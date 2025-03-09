@@ -1,19 +1,34 @@
 # auth_service.py
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
 import os
+from google_auth_oauthlib.flow import Flow
+from googleapiclient.discovery import build
 import json
 from datetime import datetime, timedelta
-from google.auth.transport.requests import Request
 
 SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "openid"]
 USER_DATA_FILE = "user_data.json"
+#REDIRECT_URI = "http://127.0.0.1:5000/oauth2callback"
+REDIRECT_URI = "https://mushtastic-intelligence.com/oauth2callback"
 
-def authenticate_google():
-    """Authenticate with Google for login, always prompting for a new flow."""
-    flow = InstalledAppFlow.from_client_secrets_file("client_secret_2.json", SCOPES)
-    credentials = flow.run_local_server(port=8080)
+def start_google_auth_flow():
+    """Start the Google OAuth flow and return the authorization URL."""
+    flow = Flow.from_client_secrets_file(
+        "client_secret_2.json",
+        scopes=SCOPES,
+        redirect_uri=REDIRECT_URI
+    )
+    auth_url, state = flow.authorization_url(access_type='offline', include_granted_scopes='true')
+    return auth_url, state  # Return only what’s needed
+
+def complete_google_auth_flow(code):
+    """Complete the OAuth flow with the authorization code."""
+    flow = Flow.from_client_secrets_file(
+        "client_secret_2.json",
+        scopes=SCOPES,
+        redirect_uri=REDIRECT_URI
+    )
+    flow.fetch_token(code=code)
+    credentials = flow.credentials
     return build("oauth2", "v2", credentials=credentials)
 
 def refresh_user_data():

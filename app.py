@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask, render_template, jsonify, request, redirect, url_for, session
 from youtube_service import upload_to_youtube  # Unchanged import
-from auth_service import authenticate_google, store_user_data  # New import
+from auth_service import start_google_auth_flow, complete_google_auth_flow, store_user_data
 
 app = Flask(__name__)
 app.secret_key = 'abd2332c672f142303ff666182f64bc5'
@@ -34,16 +34,37 @@ def login():
         return redirect(url_for('home'))
 
     if request.method == 'POST':
-        google = authenticate_google()
-        user_id = store_user_data(google)
-        print(google)
-        print("****************")
-        print(user_id)
-        session['user_id'] = user_id
-        return redirect(url_for('home'))
+        auth_url, state = start_google_auth_flow()
+        session['oauth_state'] = state  # Store only the state
+        return redirect(auth_url)  # Redirect user to Google login
 
     return render_template('login.html')
 
+
+@app.route('/oauth2callback')
+def oauth2callback():
+    if 'oauth_state' not in session:
+        return "Invalid state", 400
+
+    state = request.args.get('state')
+    if state != session['oauth_state']:
+        return "State mismatch", 400
+
+    code = request.args.get('code')
+    if not code:
+        return "No authorization code", 400
+
+    google = complete_google_auth_flow(code)
+    user_id = store_user_data(google)
+    session.pop('oauth_state', None)  # Clean up
+    session['user_id'] = user_id
+    return redirect(url_for('home'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('home'))
 
 @app.route('/api/upload_video', methods=['POST'])
 def upload_video():
