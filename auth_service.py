@@ -13,17 +13,17 @@ REDIRECT_URI = "https://mushtastic-intelligence.com/oauth2callback"
 def start_google_auth_flow():
     """Start the Google OAuth flow and return the authorization URL."""
     flow = Flow.from_client_secrets_file(
-        "client_secret_2.json",
+        "new_login_client_id.json",
         scopes=SCOPES,
         redirect_uri=REDIRECT_URI
     )
-    auth_url, state = flow.authorization_url(access_type='offline', include_granted_scopes='true')
+    auth_url, state = flow.authorization_url(access_type='offline', include_granted_scopes='true', prompt='select_account consent')
     return auth_url, state  # Return only what’s needed
 
 def complete_google_auth_flow(code):
     """Complete the OAuth flow with the authorization code."""
     flow = Flow.from_client_secrets_file(
-        "client_secret_2.json",
+        "new_login_client_id.json",
         scopes=SCOPES,
         redirect_uri=REDIRECT_URI
     )

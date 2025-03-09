@@ -4,3 +4,8 @@ __pycache__/
 .idea/
 virtual.pem
 user_data.json
+access.log
+app.log
+error.log
+nohup.out
+new_login_client_id.json
