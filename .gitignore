@@ -3,5 +3,4 @@ client_secret_2.json
 __pycache__/
 .idea/
 virtual.pem
-
-GRABDOMAIN
+user_data.json
