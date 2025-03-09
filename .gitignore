@@ -2,3 +2,6 @@ youtube_credentials.json
 client_secret_2.json
 __pycache__/
 .idea/
+virtual.pem
+
+GRABDOMAIN
