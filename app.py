@@ -6,6 +6,7 @@ from auth_service import start_google_auth_flow, complete_google_auth_flow, stor
 
 app = Flask(__name__)
 app.secret_key = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 
 # Configure logging
 logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s: %(message)s')
