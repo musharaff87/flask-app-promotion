@@ -1,4 +1,3 @@
-# youtube_service.py
 import os
 import shutil
 from google.oauth2.credentials import Credentials
@@ -31,8 +30,8 @@ def authenticate_youtube():
 
     return build("youtube", "v3", credentials=credentials)
 
-def upload_to_youtube(video_file, video_id, title, description, tags, category_id, publish_time_str):
-    """Upload a video to YouTube."""
+def upload_to_youtube(video_file, video_id, title, description, tags, category_id, publish_time_str, notify_subscribers=True, language="en"):
+    """Upload a video to YouTube with additional settings."""
     try:
         if not all([video_id, title, description, tags, publish_time_str]):
             raise ValueError("Missing required parameters")
@@ -57,13 +56,17 @@ def upload_to_youtube(video_file, video_id, title, description, tags, category_i
                 "title": title,
                 "description": description,
                 "tags": tags,
-                "categoryId": category_id
+                "categoryId": category_id,
+                "defaultLanguage": language,  # Set video language (e.g., "en" for English)
+                "defaultAudioLanguage": language  # Set audio language
             },
             "status": {
-                "privacyStatus": "private",
-                "license": "youtube",
+                "privacyStatus": "private",  # Start as private for scheduling
+                "license": "creativeCommon",
                 "publishAt": publish_time.isoformat(),
-                "selfDeclaredMadeForKids": False
+                "selfDeclaredMadeForKids": False,
+                "embeddable": True,  # Allow embedding to increase reach
+                "publicStatsViewable": True  # Make stats public
             }
         }
 
@@ -72,6 +75,7 @@ def upload_to_youtube(video_file, video_id, title, description, tags, category_i
             part="snippet,status",
             body=request_body,
             media_body=media
+            # Removed notifySubscribers since it's not supported with youtube.upload scope
         )
 
         response = None
@@ -80,23 +84,23 @@ def upload_to_youtube(video_file, video_id, title, description, tags, category_i
             if status:
                 print(f"Uploaded {int(status.progress() * 100)}%.")
 
-        print("Upload Complete!")
-
-        time.sleep(5)
+        video_id = response.get("id")
+        print(f"Upload Complete! Video ID: {video_id}")
 
         # Clean up temporary file
+        time.sleep(5)
         try:
             shutil.rmtree(temp_dir)
             print(f"Temporary directory {temp_dir} removed.")
         except Exception as e:
             print(f"Failed to remove temporary directory: {e}")
 
-        return {"message": "Upload Complete!", "response": response}
+        return {"message": "Upload Complete!", "video_id": video_id, "response": response}
 
     except Exception as e:
         print(f"Error in upload: {e}")
         raise
 
-
+# Example usage
 if __name__ == "__main__":
     authenticate_youtube()
