@@ -1,7 +1,8 @@
 import logging
 from flask import Flask, render_template, jsonify, request, redirect, url_for, session
-from youtube_service import upload_to_youtube
+from youtube_service import upload_to_youtube, authenticate_youtube, start_youtube_auth_flow, complete_youtube_auth_flow
 from auth_service import start_google_auth_flow, complete_google_auth_flow, store_user_data
+from google_auth_oauthlib.flow import Flow
 import sys
 
 app = Flask(__name__)
@@ -137,5 +138,39 @@ def upload_video():
         logger.exception(f"Upload failed with exception: {str(e)}")
         return jsonify({"error": f"Upload failed: {str(e)}"}), 500
 
+
+@app.route('/api/authenticate_youtube', methods=['POST'])
+def authenticate_youtube_endpoint():
+    session.clear()
+    try:
+        auth_url, state = start_youtube_auth_flow()
+        session['youtube_auth_state'] = state
+        logger.info("Generated YouTube auth URL")
+        return jsonify({"auth_url": auth_url}), 200
+    except Exception as e:
+        logger.error(f"YouTube authentication initiation failed: {str(e)}")
+        return jsonify({"error": f"Authentication failed: {str(e)}"}), 500
+
+@app.route('/youtube_auth_callback')
+def youtube_auth_callback():
+    if 'youtube_auth_state' not in session:
+        logger.error("Invalid state in youtube_auth_callback")
+        return "Invalid state", 400
+
+    state = request.args.get('state')
+    if state != session['youtube_auth_state']:
+        logger.error(f"State mismatch in youtube_auth_callback: Expected {session['youtube_auth_state']}, got {state}")
+        return "State mismatch", 400
+
+    try:
+        code = request.args.get('code')
+        youtube = complete_youtube_auth_flow(code)
+        session.pop('youtube_auth_state', None)
+        logger.info("YouTube authentication successful")
+        return redirect(url_for('services', auth_status='success'))
+    except Exception as e:
+        logger.error(f"YouTube auth callback failed: {str(e)}")
+        return redirect(url_for('services', auth_status=f'error: {str(e)}'))
+
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

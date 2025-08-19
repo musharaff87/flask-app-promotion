@@ -9,3 +9,4 @@ app.log
 error.log
 nohup.out
 new_login_client_id.json
+new_youtube_client.json
