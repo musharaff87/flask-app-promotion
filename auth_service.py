@@ -5,8 +5,8 @@ from googleapiclient.discovery import build
 import json
 from datetime import datetime, timedelta
 
+SCOPES = ["https://www.googleapis.com/auth/youtube.upload", "https://www.googleapis.com/auth/userinfo.email", "openid"]
 #SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "openid"]
-SCOPES = ["https://www.googleapis.com/auth/userinfo.email"]
 USER_DATA_FILE = "user_data.json"
 #REDIRECT_URI = "http://127.0.0.1:5000/oauth2callback"
 REDIRECT_URI = "https://mushtastic-intelligence.com/oauth2callback"
