@@ -1,0 +1,790 @@
+{% extends "base.html" %}
+{% block title %}Free YouTube Description Generator - AI SEO Optimized Descriptions 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-danger">📝 YouTube Description Generator</h1>
+        <p class="lead mb-4">Create SEO-optimized YouTube descriptions that boost rankings and engagement - FREE!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">5000</div>
+                <small>Characters</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">10K+</div>
+                <small>Generated</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">24/7</div>
+                <small>Available</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="descriptionGeneratorForm">
+                        <div class="mb-4">
+                            <label for="videoContent" class="form-label fw-bold">Describe your video content in detail:</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="videoContent"
+                                rows="5"
+                                placeholder="E.g., In this tutorial, I show you how to make authentic Italian pizza dough from scratch using traditional techniques. We cover ingredient selection, kneading methods, fermentation tips, and baking secrets that professional chefs use..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Include what viewers will learn, key topics covered, and any unique value you provide.</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label for="descriptionStyle" class="form-label fw-bold">Description Style:</label>
+                                <select class="form-select" id="descriptionStyle">
+                                    <option value="comprehensive" selected>📚 Comprehensive</option>
+                                    <option value="seo_focused">📈 SEO Focused</option>
+                                    <option value="engaging">✨ Engaging & Personal</option>
+                                    <option value="professional">👔 Professional</option>
+                                    <option value="tutorial">🎓 Tutorial/Educational</option>
+                                    <option value="entertainment">🎭 Entertainment</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="includeTimestamps" class="form-label fw-bold">Include Timestamps:</label>
+                                <select class="form-select" id="includeTimestamps">
+                                    <option value="yes" selected>⏰ Yes, Include Timestamps</option>
+                                    <option value="no">📝 No Timestamps</option>
+                                    <option value="chapters">📖 Chapter Markers</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="videoLength" class="form-label fw-bold">Video Length:</label>
+                                <select class="form-select" id="videoLength">
+                                    <option value="short">⚡ Short (0-5 min)</option>
+                                    <option value="medium" selected>📺 Medium (5-15 min)</option>
+                                    <option value="long">🎬 Long (15-30 min)</option>
+                                    <option value="very_long">📚 Very Long (30+ min)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="targetKeywords" class="form-label fw-bold">Target Keywords (Optional):</label>
+                                <input type="text" class="form-control" id="targetKeywords" placeholder="e.g., pizza recipe, homemade dough, Italian cooking">
+                                <div class="form-text">Separate multiple keywords with commas</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="channelName" class="form-label fw-bold">Channel Name (Optional):</label>
+                                <input type="text" class="form-control" id="channelName" placeholder="Your Channel Name">
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="socialLinks" class="form-label fw-bold">Social Media Links (Optional):</label>
+                                <textarea class="form-control" id="socialLinks" rows="3" placeholder="Instagram: @username&#10;Twitter: @username&#10;Website: www.example.com"></textarea>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="callToAction" class="form-label fw-bold">Call-to-Action Focus:</label>
+                                <select class="form-select" id="callToAction">
+                                    <option value="subscribe">👥 Subscribe & Like</option>
+                                    <option value="engagement" selected>💬 Comments & Engagement</option>
+                                    <option value="website">🔗 Visit Website</option>
+                                    <option value="products">🛒 Products/Services</option>
+                                    <option value="community">🌟 Join Community</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate YouTube Description 📝</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-danger text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🎉 Generated YouTube Description</h5>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light btn-sm" id="copyDescBtn">
+                                    <i class="fas fa-copy"></i> Copy Description
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate New
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="descriptionResults" class="description-container mb-4"></div>
+                        
+                        <!-- Description Analysis -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Description Stats:</h6>
+                                <div id="statsContainer">
+                                    <small class="text-muted">
+                                        <span id="charCount">0 characters</span> •
+                                        <span id="wordCount">0 words</span><br>
+                                        <span id="lineCount">0 lines</span> •
+                                        <span id="linkCount">0 links</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📋 Quick Actions:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="copyDescription()">Copy Text</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="exportDescription()">Download</button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="previewDescription()">Preview</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SEO Analysis -->
+                        <div class="bg-light p-3 rounded mb-3">
+                            <h6 class="fw-bold text-danger">📈 SEO Analysis:</h6>
+                            <div id="seoAnalysis">
+                                <small class="text-muted">Generate a description to see SEO analysis</small>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="fw-bold text-danger">💡 YouTube Description Best Practices:</h6>
+                            <ul class="small mb-0">
+                                <li><strong>First 125 characters crucial</strong> - Shows in search results</li>
+                                <li><strong>Include keywords naturally</strong> - Don't stuff, use contextually</li>
+                                <li><strong>Add timestamps</strong> - Helps with user experience and SEO</li>
+                                <li><strong>Include social links</strong> - Drive traffic to other platforms</li>
+                                <li><strong>Clear call-to-action</strong> - Tell viewers what to do next</li>
+                                <li><strong>Use all 5000 characters</strong> - More content = better SEO</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <button class="btn btn-outline-danger btn-sm ms-2" onclick="document.getElementById('descriptionGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Examples and Tips -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">📋 Description Template</h5>
+                </div>
+                <div class="card-body">
+                    <div class="template-example">
+                        <small><strong>Hook (First 125 chars):</strong><br>
+                        "In this video, I'll show you exactly how to..."<br><br>
+
+                        <strong>Main Content:</strong><br>
+                        • What you'll learn<br>
+                        • Key points covered<br>
+                        • Unique value provided<br><br>
+
+                        <strong>Timestamps:</strong><br>
+                        0:00 Introduction<br>
+                        2:30 Main Tutorial<br>
+                        5:45 Pro Tips<br><br>
+
+                        <strong>Call-to-Action:</strong><br>
+                        👍 Like if this helped!<br>
+                        🔔 Subscribe for more<br><br>
+
+                        <strong>Links & Social:</strong><br>
+                        🔗 Website: example.com<br>
+                        📱 Instagram: @username</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">🎯 SEO Optimization</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">🔍 <strong>Keywords:</strong> Use 2-3 main keywords naturally</li>
+                        <li class="mb-2">📍 <strong>Location:</strong> Include location for local content</li>
+                        <li class="mb-2">🏷️ <strong>Tags:</strong> Mirror your tags in description</li>
+                        <li class="mb-2">🔗 <strong>Links:</strong> Link to related videos/playlists</li>
+                        <li class="mb-2">📱 <strong>Social Proof:</strong> Mention subscribers/achievements</li>
+                        <li class="mb-0">💬 <strong>Engagement:</strong> Ask questions to encourage comments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">🚀 More YouTube Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/youtube-title-generator" class="btn btn-outline-danger btn-sm">Title Generator</a>
+                        <a href="/youtube-tag-generator" class="btn btn-outline-success btn-sm">Tag Generator</a>
+                        <a href="/youtube-thumbnail-generator" class="btn btn-outline-warning btn-sm">Thumbnail Ideas</a>
+                        <a href="/youtube-tools" class="btn btn-outline-info btn-sm">All YouTube Tools</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">YouTube Description Optimization Guide - Rank Higher in Search 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>Why YouTube Descriptions Matter for SEO</h3>
+                            <p>YouTube descriptions are crucial for both search rankings and viewer engagement. Our <strong>free YouTube description generator</strong> creates SEO-optimized descriptions that help your videos rank higher in both YouTube and Google search results.</p>
+
+                            <h3>Anatomy of a Perfect YouTube Description</h3>
+                            <h4>1. The Hook (First 125 Characters)</h4>
+                            <p>The first 125 characters appear in search results and are crucial for CTR:</p>
+                            <ul>
+                                <li>Include your main keyword naturally</li>
+                                <li>Create curiosity or promise value</li>
+                                <li>Make it compelling and readable</li>
+                                <li>Avoid clickbait - be genuine</li>
+                            </ul>
+
+                            <h4>2. Main Content Section (Characters 126-1000)</h4>
+                            <p>This section should provide detailed information about your video:</p>
+                            <ul>
+                                <li>Expand on what viewers will learn</li>
+                                <li>Include secondary keywords naturally</li>
+                                <li>Provide context and background information</li>
+                                <li>Mention any guests, products, or resources</li>
+                            </ul>
+
+                            <h4>3. Timestamps (User Experience)</h4>
+                            <p>Timestamps improve user experience and can create video chapters:</p>
+                            <ul>
+                                <li>Help viewers navigate long videos</li>
+                                <li>Increase watch time and retention</li>
+                                <li>Can appear as chapters in search</li>
+                                <li>Include keyword-rich chapter titles</li>
+                            </ul>
+
+                            <h4>4. Call-to-Action Section</h4>
+                            <p>Encourage specific actions from your viewers:</p>
+                            <ul>
+                                <li>Subscribe and ring the bell</li>
+                                <li>Like and share the video</li>
+                                <li>Comment with specific questions</li>
+                                <li>Check out related videos or playlists</li>
+                            </ul>
+
+                            <h4>5. Links and Social Media</h4>
+                            <p>Drive traffic to your other platforms:</p>
+                            <ul>
+                                <li>Website and blog links</li>
+                                <li>Social media profiles</li>
+                                <li>Related videos and playlists</li>
+                                <li>Products or affiliate links</li>
+                            </ul>
+
+                            <h3>SEO Best Practices for YouTube Descriptions</h3>
+                            <h4>Keyword Integration</h4>
+                            <ul>
+                                <li>Use main keyword in first 25 words</li>
+                                <li>Include 2-3 secondary keywords naturally</li>
+                                <li>Use long-tail keyword variations</li>
+                                <li>Don't keyword stuff - maintain readability</li>
+                            </ul>
+
+                            <h4>Description Length</h4>
+                            <ul>
+                                <li>Aim for 200+ words for better SEO</li>
+                                <li>Use all 5000 characters when relevant</li>
+                                <li>Quality over quantity - make every word count</li>
+                                <li>Break up text with bullet points and spacing</li>
+                            </ul>
+
+                            <h3>Advanced Description Strategies</h3>
+                            <h4>Video Series and Playlists</h4>
+                            <p>For video series, include:</p>
+                            <ul>
+                                <li>Links to previous and next episodes</li>
+                                <li>Playlist link for easy navigation</li>
+                                <li>Series description and episode number</li>
+                                <li>Consistent formatting across episodes</li>
+                            </ul>
+
+                            <h4>Collaboration Mentions</h4>
+                            <p>When collaborating with other creators:</p>
+                            <ul>
+                                <li>Tag collaborators in the description</li>
+                                <li>Link to their channels and social media</li>
+                                <li>Cross-promote related content</li>
+                                <li>Use collaboration-specific keywords</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-danger text-white p-4 rounded mb-4">
+                                <h5>📊 Description Stats</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 5000 character limit</li>
+                                    <li>• First 125 chars in search</li>
+                                    <li>• 200+ words for SEO</li>
+                                    <li>• Timestamps create chapters</li>
+                                    <li>• Links drive external traffic</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded">
+                                <h6>Power Words for CTAs:</h6>
+                                <div class="d-flex flex-wrap">
+                                    <span class="badge bg-secondary me-1 mb-1">Subscribe</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Like</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Share</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Comment</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Watch</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Check out</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Learn more</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Join us</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/youtube-tools" class="btn btn-outline-danger">← YouTube Tools</a>
+            <a href="/youtube-tag-generator" class="btn btn-danger">Tag Generator →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.description-container {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.description-text {
+    white-space: pre-line;
+    color: #333;
+    font-size: 1rem;
+}
+
+.template-example {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border-left: 4px solid #dc3545;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.seo-indicator {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin: 2px;
+    display: inline-block;
+}
+
+.seo-good {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.seo-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.seo-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    .description-container {
+        padding: 15px;
+        max-height: 400px;
+    }
+    
+    .template-example {
+        padding: 12px;
+        font-size: 0.8rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('descriptionGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const descriptionResults = document.getElementById('descriptionResults');
+    const copyDescBtn = document.getElementById('copyDescBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedDescription = '';
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateDescription();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateDescription();
+    });
+
+    copyDescBtn.addEventListener('click', function() {
+        copyToClipboard(lastGeneratedDescription);
+        showCopyFeedback(this, 'Description copied!');
+    });
+
+    async function generateDescription() {
+        const content = document.getElementById('videoContent').value.trim();
+        const style = document.getElementById('descriptionStyle').value;
+        const timestamps = document.getElementById('includeTimestamps').value;
+        const length = document.getElementById('videoLength').value;
+        const keywords = document.getElementById('targetKeywords').value.trim();
+        const channel = document.getElementById('channelName').value.trim();
+        const social = document.getElementById('socialLinks').value.trim();
+        const cta = document.getElementById('callToAction').value;
+
+        if (!content) {
+            showError('Please describe your video content');
+            return;
+        }
+
+        let enhancedPrompt = `${content} (Style: ${style}, Length: ${length}, Timestamps: ${timestamps}, CTA: ${cta}`;
+        if (keywords) enhancedPrompt += `, Keywords: ${keywords}`;
+        if (channel) enhancedPrompt += `, Channel: ${channel}`;
+        if (social) enhancedPrompt += `, Social: ${social}`;
+        enhancedPrompt += ')';
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/youtube/description', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate description');
+            }
+
+            if (data.success && data.description) {
+                displayResults(data.description);
+                lastGeneratedDescription = data.description;
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            buttonText.textContent = 'Crafting Perfect Description...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Generate YouTube Description 📝';
+        }
+    }
+
+    function displayResults(description) {
+        descriptionResults.innerHTML = `<div class="description-text">${description}</div>`;
+        
+        updateDescriptionStats(description);
+        analyzeSEO(description);
+        
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function updateDescriptionStats(description) {
+        const charCount = description.length;
+        const wordCount = description.trim().split(/\s+/).length;
+        const lineCount = description.split('\n').length;
+        const linkCount = (description.match(/https?:\/\/\S+/g) || []).length + (description.match(/@\w+/g) || []).length;
+        
+        document.getElementById('charCount').textContent = `${charCount}/5000 characters`;
+        document.getElementById('wordCount').textContent = `${wordCount} words`;
+        document.getElementById('lineCount').textContent = `${lineCount} lines`;
+        document.getElementById('linkCount').textContent = `${linkCount} links`;
+        
+        // Color code character count
+        const charCountEl = document.getElementById('charCount');
+        if (charCount < 200) {
+            charCountEl.className = 'text-warning';
+        } else if (charCount > 4500) {
+            charCountEl.className = 'text-warning';
+        } else {
+            charCountEl.className = 'text-success';
+        }
+    }
+
+    function analyzeSEO(description) {
+        const keywords = document.getElementById('targetKeywords').value.toLowerCase().split(',').map(k => k.trim()).filter(k => k);
+        const descLower = description.toLowerCase();
+        const first125 = description.substring(0, 125);
+        
+        let seoHTML = '';
+        let score = 0;
+        
+        // Length check
+        if (description.length >= 200) {
+            seoHTML += '<span class="seo-indicator seo-good">✓ Good Length</span>';
+            score += 20;
+        } else {
+            seoHTML += '<span class="seo-indicator seo-warning">⚠ Too Short</span>';
+        }
+        
+        // First 125 characters check
+        if (first125.length >= 100) {
+            seoHTML += '<span class="seo-indicator seo-good">✓ Strong Hook</span>';
+            score += 15;
+        } else {
+            seoHTML += '<span class="seo-indicator seo-warning">⚠ Weak Hook</span>';
+        }
+        
+        // Keywords check
+        if (keywords.length > 0) {
+            const keywordsFound = keywords.filter(keyword => descLower.includes(keyword)).length;
+            if (keywordsFound === keywords.length) {
+                seoHTML += '<span class="seo-indicator seo-good">✓ All Keywords</span>';
+                score += 25;
+            } else if (keywordsFound > 0) {
+                seoHTML += '<span class="seo-indicator seo-warning">⚠ Some Keywords</span>';
+                score += 15;
+            } else {
+                seoHTML += '<span class="seo-indicator seo-danger">✗ No Keywords</span>';
+            }
+        }
+        
+        // Call-to-action check
+        const ctaWords = ['subscribe', 'like', 'share', 'comment', 'follow', 'visit', 'check out'];
+        const hasCTA = ctaWords.some(word => descLower.includes(word));
+        if (hasCTA) {
+            seoHTML += '<span class="seo-indicator seo-good">✓ Has CTA</span>';
+            score += 15;
+        } else {
+            seoHTML += '<span class="seo-indicator seo-warning">⚠ Missing CTA</span>';
+        }
+        
+        // Timestamps check
+        const hasTimestamps = /\d+:\d+/.test(description);
+        if (hasTimestamps) {
+            seoHTML += '<span class="seo-indicator seo-good">✓ Timestamps</span>';
+            score += 15;
+        }
+        
+        // Links check
+        const hasLinks = /https?:\/\//.test(description) || /@\w+/.test(description);
+        if (hasLinks) {
+            seoHTML += '<span class="seo-indicator seo-good">✓ Has Links</span>';
+            score += 10;
+        }
+        
+        seoHTML += `<br><small class="text-muted mt-2">SEO Score: ${score}/100</small>`;
+        document.getElementById('seoAnalysis').innerHTML = seoHTML;
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('btn-success');
+        button.classList.remove('btn-light');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-light');
+        }, 2000);
+    }
+
+    // Global functions for onclick handlers
+    window.copyDescription = function() {
+        copyToClipboard(lastGeneratedDescription);
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('btn-success');
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-primary');
+        }, 2000);
+    };
+
+    window.exportDescription = function() {
+        const videoTitle = document.getElementById('videoContent').value.substring(0, 50) + '...';
+        const filename = `youtube-description-${Date.now()}.txt`;
+        
+        let exportText = `YouTube Video Description\n`;
+        exportText += `Generated: ${new Date().toLocaleDateString()}\n`;
+        exportText += `Video: ${videoTitle}\n\n`;
+        exportText += `--- DESCRIPTION START ---\n\n`;
+        exportText += lastGeneratedDescription;
+        exportText += `\n\n--- DESCRIPTION END ---\n\n`;
+        exportText += `Character count: ${lastGeneratedDescription.length}/5000\n`;
+        exportText += `Word count: ${lastGeneratedDescription.trim().split(/\s+/).length}\n`;
+        
+        const blob = new Blob([exportText], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+
+    window.previewDescription = function() {
+        const preview = window.open('', 'preview', 'width=800,height=600');
+        preview.document.write(`
+            <html>
+            <head>
+                <title>YouTube Description Preview</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+                    .preview-container { max-width: 800px; margin: 0 auto; }
+                    .preview-section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+                    .search-preview { background-color: #f8f9fa; }
+                    .full-preview { background-color: #fff; }
+                    h3 { color: #333; margin-top: 0; }
+                    .char-limit { color: #666; font-size: 0.9em; }
+                    .description-text { white-space: pre-line; }
+                </style>
+            </head>
+            <body>
+                <div class="preview-container">
+                    <h2>YouTube Description Preview</h2>
+                    
+                    <div class="preview-section search-preview">
+                        <h3>Search Results Preview (First 125 characters):</h3>
+                        <div class="description-text">${lastGeneratedDescription.substring(0, 125)}${lastGeneratedDescription.length > 125 ? '...' : ''}</div>
+                        <div class="char-limit">${Math.min(125, lastGeneratedDescription.length)}/125 characters shown in search</div>
+                    </div>
+                    
+                    <div class="preview-section full-preview">
+                        <h3>Full Description:</h3>
+                        <div class="description-text">${lastGeneratedDescription}</div>
+                        <div class="char-limit">${lastGeneratedDescription.length}/5000 characters total</div>
+                    </div>
+                </div>
+            </body>
+            </html>
+        `);
+        preview.document.close();
+    };
+});
+</script>
+{% endblock %}

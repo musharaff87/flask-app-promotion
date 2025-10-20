@@ -2,6 +2,7 @@
 {% block title %}Your All-in-One AI Toolkit - Mushtastic Intelligence{% endblock %}
 {% block content %}
 <div class="container py-5">
+    <!-- Hero Section -->
     <div class="text-center mb-5">
         <h1 class="display-4 fw-bold">Welcome to Mushtastic Intelligence</h1>
         <p class="lead">Your ultimate destination for powerful AI tools, all in one place.</p>
@@ -12,32 +13,127 @@
             <a href="/login" class="btn btn-custom btn-lg mt-3">Login to Get Started</a>
         {% endif %}
     </div>
-    <h2 class="text-center mb-4">Discover the Future of AI</h2>
-    <div class="row g-4 text-center">
-        <div class="col-md-3">
-            <div class="card p-3 h-100">
-                <h5>For Social Media Creators</h5>
-                <p class="small">Supercharge your content with AI-powered video, photo, and audio editing tools.</p>
+
+    <!-- Featured: AI Video Generation Section -->
+    <div class="row mb-5 py-4 bg-light rounded-3">
+        <div class="col-lg-6 d-flex align-items-center">
+            <div>
+                <h2 class="fw-bold mb-3">🎬 AI-Powered Video Generation</h2>
+                <p class="lead">Create stunning short-form videos automatically!</p>
+                <p>Generate engaging content for YouTube Shorts, Instagram Reels, and TikTok with our advanced AI video generation tools. Perfect for creators who want to scale their content production.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2">✨ Automated video creation</li>
+                    <li class="mb-2">📱 Optimized for all platforms</li>
+                    <li class="mb-2">🎨 Professional editing, zero effort</li>
+                    <li class="mb-2">⚡ Generate videos in minutes</li>
+                </ul>
+                <a href="/ai-video-generator" class="btn btn-custom btn-lg mt-3">Explore AI Video Generator</a>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card p-3 h-100">
-                <h5>For the Film Industry</h5>
-                <p class="small">From script generation to AI dubbing, revolutionize your filmmaking process.</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card p-3 h-100">
-                <h5>For Developers</h5>
-                <p class="small">Automate your workflow with AI code generation, debugging, and documentation.</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card p-3 h-100">
-                <h5>For Daily Productivity</h5>
-                <p class="small">Enhance your everyday tasks with smart text, voice, and automation utilities.</p>
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="ratio ratio-16x9 rounded-3 overflow-hidden shadow">
+                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&h=450&fit=crop" 
+                     alt="Video Generation Preview" 
+                     class="img-fluid"
+                     style="object-fit: cover;">
             </div>
         </div>
     </div>
+
+    <!-- Services Grid -->
+    <h2 class="text-center mb-4">Discover the Future of AI</h2>
+    <div class="row g-4 text-center mb-5">
+        <div class="col-md-3">
+            <a href="/social-media" class="text-decoration-none">
+                <div class="card p-3 h-100 shadow-sm hover-card">
+                    <div class="card-body">
+                        <div class="mb-3 fs-1">📱</div>
+                        <h5 class="fw-bold">Social Media Creators</h5>
+                        <p class="small text-muted">Supercharge your content with AI-powered video, photo, and audio editing tools.</p>
+                        <span class="badge bg-success">Available Now</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 h-100 shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3 fs-1">🎬</div>
+                    <h5 class="fw-bold">Film Industry</h5>
+                    <p class="small text-muted">From script generation to AI dubbing, revolutionize your filmmaking process.</p>
+                    <span class="badge bg-secondary">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 h-100 shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3 fs-1">💻</div>
+                    <h5 class="fw-bold">Developers</h5>
+                    <p class="small text-muted">Automate your workflow with AI code generation, debugging, and documentation.</p>
+                    <span class="badge bg-secondary">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 h-100 shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3 fs-1">⚡</div>
+                    <h5 class="fw-bold">Daily Productivity</h5>
+                    <p class="small text-muted">Enhance your everyday tasks with smart text, voice, and automation utilities.</p>
+                    <span class="badge bg-secondary">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Choose Us Section -->
+    <div class="row py-5 bg-white rounded-3 shadow-sm mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="fw-bold">Why Choose Mushtastic Intelligence?</h2>
+            <p class="text-muted">Cutting-edge AI technology made accessible for everyone</p>
+        </div>
+        <div class="col-md-4 text-center mb-3">
+            <div class="mb-3 fs-1">🚀</div>
+            <h5>Fast & Efficient</h5>
+            <p class="small text-muted">Generate content in seconds, not hours</p>
+        </div>
+        <div class="col-md-4 text-center mb-3">
+            <div class="mb-3 fs-1">🎯</div>
+            <h5>Purpose-Built Tools</h5>
+            <p class="small text-muted">Each tool designed for specific creative needs</p>
+        </div>
+        <div class="col-md-4 text-center mb-3">
+            <div class="mb-3 fs-1">🔒</div>
+            <h5>Secure & Private</h5>
+            <p class="small text-muted">Your data and content remain yours</p>
+        </div>
+    </div>
 </div>
+
+<style>
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-custom {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+</style>
 {% endblock %}

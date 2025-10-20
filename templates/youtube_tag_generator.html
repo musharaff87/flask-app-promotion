@@ -1,0 +1,657 @@
+{% extends "base.html" %}
+{% block title %}Free YouTube Tag Generator - SEO Keywords & Tags 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-danger">🎥 YouTube Tag Generator</h1>
+        <p class="lead mb-4">Generate SEO-optimized YouTube tags and keywords - Boost your video discoverability!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free & Unlimited</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-danger h3">SEO</div>
+                <small>Optimized</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">50+</div>
+                <small>Keywords</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">2B+</div>
+                <small>YT Users</small>
+            </div>
+        </div>
+        <p class="text-muted">YouTube is the world's 2nd largest search engine - optimize your videos with our AI!</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="tagGeneratorForm">
+                        <div class="mb-4">
+                            <label for="videoPrompt" class="form-label fw-bold">Describe your YouTube video:</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="videoPrompt"
+                                rows="4"
+                                placeholder="E.g., Tutorial on how to make homemade pizza from scratch, step by step cooking guide for beginners, Italian recipe with traditional methods..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Include your video topic, target audience, and main keywords for best results!</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label for="videoCategory" class="form-label fw-bold">Video Category:</label>
+                                <select class="form-select" id="videoCategory">
+                                    <option value="education">🎓 Education & Tutorial</option>
+                                    <option value="entertainment">🎭 Entertainment</option>
+                                    <option value="gaming">🎮 Gaming</option>
+                                    <option value="lifestyle">🌟 Lifestyle</option>
+                                    <option value="technology">💻 Technology</option>
+                                    <option value="business">💼 Business</option>
+                                    <option value="health">🏥 Health & Fitness</option>
+                                    <option value="music">🎵 Music</option>
+                                    <option value="travel">✈️ Travel</option>
+                                    <option value="cooking">🍳 Cooking & Food</option>
+                                    <option value="diy">🔧 DIY & Crafts</option>
+                                    <option value="review">⭐ Review & Unboxing</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="tagCount" class="form-label fw-bold">Number of tags:</label>
+                                <select class="form-select" id="tagCount">
+                                    <option value="10">10 tags</option>
+                                    <option value="15">15 tags</option>
+                                    <option value="20" selected>20 tags (Recommended)</option>
+                                    <option value="25">25 tags</option>
+                                    <option value="30">30 tags</option>
+                                    <option value="50">50 tags (Maximum)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="targetAudience" class="form-label fw-bold">Target Audience:</label>
+                                <select class="form-select" id="targetAudience">
+                                    <option value="general">👥 General Audience</option>
+                                    <option value="beginners">🌱 Beginners</option>
+                                    <option value="advanced">🏆 Advanced Users</option>
+                                    <option value="professionals">💼 Professionals</option>
+                                    <option value="kids">👶 Kids & Family</option>
+                                    <option value="teens">🧑‍🎓 Teens & Young Adults</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate YouTube Tags 🚀</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-danger text-white">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <h5 class="mb-0">🎯 SEO-Optimized YouTube Tags</h5>
+                            <div class="btn-group mt-2 mt-md-0" role="group">
+                                <button class="btn btn-light btn-sm" id="copyAllBtn">
+                                    <i class="fas fa-copy"></i> Copy All
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="copyCommaBtn">
+                                    Comma Format
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="tagResults" class="tag-container mb-4"></div>
+                        
+                        <!-- Copy Options -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📋 Copy Formats:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="copyFormatted('comma')">Comma Separated</button>
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="copyFormatted('quoted')">Quoted Tags</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="copyFormatted('lines')">Line by Line</button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="copyFormatted('space')">Space Separated</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Tag Analytics:</h6>
+                                <div id="statsContainer">
+                                    <small class="text-muted">
+                                        <span id="tagStats">0 tags generated</span> •
+                                        <span id="avgLength">0 avg chars</span> •
+                                        <span id="totalChars">0 total chars</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- YouTube Studio Guide -->
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="fw-bold text-danger">🎬 How to Add Tags in YouTube Studio:</h6>
+                            <ol class="small mb-0">
+                                <li><strong>Go to YouTube Studio</strong> → Content → Select your video</li>
+                                <li><strong>Click "Details"</strong> → Scroll to "Tags" section</li>
+                                <li><strong>Paste your tags</strong> → YouTube will automatically separate them</li>
+                                <li><strong>Save changes</strong> → Tags will help your video get discovered!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <button class="btn btn-outline-danger btn-sm ms-2" onclick="document.getElementById('tagGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Examples and Tips -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">📝 Tag Examples</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">Cooking Tutorial:</h6>
+                    <div class="tag-example mb-3">
+                        <small>how to cook, easy recipes, cooking tutorial, homemade food, kitchen tips, cooking for beginners</small>
+                    </div>
+                    
+                    <h6 class="fw-bold">Gaming Video:</h6>
+                    <div class="tag-example mb-3">
+                        <small>gaming, gameplay, walkthrough, game review, pc gaming, mobile gaming, gaming tips</small>
+                    </div>
+
+                    <h6 class="fw-bold">Tech Review:</h6>
+                    <div class="tag-example">
+                        <small>tech review, unboxing, technology, gadget review, best tech, tech news, product review</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">🎯 YouTube SEO Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ <strong>Use 10-15 tags:</strong> Quality over quantity</li>
+                        <li class="mb-2">✅ <strong>Include main keyword:</strong> Match your video content</li>
+                        <li class="mb-2">✅ <strong>Mix broad & specific:</strong> Cover different search intents</li>
+                        <li class="mb-2">✅ <strong>Research competitors:</strong> See what tags they use</li>
+                        <li class="mb-2">✅ <strong>Use long-tail keywords:</strong> Less competition, higher conversion</li>
+                        <li class="mb-0">✅ <strong>Update regularly:</strong> Optimize based on performance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">🚫 Tag Don'ts</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">❌ <strong>Don't use misleading tags</strong></li>
+                        <li class="mb-2">❌ <strong>Avoid irrelevant keywords</strong></li>
+                        <li class="mb-2">❌ <strong>Don't stuff keywords</strong></li>
+                        <li class="mb-2">❌ <strong>Avoid banned/restricted terms</strong></li>
+                        <li class="mb-0">❌ <strong>Don't copy tags blindly</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">🔗 More YouTube Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/youtube-title-generator" class="btn btn-outline-danger btn-sm">Title Generator</a>
+                        <a href="/youtube-description-generator" class="btn btn-outline-success btn-sm">Description Generator</a>
+                        <a href="/instagram-hashtag-generator" class="btn btn-outline-primary btn-sm">Instagram Tags</a>
+                        <a href="/tiktok-hashtag-generator" class="btn btn-outline-dark btn-sm">TikTok Hashtags</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">YouTube Tag Generator - Free SEO Keywords Tool 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>Why YouTube Tags Matter for Video SEO</h3>
+                            <p>YouTube tags are crucial metadata that help YouTube's algorithm understand your video content and show it to the right audience. Our <strong>free YouTube tag generator</strong> creates SEO-optimized keywords that can significantly improve your video's discoverability and ranking in search results.</p>
+
+                            <h3>How YouTube Tags Work in 2024</h3>
+                            <p>YouTube tags serve multiple purposes in the platform's algorithm:</p>
+                            <ul>
+                                <li><strong>Content Classification:</strong> Tags help YouTube categorize your video correctly</li>
+                                <li><strong>Search Discovery:</strong> Relevant tags make your video appear in search results</li>
+                                <li><strong>Suggested Videos:</strong> Tags influence which videos appear in the sidebar</li>
+                                <li><strong>Topic Association:</strong> Tags connect your video to trending topics</li>
+                            </ul>
+
+                            <h3>YouTube Tag vs Instagram Hashtag - Key Differences</h3>
+                            <p>Understanding the difference between YouTube tags and social media hashtags is crucial:</p>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>YouTube Tags</th>
+                                            <th>Instagram Hashtags</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Format</strong></td>
+                                            <td>No # symbol, keyword phrases</td>
+                                            <td>With # symbol, single words</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Visibility</strong></td>
+                                            <td>Hidden from viewers</td>
+                                            <td>Visible in posts</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Purpose</strong></td>
+                                            <td>SEO and categorization</td>
+                                            <td>Discovery and community</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Length</strong></td>
+                                            <td>Can be phrases (2-4 words)</td>
+                                            <td>Usually single words</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h3>Best YouTube Tag Strategies</h3>
+                            <h4>1. The 3-Tier Tag Strategy</h4>
+                            <ul>
+                                <li><strong>Broad tags:</strong> General category terms (e.g., "cooking")</li>
+                                <li><strong>Specific tags:</strong> Detailed descriptions (e.g., "homemade pizza recipe")</li>
+                                <li><strong>Long-tail tags:</strong> Very specific phrases (e.g., "easy pizza dough recipe for beginners")</li>
+                            </ul>
+
+                            <h4>2. Keyword Research for Tags</h4>
+                            <p>Our AI analyzes millions of successful YouTube videos to suggest:</p>
+                            <ul>
+                                <li>High-search volume keywords</li>
+                                <li>Low-competition phrases</li>
+                                <li>Trending topic associations</li>
+                                <li>Semantic keyword variations</li>
+                            </ul>
+
+                            <h4>3. Category-Specific Optimization</h4>
+                            <p>Different video categories require different tagging strategies:</p>
+                            <ul>
+                                <li><strong>Educational Content:</strong> Focus on "how to," "tutorial," "guide" keywords</li>
+                                <li><strong>Entertainment:</strong> Use emotional and trending tags</li>
+                                <li><strong>Reviews:</strong> Include product names and comparison terms</li>
+                                <li><strong>Gaming:</strong> Use game titles, character names, and gaming terms</li>
+                            </ul>
+
+                            <h3>YouTube Tag Best Practices for 2024</h3>
+                            <h4>Tag Optimization Rules:</h4>
+                            <ol>
+                                <li><strong>Use 10-15 relevant tags:</strong> Quality trumps quantity</li>
+                                <li><strong>Start with your main keyword:</strong> Most important tag first</li>
+                                <li><strong>Include variations:</strong> Synonyms and related terms</li>
+                                <li><strong>Add branded tags:</strong> Your channel name or series</li>
+                                <li><strong>Research competitor tags:</strong> See what's working in your niche</li>
+                                <li><strong>Update based on performance:</strong> Use YouTube Analytics to optimize</li>
+                            </ol>
+
+                            <h3>Common YouTube Tagging Mistakes</h3>
+                            <ul>
+                                <li>❌ Using irrelevant or misleading tags</li>
+                                <li>❌ Stuffing tags with unrelated keywords</li>
+                                <li>❌ Using trademarked terms inappropriately</li>
+                                <li>❌ Ignoring long-tail keywords</li>
+                                <li>❌ Not updating tags based on performance</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-danger text-white p-4 rounded mb-4">
+                                <h5>🚀 YouTube Tag Features</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• SEO-optimized keyword phrases</li>
+                                    <li>• No hashtag (#) symbols</li>
+                                    <li>• Category-specific suggestions</li>
+                                    <li>• Multiple copy formats</li>
+                                    <li>• Unlimited generations</li>
+                                    <li>• Competition analysis</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded mb-4">
+                                <h6>Tag Performance Metrics:</h6>
+                                <ul class="small mb-0">
+                                    <li>• <strong>CTR improvement:</strong> Up to 25%</li>
+                                    <li>• <strong>Search ranking:</strong> Higher visibility</li>
+                                    <li>• <strong>Suggested videos:</strong> More recommendations</li>
+                                    <li>• <strong>Topic authority:</strong> Better categorization</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-success text-white p-4 rounded">
+                                <h6>🎯 Pro Tip</h6>
+                                <p class="small mb-0">Use our tags in combination with optimized titles and descriptions for maximum SEO impact. The best YouTube creators use all three elements together!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/youtube-tools" class="btn btn-outline-danger">← YouTube Tools</a>
+            <a href="/youtube-title-generator" class="btn btn-danger">YouTube Titles →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.tag-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.youtube-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    margin: 0.25rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.youtube-tag:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+}
+
+.youtube-tag.copied {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    animation: pulse 0.6s ease-in-out;
+}
+
+.tag-example {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    font-family: monospace;
+    border-left: 4px solid #dc3545;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    .youtube-tag {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('tagGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const tagResults = document.getElementById('tagResults');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const copyCommaBtn = document.getElementById('copyCommaBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedTags = [];
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateTags();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateTags();
+    });
+
+    copyAllBtn.addEventListener('click', function() {
+        const tags = lastGeneratedTags.join(', ');
+        copyToClipboard(tags);
+        showCopyFeedback(this, 'All tags copied!');
+    });
+
+    copyCommaBtn.addEventListener('click', function() {
+        const tags = lastGeneratedTags.join(', ');
+        copyToClipboard(tags);
+        showCopyFeedback(this, 'Comma format copied!');
+    });
+
+    async function generateTags() {
+        const prompt = document.getElementById('videoPrompt').value.trim();
+        const category = document.getElementById('videoCategory').value;
+        const count = parseInt(document.getElementById('tagCount').value);
+        const audience = document.getElementById('targetAudience').value;
+
+        if (!prompt) {
+            showError('Please describe your YouTube video');
+            return;
+        }
+
+        const enhancedPrompt = `${prompt} (Category: ${category}, Audience: ${audience})`;
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/youtube/tags', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt,
+                    count: count
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate tags');
+            }
+
+            if (data.success && data.tags) {
+                displayResults(data.tags);
+                lastGeneratedTags = data.tags;
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            buttonText.textContent = 'Generating SEO Tags...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Generate YouTube Tags 🚀';
+        }
+    }
+
+    function displayResults(tags) {
+        tagResults.innerHTML = '';
+
+        tags.forEach((tag, index) => {
+            const tagElement = document.createElement('button');
+            tagElement.className = 'youtube-tag';
+            tagElement.textContent = tag;
+            tagElement.title = `Click to copy "${tag}"`;
+            tagElement.addEventListener('click', function() {
+                copyToClipboard(tag);
+                this.classList.add('copied');
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                }, 1000);
+            });
+            tagResults.appendChild(tagElement);
+        });
+
+        // Update stats
+        document.getElementById('tagStats').textContent = `${tags.length} tags generated`;
+        const avgLength = Math.round(tags.reduce((sum, tag) => sum + tag.length, 0) / tags.length);
+        document.getElementById('avgLength').textContent = `${avgLength} avg chars`;
+        const totalChars = tags.join(', ').length;
+        document.getElementById('totalChars').textContent = `${totalChars} total chars`;
+
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('btn-success');
+        button.classList.remove('btn-light', 'btn-outline-light');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add(button.id === 'copyAllBtn' ? 'btn-light' : 'btn-outline-light');
+        }, 2000);
+    }
+
+    // Copy format functions
+    window.copyFormatted = function(format) {
+        let text = '';
+        switch(format) {
+            case 'comma':
+                text = lastGeneratedTags.join(', ');
+                break;
+            case 'quoted':
+                text = lastGeneratedTags.map(tag => `"${tag}"`).join(', ');
+                break;
+            case 'lines':
+                text = lastGeneratedTags.join('\n');
+                break;
+            case 'space':
+                text = lastGeneratedTags.join(' ');
+                break;
+        }
+        copyToClipboard(text);
+        
+        // Show feedback
+        const button = event.target;
+        showCopyFeedback(button, 'Copied!');
+    };
+});
+</script>
+{% endblock %}

@@ -1,0 +1,699 @@
+{% extends "base.html" %}
+{% block title %}Free Instagram Caption Generator - AI Powered Engaging Captions 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">✍️ Instagram Caption Generator</h1>
+        <p class="lead mb-4">Create engaging Instagram captions with AI - Boost engagement by 300%!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free Forever</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">10+</div>
+                <small>Caption Styles</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">1M+</div>
+                <small>Generated</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">AI</div>
+                <small>Powered</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="captionGeneratorForm">
+                        <div class="mb-4">
+                            <label for="contentPrompt" class="form-label fw-bold">Describe your Instagram post:</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="contentPrompt"
+                                rows="4"
+                                placeholder="E.g., Sharing my morning coffee routine at a cozy cafe downtown. The latte art is amazing and the atmosphere is perfect for work. Feeling grateful for these peaceful moments..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Include emotions, location, activities, and what message you want to convey!</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="captionStyle" class="form-label fw-bold">Caption Style:</label>
+                                <select class="form-select" id="captionStyle">
+                                    <option value="engaging" selected>🎯 Engaging (High interaction)</option>
+                                    <option value="inspirational">✨ Inspirational</option>
+                                    <option value="funny">😄 Funny & Witty</option>
+                                    <option value="professional">💼 Professional</option>
+                                    <option value="storytelling">📖 Storytelling</option>
+                                    <option value="question">❓ Question-based</option>
+                                    <option value="lifestyle">🌟 Lifestyle</option>
+                                    <option value="promotional">📢 Promotional</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="captionLength" class="form-label fw-bold">Caption Length:</label>
+                                <select class="form-select" id="captionLength">
+                                    <option value="short">📱 Short (1-2 sentences)</option>
+                                    <option value="medium" selected>📝 Medium (3-5 sentences)</option>
+                                    <option value="long">📚 Long (Story format)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="includeHashtags" class="form-label fw-bold">Include Hashtags:</label>
+                                <select class="form-select" id="includeHashtags">
+                                    <option value="yes" selected>✅ Yes (3-5 relevant hashtags)</option>
+                                    <option value="no">❌ No hashtags</option>
+                                    <option value="many">🔥 Many (10+ hashtags)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="includeEmojis" class="form-label fw-bold">Emojis:</label>
+                                <select class="form-select" id="includeEmojis">
+                                    <option value="moderate" selected>😊 Moderate use</option>
+                                    <option value="minimal">🎯 Minimal</option>
+                                    <option value="lots">🎉 Lots of emojis</option>
+                                    <option value="none">📝 No emojis</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate Instagram Caption ✨</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🎉 Generated Instagram Caption</h5>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light btn-sm" id="copyCaptionBtn">
+                                    <i class="fas fa-copy"></i> Copy Caption
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate New
+                                </button>
+                                <button class="btn btn-outline-warning btn-sm" id="generateVariationBtn">
+                                    <i class="fas fa-magic"></i> Generate Variation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="captionResult" class="caption-display mb-4"></div>
+                        
+                        <!-- Stats and Options -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Caption Stats:</h6>
+                                <div id="statsContainer">
+                                    <small class="text-muted">
+                                        <span id="characterCount">0 characters</span> •
+                                        <span id="wordCount">0 words</span> •
+                                        <span id="hashtagCount">0 hashtags</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📋 Quick Actions:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="copyCaption('text')">Text Only</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="copyCaption('hashtags')">Hashtags Only</button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="copyCaption('formatted')">Formatted</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="fw-bold text-primary">💡 Caption Optimization Tips:</h6>
+                            <ul class="small mb-0">
+                                <li><strong>Hook in first line</strong> - Grab attention immediately</li>
+                                <li><strong>Include call-to-action</strong> - Ask questions, encourage comments</li>
+                                <li><strong>Use line breaks</strong> - Make captions easy to read</li>
+                                <li><strong>Add relevant hashtags</strong> - Mix popular and niche tags</li>
+                                <li><strong>Show personality</strong> - Let your brand voice shine through</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <div class="mt-2">
+                        <button class="btn btn-outline-danger btn-sm me-2" onclick="document.getElementById('captionGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                        <button class="btn btn-outline-warning btn-sm" onclick="generateCaptionVariation()">Try Variation Instead</button>
+                    </div>
+                    <div class="mt-2 small text-muted">
+                        <strong>Common Solutions:</strong>
+                        <ul class="mb-0 mt-1">
+                            <li>Try a different description or style</li>
+                            <li>Check your internet connection</li>
+                            <li>Wait a moment and try again</li>
+                            <li>Use the "Generate Variation" button for creative alternatives</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Examples and Tips -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">📝 Caption Examples</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">Engaging Style:</h6>
+                    <div class="caption-example mb-3">
+                        <small>"Starting my day with the perfect latte ☕️ There's something magical about that first sip! What's your go-to morning drink? Drop a comment below! ⬇️ #coffee #morningvibes #latte"</small>
+                    </div>
+                    
+                    <h6 class="fw-bold">Inspirational Style:</h6>
+                    <div class="caption-example mb-3">
+                        <small>"Every sunset is a reminder that endings can be beautiful too 🌅 Sometimes we need to let go of what was to make room for what will be. What are you letting go of today? ✨ #inspiration #sunset #mindfulness"</small>
+                    </div>
+
+                    <h6 class="fw-bold">Funny Style:</h6>
+                    <div class="caption-example">
+                        <small>"Me: I'll just have a small coffee ☕️ Also me: Orders a venti with extra shot, extra foam, and extra everything 😅 Who else can relate? #coffeeaddict #relateable #monday"</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">🚀 Caption Best Practices</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ <strong>Start Strong:</strong> Hook readers in the first line</li>
+                        <li class="mb-2">✅ <strong>Tell a Story:</strong> Share experiences and emotions</li>
+                        <li class="mb-2">✅ <strong>Ask Questions:</strong> Encourage engagement and comments</li>
+                        <li class="mb-2">✅ <strong>Use Emojis:</strong> Make captions visually appealing</li>
+                        <li class="mb-2">✅ <strong>Include CTA:</strong> Direct followers to take action</li>
+                        <li class="mb-0">✅ <strong>Stay Authentic:</strong> Be genuine and relatable</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">📈 Engagement Boosters</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">Question Starters:</h6>
+                    <ul class="small">
+                        <li>"What do you think about..."</li>
+                        <li>"Who else can relate?"</li>
+                        <li>"What's your favorite..."</li>
+                        <li>"How do you handle..."</li>
+                        <li>"Tag someone who..."</li>
+                    </ul>
+                    
+                    <h6 class="fw-bold mt-3">Call-to-Actions:</h6>
+                    <ul class="small mb-0">
+                        <li>"Double tap if you agree"</li>
+                        <li>"Save this for later"</li>
+                        <li>"Share with a friend"</li>
+                        <li>"Comment your thoughts"</li>
+                        <li>"Follow for more tips"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">🔗 More Instagram Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/instagram-hashtag-generator" class="btn btn-outline-primary btn-sm">Hashtag Generator</a>
+                        <a href="/instagram-bio-generator" class="btn btn-outline-success btn-sm">Bio Generator</a>
+                        <a href="/youtube-title-generator" class="btn btn-outline-danger btn-sm">YouTube Titles</a>
+                        <a href="/tiktok-caption-generator" class="btn btn-outline-dark btn-sm">TikTok Captions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">Instagram Caption Generator - Free AI Tool for Engaging Content 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>What Makes a Great Instagram Caption?</h3>
+                            <p>A great Instagram caption does more than just describe your photo - it tells a story, evokes emotion, and encourages engagement. Our <strong>free Instagram caption generator</strong> uses advanced AI to create captions that not only match your content but also drive meaningful interactions with your audience.</p>
+
+                            <h3>Why Instagram Captions Matter in 2024</h3>
+                            <p>Instagram's algorithm prioritizes content that generates engagement. Well-crafted captions can:</p>
+                            <ul>
+                                <li><strong>Increase engagement by up to 300%</strong> - Compelling captions drive likes, comments, and shares</li>
+                                <li><strong>Improve reach and visibility</strong> - Instagram shows engaging content to more users</li>
+                                <li><strong>Build stronger connections</strong> - Personal stories and questions create community</li>
+                                <li><strong>Drive traffic and conversions</strong> - Strategic CTAs guide followers to take action</li>
+                            </ul>
+
+                            <h3>Instagram Caption Types That Convert</h3>
+                            <h4>1. Question-Based Captions</h4>
+                            <p>Questions are the #1 way to boost engagement. Our AI generates thought-provoking questions that encourage your audience to comment and share their experiences.</p>
+
+                            <h4>2. Storytelling Captions</h4>
+                            <p>Stories create emotional connections. Whether it's a behind-the-scenes moment or a personal journey, narrative captions help followers feel connected to your brand.</p>
+
+                            <h4>3. Inspirational Captions</h4>
+                            <p>Motivational content performs exceptionally well on Instagram. Our generator creates uplifting messages that inspire action and sharing.</p>
+
+                            <h4>4. Educational Captions</h4>
+                            <p>Teach your audience something new. Educational captions position you as an expert and encourage saves, which boost your content's reach.</p>
+
+                            <h3>Caption Length Strategy</h3>
+                            <p>Our generator offers three length options:</p>
+                            <ul>
+                                <li><strong>Short Captions (1-2 sentences):</strong> Perfect for quick thoughts, announcements, or when the image speaks for itself</li>
+                                <li><strong>Medium Captions (3-5 sentences):</strong> Ideal for most posts - enough space to tell a story without overwhelming</li>
+                                <li><strong>Long Captions (Story format):</strong> Great for in-depth stories, tutorials, or when you have a lot to share</li>
+                            </ul>
+
+                            <h3>Hashtag Integration in Captions</h3>
+                            <p>Our AI seamlessly integrates hashtags into your captions:</p>
+                            <ul>
+                                <li><strong>Few hashtags (3-5):</strong> Naturally woven into the caption for a clean look</li>
+                                <li><strong>Many hashtags (10+):</strong> Strategically placed to maximize reach while maintaining readability</li>
+                                <li><strong>No hashtags:</strong> Clean, text-only captions that rely purely on content quality</li>
+                            </ul>
+
+                            <h3>Emoji Usage in Instagram Captions</h3>
+                            <p>Emojis can increase engagement by up to 48%. Our generator offers different emoji strategies:</p>
+                            <ul>
+                                <li><strong>Moderate:</strong> Strategic emoji placement for emphasis and visual appeal</li>
+                                <li><strong>Minimal:</strong> Professional approach with selective emoji use</li>
+                                <li><strong>Lots:</strong> Fun, expressive style popular with younger audiences</li>
+                                <li><strong>None:</strong> Clean, professional text for corporate or minimalist brands</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-primary text-white p-4 rounded mb-4">
+                                <h5>⚡ Instant Caption Generation</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 8 different caption styles</li>
+                                    <li>• Customizable length options</li>
+                                    <li>• Smart hashtag integration</li>
+                                    <li>• Emoji customization</li>
+                                    <li>• Unlimited generations</li>
+                                    <li>• Mobile optimized</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded mb-4">
+                                <h6>Caption Performance Tips:</h6>
+                                <ul class="small mb-0">
+                                    <li>• Hook readers in first 125 characters</li>
+                                    <li>• Use 3-5 hashtags in caption body</li>
+                                    <li>• Ask questions to boost comments</li>
+                                    <li>• Include clear call-to-actions</li>
+                                    <li>• Use line breaks for readability</li>
+                                    <li>• Tag relevant accounts when appropriate</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-success text-white p-4 rounded">
+                                <h6>🎯 Engagement Guarantee</h6>
+                                <p class="small mb-0">Users report 200-300% increase in engagement when using our AI-generated captions compared to their original posts!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/instagram-hashtag-generator" class="btn btn-outline-primary">← Instagram Hashtags</a>
+            <a href="/social-media" class="btn btn-primary">All Social Tools</a>
+            <a href="/instagram-bio-generator" class="btn btn-outline-primary">Instagram Bio →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.caption-display {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    min-height: 120px;
+}
+
+.caption-example {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+    font-style: italic;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    .caption-display {
+        font-size: 1rem;
+        padding: 15px;
+    }
+}
+
+.alert-sm {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+#generateVariationBtn:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('captionGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const captionResult = document.getElementById('captionResult');
+    const copyCaptionBtn = document.getElementById('copyCaptionBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedCaption = '';
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateCaption();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateCaption();
+    });
+
+    document.getElementById('generateVariationBtn').addEventListener('click', async function() {
+        await generateCaptionVariation();
+    });
+
+    copyCaptionBtn.addEventListener('click', function() {
+        copyToClipboard(lastGeneratedCaption);
+        showCopyFeedback(this, 'Caption copied!');
+    });
+
+    async function generateCaption() {
+        const prompt = document.getElementById('contentPrompt').value.trim();
+        const style = document.getElementById('captionStyle').value;
+        const length = document.getElementById('captionLength').value;
+        const includeHashtags = document.getElementById('includeHashtags').value;
+        const includeEmojis = document.getElementById('includeEmojis').value;
+
+        if (!prompt) {
+            showError('Please describe your Instagram content');
+            return;
+        }
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/instagram/caption', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: prompt,
+                    style: style,
+                    length: length,
+                    hashtags: includeHashtags,
+                    emojis: includeEmojis,
+                    is_variation: false
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate caption');
+            }
+
+            if (data.success && data.caption) {
+                displayResult(data.caption);
+                lastGeneratedCaption = data.caption;
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    async function generateCaptionVariation() {
+        const prompt = document.getElementById('contentPrompt').value.trim();
+        const style = document.getElementById('captionStyle').value;
+        const length = document.getElementById('captionLength').value;
+        const includeHashtags = document.getElementById('includeHashtags').value;
+        const includeEmojis = document.getElementById('includeEmojis').value;
+
+        if (!prompt) {
+            showError('Please describe your Instagram content first');
+            return;
+        }
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/instagram/caption', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: prompt,
+                    style: style,
+                    length: length,
+                    hashtags: includeHashtags,
+                    emojis: includeEmojis,
+                    is_variation: true
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate variation');
+            }
+
+            if (data.success && data.caption) {
+                displayResult(data.caption);
+                lastGeneratedCaption = data.caption;
+                
+                // Show variation indicator
+                const resultsSection = document.getElementById('resultsSection');
+                const variationBadge = document.createElement('div');
+                variationBadge.className = 'alert alert-warning alert-sm mb-3';
+                variationBadge.innerHTML = '<i class="fas fa-magic"></i> <strong>Unique Variation Generated!</strong> This is a creative, trending version with web search integration.';
+                
+                const cardBody = resultsSection.querySelector('.card-body');
+                cardBody.insertBefore(variationBadge, cardBody.firstChild);
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const regenerateBtn = document.getElementById('regenerateBtn');
+        const variationBtn = document.getElementById('generateVariationBtn');
+        
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            regenerateBtn.disabled = true;
+            variationBtn.disabled = true;
+            buttonText.textContent = 'Creating Your Perfect Caption...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            regenerateBtn.disabled = false;
+            variationBtn.disabled = false;
+            buttonText.textContent = 'Generate Instagram Caption ✨';
+        }
+    }
+
+    function displayResult(caption) {
+        captionResult.textContent = caption;
+
+        // Update stats
+        const charCount = caption.length;
+        const wordCount = caption.trim().split(/\s+/).length;
+        const hashtagCount = (caption.match(/#\w+/g) || []).length;
+
+        document.getElementById('characterCount').textContent = `${charCount} characters`;
+        document.getElementById('wordCount').textContent = `${wordCount} words`;
+        document.getElementById('hashtagCount').textContent = `${hashtagCount} hashtags`;
+
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('btn-success');
+        button.classList.remove('btn-light');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-light');
+        }, 2000);
+    }
+
+    // Copy format functions
+    window.copyCaption = function(format) {
+        let text = lastGeneratedCaption;
+        
+        if (format === 'text') {
+            // Remove hashtags
+            text = text.replace(/#\w+/g, '').trim();
+        } else if (format === 'hashtags') {
+            // Extract only hashtags
+            const hashtags = text.match(/#\w+/g) || [];
+            text = hashtags.join(' ');
+        } else if (format === 'formatted') {
+            // Keep original formatting
+            text = lastGeneratedCaption;
+        }
+        
+        copyToClipboard(text);
+        
+        // Show feedback
+        const button = event.target;
+        showCopyFeedback(button, 'Copied!');
+    };
+});
+</script>
+{% endblock %} for="captionStyle" class="form-label fw-bold">Caption Style:</label>
+                                <select class="form-select" id="captionStyle">
+                                    <option value="engaging" selected>🎯 Engaging (High interaction)</option>
+                                    <option value="inspirational">✨ Inspirational</option>
+                                    <option value="funny">😄 Funny & Witty</option>
+                                    <option value="professional">💼 Professional</option>
+                                    <option value="storytelling">📖 Storytelling</option>
+                                    <option value="question">❓ Question-based</option>
+                                    <option value="lifestyle">🌟 Lifestyle</option>
+                                    <option value="promotional">📢 Promotional</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="captionLength" class="form-label fw-bold">Caption Length:</label>
+                                <select class="form-select" id="captionLength">
+                                    <option value="short">📱 Short (1-2 sentences)</option>
+                                    <option value="medium" selected>📝 Medium (3-5 sentences)</option>
+                                    <option value="long">📚 Long (Story format)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label

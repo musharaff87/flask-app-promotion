@@ -1,0 +1,1157 @@
+{% extends "base.html" %}
+{% block title %}Free Twitter Thread Generator - AI Viral Thread Creator 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-info">🧵 Twitter Thread Generator</h1>
+        <p class="lead mb-4">Create viral Twitter threads that engage, educate, and grow your following - 100% FREE!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free Forever</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">15+</div>
+                <small>Tweets per Thread</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">50K+</div>
+                <small>Threads Generated</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">24/7</div>
+                <small>Available</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="threadGeneratorForm">
+                        <div class="mb-4">
+                            <label for="threadTopic" class="form-label fw-bold">What's your thread topic or main idea?</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="threadTopic"
+                                rows="4"
+                                placeholder="E.g., 10 productivity tips that changed my life, Why remote work is the future of business, The complete guide to starting a side hustle in 2024..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Be specific! Include key points you want to cover, your expertise, or unique angles.</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label for="threadStyle" class="form-label fw-bold">Thread Style:</label>
+                                <select class="form-select" id="threadStyle">
+                                    <option value="educational" selected>📚 Educational/Tutorial</option>
+                                    <option value="storytelling">📖 Storytelling</option>
+                                    <option value="listicle">📋 List/Tips Format</option>
+                                    <option value="personal">💭 Personal Experience</option>
+                                    <option value="controversial">🔥 Hot Take/Controversial</option>
+                                    <option value="inspirational">✨ Inspirational/Motivational</option>
+                                    <option value="news_analysis">📰 News Analysis</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="threadLength" class="form-label fw-bold">Thread Length:</label>
+                                <select class="form-select" id="threadLength">
+                                    <option value="short">⚡ Short (5-7 tweets)</option>
+                                    <option value="medium" selected>📱 Medium (8-12 tweets)</option>
+                                    <option value="long">📜 Long (13-20 tweets)</option>
+                                    <option value="mega">🚀 Mega Thread (20+ tweets)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="audience" class="form-label fw-bold">Target Audience:</label>
+                                <select class="form-select" id="audience">
+                                    <option value="general">👥 General Audience</option>
+                                    <option value="entrepreneurs" selected>💼 Entrepreneurs</option>
+                                    <option value="creators">🎨 Content Creators</option>
+                                    <option value="professionals">👔 Professionals</option>
+                                    <option value="students">🎓 Students</option>
+                                    <option value="tech">💻 Tech Community</option>
+                                    <option value="marketing">📢 Marketers</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="toneStyle" class="form-label fw-bold">Writing Tone:</label>
+                                <select class="form-select" id="toneStyle">
+                                    <option value="casual" selected>😊 Casual & Friendly</option>
+                                    <option value="professional">💼 Professional</option>
+                                    <option value="humorous">😄 Humorous</option>
+                                    <option value="authoritative">🎯 Authoritative</option>
+                                    <option value="conversational">💬 Conversational</option>
+                                    <option value="inspiring">🌟 Inspiring</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="includeHashtags" class="form-label fw-bold">Include Hashtags:</label>
+                                <select class="form-select" id="includeHashtags">
+                                    <option value="yes" selected>✅ Yes, Include Relevant Hashtags</option>
+                                    <option value="no">❌ No Hashtags</option>
+                                    <option value="minimal">➖ Minimal (1-2 per tweet)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="keyPoints" class="form-label fw-bold">Key Points to Include (Optional):</label>
+                            <textarea
+                                class="form-control"
+                                id="keyPoints"
+                                rows="3"
+                                placeholder="E.g., Personal story about failure, Statistics on remote work, Tools I recommend, Common mistakes to avoid..."
+                            ></textarea>
+                            <div class="form-text">List specific points, stories, or data you want included in the thread</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-info btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate Viral Twitter Thread 🧵</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-info text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🎉 Generated Twitter Thread</h5>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light btn-sm" id="copyAllBtn">
+                                    <i class="fas fa-copy"></i> Copy All
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="tweetByTweetBtn">
+                                    📱 Tweet Mode
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate New
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="threadResults" class="thread-container mb-4"></div>
+                        
+                        <!-- Thread Statistics -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Thread Stats:</h6>
+                                <div id="statsContainer">
+                                    <small class="text-muted">
+                                        <span id="tweetCount">0 tweets</span> •
+                                        <span id="totalChars">0 characters</span><br>
+                                        <span id="avgCharsPerTweet">0 avg chars/tweet</span> •
+                                        <span id="hashtagCount">0 hashtags</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📋 Quick Actions:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="copyThreadText()">Copy Text</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="exportThread()">Download</button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="scheduleThread()">Schedule</button>
+                                    <button class="btn btn-outline-warning btn-sm" onclick="previewThread()">Preview</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Engagement Prediction -->
+                        <div class="bg-light p-3 rounded mb-3">
+                            <h6 class="fw-bold text-info">🔮 Engagement Prediction:</h6>
+                            <div id="engagementAnalysis">
+                                <small class="text-muted">Generate a thread to see engagement analysis</small>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="fw-bold text-info">💡 Twitter Thread Best Practices:</h6>
+                            <ul class="small mb-0">
+                                <li><strong>Hook in first tweet</strong> - Make it irresistible to read</li>
+                                <li><strong>Number your tweets</strong> - Shows thread structure (1/12, 2/12, etc.)</li>
+                                <li><strong>One idea per tweet</strong> - Keep each tweet focused</li>
+                                <li><strong>Strong conclusion</strong> - End with CTA or thought-provoking question</li>
+                                <li><strong>Post at peak times</strong> - 9-10 AM or 7-9 PM your audience's timezone</li>
+                                <li><strong>Engage immediately</strong> - Reply to comments within first hour</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <button class="btn btn-outline-danger btn-sm ms-2" onclick="document.getElementById('threadGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Examples and Tips -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">🎯 Thread Examples</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">Educational Thread:</h6>
+                    <div class="thread-example mb-3">
+                        <small>
+                            1/8 🧵 How I grew from 0 to 10K followers in 6 months:<br><br>
+                            2/8 First, I analyzed my top competitors and found gaps in their content...<br><br>
+                            3/8 Then I created a content calendar focusing on these 3 pillars...
+                        </small>
+                    </div>
+                    
+                    <h6 class="fw-bold">Storytelling Thread:</h6>
+                    <div class="thread-example mb-3">
+                        <small>
+                            1/12 🧵 The day I lost $50K taught me the most valuable lesson of my life:<br><br>
+                            2/12 It was 2019, and I thought I had everything figured out...<br><br>
+                            3/12 But I was about to learn that success isn't permanent...
+                        </small>
+                    </div>
+
+                    <h6 class="fw-bold">List Thread:</h6>
+                    <div class="thread-example">
+                        <small>
+                            1/10 🧵 10 tools that made me 10x more productive:<br><br>
+                            2/10 📱 Notion - My second brain for everything...<br><br>
+                            3/10 ⏰ RescueTime - Shows where my time really goes...
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">📈 Viral Thread Secrets</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">🎣 <strong>Hook with curiosity:</strong> "The mistake that cost me $10K..."</li>
+                        <li class="mb-2">📊 <strong>Use specific numbers:</strong> "7 ways" vs "Several ways"</li>
+                        <li class="mb-2">🎭 <strong>Tell personal stories:</strong> People connect with experiences</li>
+                        <li class="mb-2">❓ <strong>Ask engaging questions:</strong> Get people thinking and replying</li>
+                        <li class="mb-2">💎 <strong>Provide real value:</strong> Actionable tips, not just opinions</li>
+                        <li class="mb-0">🔗 <strong>Thread continuation:</strong> Reply to yourself for longer threads</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">📊 Success Metrics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="testimonial mb-3">
+                        <div class="stars mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <small>"My thread got 500K impressions and gained 2K followers!"</small>
+                        <br><small class="text-muted">- Sarah M., Marketing Director</small>
+                    </div>
+                    <div class="testimonial">
+                        <div class="stars mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <small>"Generated 10 viral threads in one afternoon!"</small>
+                        <br><small class="text-muted">- Mike R., Content Creator</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">🚀 More Twitter Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/twitter-hashtag-generator" class="btn btn-outline-info btn-sm">Hashtag Generator</a>
+                        <a href="/twitter-tweet-generator" class="btn btn-outline-success btn-sm">Tweet Generator</a>
+                        <a href="/twitter-bio-generator" class="btn btn-outline-warning btn-sm">Bio Generator</a>
+                        <a href="/twitter-tools" class="btn btn-outline-primary btn-sm">All Twitter Tools</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">Twitter Thread Mastery - Go Viral with AI-Powered Threads 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>Understanding Twitter Thread Algorithms</h3>
+                            <p>Twitter threads are one of the most powerful ways to build audience and engagement on the platform. Our <strong>free Twitter thread generator</strong> creates compelling threads that the algorithm loves, increasing your chances of going viral and gaining followers.</p>
+
+                            <h3>Anatomy of a Viral Twitter Thread</h3>
+                            <h4>1. The Hook (First Tweet)</h4>
+                            <p>Your opening tweet is everything. It determines whether people read the rest:</p>
+                            <ul>
+                                <li><strong>Create curiosity:</strong> "The mistake that cost me $50K taught me..."</li>
+                                <li><strong>Promise value:</strong> "10 tools that made me 10x more productive:"</li>
+                                <li><strong>Use numbers:</strong> "7 lessons from building a $1M company:"</li>
+                                <li><strong>Ask questions:</strong> "What if I told you that everything you know about..."</li>
+                            </ul>
+
+                            <h4>2. Thread Structure and Flow</h4>
+                            <p>A well-structured thread keeps readers engaged:</p>
+                            <ul>
+                                <li><strong>Number your tweets:</strong> (1/12, 2/12, etc.) shows progress</li>
+                                <li><strong>One idea per tweet:</strong> Don't overcrowd individual tweets</li>
+                                <li><strong>Use transitions:</strong> Connect tweets smoothly</li>
+                                <li><strong>Maintain momentum:</strong> Each tweet should make them want the next</li>
+                            </ul>
+
+                            <h4>3. Content Types That Go Viral</h4>
+                            <ol>
+                                <li><strong>Personal Stories:</strong> Failures, successes, lessons learned</li>
+                                <li><strong>Educational Content:</strong> Step-by-step tutorials and guides</li>
+                                <li><strong>List Threads:</strong> "X tools/tips/mistakes that..."</li>
+                                <li><strong>Behind-the-Scenes:</strong> How you built something</li>
+                                <li><strong>Hot Takes:</strong> Controversial but defensible opinions</li>
+                                <li><strong>Case Studies:</strong> Detailed analysis of successes/failures</li>
+                            </ol>
+
+                            <h3>Advanced Thread Optimization Strategies</h3>
+                            <h4>Engagement Maximization</h4>
+                            <ul>
+                                <li><strong>Ask for engagement:</strong> "What's your experience with this?"</li>
+                                <li><strong>Use polls and questions:</strong> Interactive elements boost engagement</li>
+                                <li><strong>Quote tweet yourself:</strong> Add additional context</li>
+                                <li><strong>Reply immediately:</strong> Engage with early commenters</li>
+                            </ul>
+
+                            <h4>Thread Length Optimization</h4>
+                            <ul>
+                                <li><strong>Short threads (5-7 tweets):</strong> Quick tips, simple concepts</li>
+                                <li><strong>Medium threads (8-12 tweets):</strong> Detailed tutorials, stories</li>
+                                <li><strong>Long threads (13+ tweets):</strong> Comprehensive guides, case studies</li>
+                                <li><strong>Thread continuation:</strong> Reply to yourself for mega-threads</li>
+                            </ul>
+
+                            <h3>Best Times to Post Twitter Threads</h3>
+                            <h4>Global Best Times (EST)</h4>
+                            <ul>
+                                <li><strong>Weekdays:</strong> 9-10 AM, 7-9 PM</li>
+                                <li><strong>Tuesday-Thursday:</strong> Peak engagement days</li>
+                                <li><strong>Saturday mornings:</strong> 10 AM - 12 PM</li>
+                                <li><strong>Avoid:</strong> Late nights and early mornings</li>
+                            </ul>
+
+                            <h4>Industry-Specific Timing</h4>
+                            <ul>
+                                <li><strong>B2B/Professional:</strong> Tuesday-Thursday, 10 AM - 3 PM</li>
+                                <li><strong>Creator/Entertainment:</strong> Evenings and weekends</li>
+                                <li><strong>Tech/Startup:</strong> Early mornings (8-10 AM) and evenings</li>
+                                <li><strong>Personal Brand:</strong> When your audience is most active</li>
+                            </ul>
+
+                            <h3>Thread Promotion and Distribution</h3>
+                            <h4>Cross-Platform Amplification</h4>
+                            <ul>
+                                <li>Share thread highlights on LinkedIn</li>
+                                <li>Convert threads to blog posts</li>
+                                <li>Create Instagram carousels from threads</li>
+                                <li>Turn threads into YouTube videos</li>
+                            </ul>
+
+                            <h4>Community Building Through Threads</h4>
+                            <ul>
+                                <li>Create thread series on specific topics</li>
+                                <li>Build anticipation for upcoming threads</li>
+                                <li>Engage with thread readers individually</li>
+                                <li>Create Twitter Spaces to discuss thread topics</li>
+                            </ul>
+
+                            <h3>Measuring Thread Success</h3>
+                            <h4>Key Metrics to Track</h4>
+                            <ul>
+                                <li><strong>Impressions:</strong> How many people saw your thread</li>
+                                <li><strong>Engagement rate:</strong> Likes, retweets, comments per impression</li>
+                                <li><strong>Click-through rate:</strong> If you included links</li>
+                                <li><strong>Follower growth:</strong> New followers from the thread</li>
+                                <li><strong>Thread completion rate:</strong> How many read to the end</li>
+                            </ul>
+
+                            <h4>A/B Testing Your Threads</h4>
+                            <ul>
+                                <li>Test different hook styles</li>
+                                <li>Vary thread lengths</li>
+                                <li>Experiment with posting times</li>
+                                <li>Try different thread topics</li>
+                                <li>Test various call-to-actions</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-info text-white p-4 rounded mb-4">
+                                <h5>🎯 Thread Statistics</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• Threads get 3x more engagement</li>
+                                    <li>• Average viral thread: 8-12 tweets</li>
+                                    <li>• Best hook: Question or bold statement</li>
+                                    <li>• Optimal posting: Tuesday-Thursday</li>
+                                    <li>• Peak times: 9-10 AM, 7-9 PM</li>
+                                    <li>• Thread numbering increases completion by 40%</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded">
+                                <h6>Power Thread Starters:</h6>
+                                <div class="d-flex flex-wrap">
+                                    <span class="badge bg-secondary me-1 mb-1">I used to think...</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Here's what I learned...</span>
+                                    <span class="badge bg-secondary me-1 mb-1">The day I realized...</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Nobody talks about...</span>
+                                    <span class="badge bg-secondary me-1 mb-1">What if I told you...</span>
+                                    <span class="badge bg-secondary me-1 mb-1">The biggest mistake...</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Here's why...</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Stop doing this...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/twitter-tools" class="btn btn-outline-info">← Back to Twitter Tools</a>
+            <a href="/twitter-hashtag-generator" class="btn btn-info">Hashtag Generator →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.thread-container {
+    max-height: 600px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.thread-tweet {
+    background: white;
+    border: 1px solid #e1e8ed;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.thread-tweet:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #1da1f2;
+}
+
+.tweet-number {
+    background: linear-gradient(135deg, #1da1f2 0%, #0d8bf0 100%);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    position: absolute;
+    top: -8px;
+    right: 16px;
+}
+
+.tweet-content {
+    margin-top: 8px;
+    line-height: 1.6;
+    color: #14171a;
+}
+
+.tweet-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #e1e8ed;
+    color: #657786;
+    font-size: 0.85rem;
+}
+
+.copy-tweet-btn {
+    background: none;
+    border: none;
+    color: #1da1f2;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.copy-tweet-btn:hover {
+    background-color: #e1f5fe;
+}
+
+.thread-example {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border-left: 4px solid #1da1f2;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.testimonial {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #1da1f2;
+}
+
+.engagement-score {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    margin: 4px;
+}
+
+.score-high {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.score-medium {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.score-low {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+@keyframes threadLoad {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.thread-tweet {
+    animation: threadLoad 0.5s ease-out forwards;
+}
+
+.thread-tweet:nth-child(n) {
+    animation-delay: calc(0.1s * var(--tweet-index));
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    .thread-container {
+        padding: 15px;
+        max-height: 500px;
+    }
+    
+    .thread-tweet {
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('threadGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const threadResults = document.getElementById('threadResults');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const tweetByTweetBtn = document.getElementById('tweetByTweetBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedThread = [];
+    let currentDisplayMode = 'normal';
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateThread();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateThread();
+    });
+
+    copyAllBtn.addEventListener('click', function() {
+        const threadText = lastGeneratedThread.join('\n\n');
+        copyToClipboard(threadText);
+        showCopyFeedback(this, 'Thread copied!');
+    });
+
+    tweetByTweetBtn.addEventListener('click', function() {
+        if (currentDisplayMode === 'normal') {
+            currentDisplayMode = 'individual';
+            this.innerHTML = '<i class="fas fa-list"></i> Normal View';
+            displayThreadIndividual();
+        } else {
+            currentDisplayMode = 'normal';
+            this.innerHTML = '📱 Tweet Mode';
+            displayThread(lastGeneratedThread);
+        }
+    });
+
+    async function generateThread() {
+        const topic = document.getElementById('threadTopic').value.trim();
+        const style = document.getElementById('threadStyle').value;
+        const length = document.getElementById('threadLength').value;
+        const audience = document.getElementById('audience').value;
+        const tone = document.getElementById('toneStyle').value;
+        const hashtags = document.getElementById('includeHashtags').value;
+        const keyPoints = document.getElementById('keyPoints').value.trim();
+
+        if (!topic) {
+            showError('Please describe your thread topic');
+            return;
+        }
+
+        let enhancedPrompt = `${topic} (Style: ${style}, Length: ${length}, Audience: ${audience}, Tone: ${tone}, Hashtags: ${hashtags}`;
+        if (keyPoints) enhancedPrompt += `, Key points: ${keyPoints}`;
+        enhancedPrompt += ')';
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/twitter/thread', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate thread');
+            }
+
+            if (data.success && data.thread) {
+                // Assuming the API returns a thread array or we need to parse it
+                const threadArray = Array.isArray(data.thread) ? data.thread : parseThreadFromText(data.thread);
+                displayThread(threadArray);
+                lastGeneratedThread = threadArray;
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function parseThreadFromText(threadText) {
+        // Parse the thread text into individual tweets
+        const lines = threadText.split('\n').filter(line => line.trim());
+        const tweets = [];
+        let currentTweet = '';
+
+        for (let line of lines) {
+            line = line.trim();
+            
+            // Check if this line starts a new tweet (with numbering)
+            if (/^\d+\/\d+/.test(line) || /^\d+\)/.test(line) || /^\d+\./.test(line)) {
+                if (currentTweet) {
+                    tweets.push(currentTweet.trim());
+                }
+                currentTweet = line;
+            } else if (line) {
+                currentTweet += ' ' + line;
+            }
+        }
+        
+        if (currentTweet) {
+            tweets.push(currentTweet.trim());
+        }
+
+        return tweets.length > 0 ? tweets : [threadText];
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            buttonText.textContent = 'Creating Viral Thread...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Generate Viral Twitter Thread 🧵';
+        }
+    }
+
+    function displayThread(tweets) {
+        threadResults.innerHTML = '';
+        
+        tweets.forEach((tweet, index) => {
+            const tweetElement = document.createElement('div');
+            tweetElement.className = 'thread-tweet';
+            tweetElement.style.setProperty('--tweet-index', index);
+            
+            const tweetNumber = document.createElement('div');
+            tweetNumber.className = 'tweet-number';
+            tweetNumber.textContent = `${index + 1}/${tweets.length}`;
+            
+            const tweetContent = document.createElement('div');
+            tweetContent.className = 'tweet-content';
+            tweetContent.textContent = tweet;
+            
+            const tweetStats = document.createElement('div');
+            tweetStats.className = 'tweet-stats';
+            
+            const charCount = tweet.length;
+            const charColor = charCount > 280 ? 'color: #e0245e' : charCount > 240 ? 'color: #f45d22' : 'color: #17bf63';
+            
+            tweetStats.innerHTML = `
+                <span style="${charColor}">${charCount}/280 characters</span>
+                <button class="copy-tweet-btn" onclick="copySingleTweet(${index})">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            `;
+            
+            tweetElement.appendChild(tweetNumber);
+            tweetElement.appendChild(tweetContent);
+            tweetElement.appendChild(tweetStats);
+            
+            threadResults.appendChild(tweetElement);
+        });
+
+        updateThreadStats(tweets);
+        analyzeEngagement(tweets);
+        
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function displayThreadIndividual() {
+        threadResults.innerHTML = '';
+        
+        lastGeneratedThread.forEach((tweet, index) => {
+            const tweetContainer = document.createElement('div');
+            tweetContainer.className = 'individual-tweet-container mb-3';
+            
+            tweetContainer.innerHTML = `
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Tweet ${index + 1}/${lastGeneratedThread.length}</span>
+                        <button class="btn btn-outline-primary btn-sm" onclick="copySingleTweet(${index})">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <textarea class="form-control" rows="3" id="tweet-${index}">${tweet}</textarea>
+                        <small class="text-muted mt-2 d-block">${tweet.length}/280 characters</small>
+                    </div>
+                </div>
+            `;
+            
+            threadResults.appendChild(tweetContainer);
+        });
+    }
+
+    function updateThreadStats(tweets) {
+        const tweetCount = tweets.length;
+        const totalChars = tweets.reduce((sum, tweet) => sum + tweet.length, 0);
+        const avgChars = Math.round(totalChars / tweetCount);
+        const hashtagCount = tweets.reduce((sum, tweet) => sum + (tweet.match(/#\w+/g) || []).length, 0);
+        
+        document.getElementById('tweetCount').textContent = `${tweetCount} tweets`;
+        document.getElementById('totalChars').textContent = `${totalChars} total characters`;
+        document.getElementById('avgCharsPerTweet').textContent = `${avgChars} avg chars/tweet`;
+        document.getElementById('hashtagCount').textContent = `${hashtagCount} hashtags`;
+    }
+
+    function analyzeEngagement(tweets) {
+        let score = 50; // Base score
+        let analysis = '';
+        
+        // Analyze hook (first tweet)
+        const firstTweet = tweets[0].toLowerCase();
+        if (firstTweet.includes('?') || firstTweet.includes('how to') || firstTweet.includes('why') || 
+            firstTweet.includes('what if') || firstTweet.includes('secret') || firstTweet.includes('mistake')) {
+            score += 15;
+            analysis += '<span class="engagement-score score-high">Strong Hook ✓</span>';
+        } else {
+            analysis += '<span class="engagement-score score-medium">Hook Could Be Stronger</span>';
+        }
+        
+        // Analyze thread length
+        if (tweets.length >= 8 && tweets.length <= 15) {
+            score += 10;
+            analysis += '<span class="engagement-score score-high">Optimal Length ✓</span>';
+        } else if (tweets.length < 5) {
+            score -= 10;
+            analysis += '<span class="engagement-score score-low">Too Short</span>';
+        } else {
+            analysis += '<span class="engagement-score score-medium">Long Thread</span>';
+        }
+        
+        // Analyze engagement elements
+        const fullThread = tweets.join(' ').toLowerCase();
+        const engagementWords = ['what do you think', 'share your', 'let me know', 'comment', 'retweet', 'agree'];
+        if (engagementWords.some(word => fullThread.includes(word))) {
+            score += 10;
+            analysis += '<span class="engagement-score score-high">Asks for Engagement ✓</span>';
+        }
+        
+        // Analyze storytelling elements
+        const storyWords = ['i', 'my', 'when i', 'story', 'experience', 'learned', 'realized'];
+        if (storyWords.some(word => fullThread.includes(word))) {
+            score += 8;
+            analysis += '<span class="engagement-score score-high">Personal Touch ✓</span>';
+        }
+        
+        // Final score assessment
+        let scoreClass = 'score-medium';
+        let scoreText = 'Good';
+        if (score >= 80) {
+            scoreClass = 'score-high';
+            scoreText = 'Viral Potential';
+        } else if (score <= 60) {
+            scoreClass = 'score-low';
+            scoreText = 'Needs Improvement';
+        }
+        
+        analysis = `<span class="engagement-score ${scoreClass}">${scoreText} (${score}/100)</span><br>` + analysis;
+        document.getElementById('engagementAnalysis').innerHTML = analysis;
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('btn-success');
+        button.classList.remove('btn-light');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-light');
+        }, 2000);
+    }
+
+    // Global functions for onclick handlers
+    window.copySingleTweet = function(index) {
+        const tweet = lastGeneratedThread[index];
+        copyToClipboard(tweet);
+        
+        // Show feedback
+        const copyBtn = document.querySelector(`[onclick="copySingleTweet(${index})"]`);
+        if (copyBtn) {
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            copyBtn.classList.add('text-success');
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+                copyBtn.classList.remove('text-success');
+            }, 2000);
+        }
+    };
+
+    window.copyThreadText = function() {
+        const threadText = lastGeneratedThread.join('\n\n');
+        copyToClipboard(threadText);
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('btn-success');
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-primary');
+        }, 2000);
+    };
+
+    window.exportThread = function() {
+        const topic = document.getElementById('threadTopic').value.substring(0, 50) + '...';
+        const filename = `twitter-thread-${Date.now()}.txt`;
+        
+        let exportText = `Twitter Thread\n`;
+        exportText += `Generated: ${new Date().toLocaleDateString()}\n`;
+        exportText += `Topic: ${topic}\n`;
+        exportText += `Thread Length: ${lastGeneratedThread.length} tweets\n\n`;
+        exportText += `--- THREAD START ---\n\n`;
+        
+        lastGeneratedThread.forEach((tweet, index) => {
+            exportText += `Tweet ${index + 1}/${lastGeneratedThread.length}:\n`;
+            exportText += `${tweet}\n`;
+            exportText += `(${tweet.length}/280 characters)\n\n`;
+        });
+        
+        exportText += `--- THREAD END ---\n\n`;
+        exportText += `Total tweets: ${lastGeneratedThread.length}\n`;
+        exportText += `Total characters: ${lastGeneratedThread.reduce((sum, tweet) => sum + tweet.length, 0)}\n`;
+        
+        const blob = new Blob([exportText], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+
+    window.scheduleThread = function() {
+        const threadText = lastGeneratedThread.join('\n\n');
+        const encodedThread = encodeURIComponent(threadText);
+        
+        // Create a modal or alert with scheduling options
+        const modal = document.createElement('div');
+        modal.className = 'modal fade';
+        modal.innerHTML = `
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Schedule Twitter Thread</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Choose how you'd like to schedule your thread:</p>
+                        <div class="d-grid gap-2">
+                            <a href="https://buffer.com/publish" target="_blank" class="btn btn-outline-primary">
+                                <i class="fab fa-buffer"></i> Schedule with Buffer
+                            </a>
+                            <a href="https://hootsuite.com" target="_blank" class="btn btn-outline-info">
+                                <i class="fas fa-share-alt"></i> Schedule with Hootsuite
+                            </a>
+                            <a href="https://later.com" target="_blank" class="btn btn-outline-success">
+                                <i class="fas fa-clock"></i> Schedule with Later
+                            </a>
+                            <button class="btn btn-outline-secondary" onclick="copyThreadForScheduling()">
+                                <i class="fas fa-copy"></i> Copy for Manual Scheduling
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        const bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+        
+        modal.addEventListener('hidden.bs.modal', () => {
+            document.body.removeChild(modal);
+        });
+    };
+
+    window.copyThreadForScheduling = function() {
+        let schedulingText = "TWITTER THREAD - Ready for Scheduling\n\n";
+        
+        lastGeneratedThread.forEach((tweet, index) => {
+            schedulingText += `Tweet ${index + 1}:\n${tweet}\n\n`;
+        });
+        
+        schedulingText += `\nInstructions:\n`;
+        schedulingText += `- Post Tweet 1 first\n`;
+        schedulingText += `- Reply with Tweet 2, then Tweet 3, etc.\n`;
+        schedulingText += `- Wait 30-60 seconds between tweets\n`;
+        schedulingText += `- Engage with early replies immediately`;
+        
+        copyToClipboard(schedulingText);
+        
+        // Close modal and show success
+        const modal = bootstrap.Modal.getInstance(document.querySelector('.modal'));
+        modal.hide();
+        
+        setTimeout(() => {
+            alert('Thread copied for scheduling! Paste it into your scheduling tool.');
+        }, 300);
+    };
+
+    window.previewThread = function() {
+        const preview = window.open('', 'preview', 'width=600,height=800');
+        preview.document.write(`
+            <html>
+            <head>
+                <title>Twitter Thread Preview</title>
+                <style>
+                    body { 
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                        background-color: #15202b;
+                        color: #ffffff;
+                        padding: 20px;
+                        margin: 0;
+                    }
+                    .preview-container { max-width: 500px; margin: 0 auto; }
+                    .tweet-preview { 
+                        background-color: #192734;
+                        border: 1px solid #38444d;
+                        border-radius: 16px;
+                        padding: 16px;
+                        margin-bottom: 16px;
+                        position: relative;
+                    }
+                    .tweet-header { 
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 12px;
+                    }
+                    .avatar { 
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        background: linear-gradient(135deg, #1da1f2, #0d8bf0);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-weight: bold;
+                        margin-right: 12px;
+                    }
+                    .username { font-weight: bold; color: #ffffff; }
+                    .handle { color: #8b98a5; margin-left: 4px; }
+                    .tweet-content { line-height: 1.6; font-size: 15px; }
+                    .thread-indicator {
+                        position: absolute;
+                        top: -8px;
+                        right: 16px;
+                        background: #1da1f2;
+                        color: white;
+                        padding: 4px 8px;
+                        border-radius: 12px;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tweet-stats {
+                        margin-top: 16px;
+                        display: flex;
+                        justify-content: space-between;
+                        color: #8b98a5;
+                        font-size: 13px;
+                    }
+                    h2 { text-align: center; color: #1da1f2; margin-bottom: 30px; }
+                </style>
+            </head>
+            <body>
+                <div class="preview-container">
+                    <h2>Twitter Thread Preview</h2>
+                    ${lastGeneratedThread.map((tweet, index) => `
+                        <div class="tweet-preview">
+                            <div class="thread-indicator">${index + 1}/${lastGeneratedThread.length}</div>
+                            <div class="tweet-header">
+                                <div class="avatar">Y</div>
+                                <div>
+                                    <span class="username">Your Name</span>
+                                    <span class="handle">@yourusername</span>
+                                </div>
+                            </div>
+                            <div class="tweet-content">${tweet}</div>
+                            <div class="tweet-stats">
+                                <span>${tweet.length}/280 characters</span>
+                                <span>${index === 0 ? 'Thread starter' : index === lastGeneratedThread.length - 1 ? 'Thread end' : 'Thread continues...'}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </body>
+            </html>
+        `);
+        preview.document.close();
+    };
+});
+</script>
+{% endblock %}

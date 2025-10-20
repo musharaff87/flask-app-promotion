@@ -1,0 +1,791 @@
+{% extends "base.html" %}
+{% block title %}Free YouTube Title Generator - AI Powered Click-Worthy Titles 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-danger">🎬 YouTube Title Generator</h1>
+        <p class="lead mb-4">Generate click-worthy YouTube titles that boost views and CTR - 100% FREE!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">10+</div>
+                <small>Titles</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">25K+</div>
+                <small>Generated</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">24/7</div>
+                <small>Available</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="titleGeneratorForm">
+                        <div class="mb-4">
+                            <label for="videoTopic" class="form-label fw-bold">Describe your video content:</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="videoTopic"
+                                rows="4"
+                                placeholder="E.g., How to make delicious homemade pizza from scratch, beginner-friendly cooking tutorial with easy ingredients..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Be specific! Include the main topic, target audience, key benefits, and any unique angles.</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label for="titleStyle" class="form-label fw-bold">Title Style:</label>
+                                <select class="form-select" id="titleStyle">
+                                    <option value="clickworthy" selected>🔥 Click-worthy (High CTR)</option>
+                                    <option value="seo">📈 SEO Focused</option>
+                                    <option value="howto">📚 How-to Style</option>
+                                    <option value="listicle">📝 List/Number Based</option>
+                                    <option value="question">❓ Question Based</option>
+                                    <option value="urgent">⚡ Urgent/Trending</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="titleCount" class="form-label fw-bold">Number of titles:</label>
+                                <select class="form-select" id="titleCount">
+                                    <option value="5">5 titles</option>
+                                    <option value="10" selected>10 titles</option>
+                                    <option value="15">15 titles</option>
+                                    <option value="20">20 titles</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="videoCategory" class="form-label fw-bold">Video Category:</label>
+                                <select class="form-select" id="videoCategory">
+                                    <option value="education">📚 Educational</option>
+                                    <option value="entertainment">🎭 Entertainment</option>
+                                    <option value="howto">🔧 How-to/Tutorial</option>
+                                    <option value="review">⭐ Review</option>
+                                    <option value="gaming">🎮 Gaming</option>
+                                    <option value="lifestyle">✨ Lifestyle</option>
+                                    <option value="tech">💻 Technology</option>
+                                    <option value="cooking">👨‍🍳 Cooking</option>
+                                    <option value="fitness">💪 Fitness</option>
+                                    <option value="music">🎵 Music</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="targetKeyword" class="form-label fw-bold">Target Keyword (Optional):</label>
+                                <input type="text" class="form-control" id="targetKeyword" placeholder="e.g., homemade pizza">
+                                <div class="form-text">Include your main SEO keyword</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="audienceLevel" class="form-label fw-bold">Audience Level:</label>
+                                <select class="form-select" id="audienceLevel">
+                                    <option value="beginner">👶 Beginner</option>
+                                    <option value="intermediate" selected>🎯 Intermediate</option>
+                                    <option value="advanced">🚀 Advanced</option>
+                                    <option value="all">👥 All Levels</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate YouTube Titles 🎬</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-danger text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🎉 Generated YouTube Titles</h5>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light btn-sm" id="copyAllBtn">
+                                    <i class="fas fa-copy"></i> Copy All
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="titleResults" class="title-container mb-4"></div>
+                        
+                        <!-- Title Analysis -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Title Analysis:</h6>
+                                <div id="analysisContainer">
+                                    <small class="text-muted">
+                                        <span id="titleStats">0 titles generated</span><br>
+                                        <span id="avgLength">Average length: 0 characters</span><br>
+                                        <span id="seoScore">SEO potential: Not analyzed</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📋 Quick Actions:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="copyBestTitles()">Copy Top 5</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="analyzeTitles()">Analyze SEO</button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="exportTitles()">Export List</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="fw-bold text-danger">💡 YouTube Title Best Practices:</h6>
+                            <ul class="small mb-0">
+                                <li><strong>Keep it under 60 characters</strong> - Avoid title truncation in search results</li>
+                                <li><strong>Include keywords early</strong> - First 40 characters are most important</li>
+                                <li><strong>Use power words</strong> - Ultimate, Complete, Secret, Proven, Amazing</li>
+                                <li><strong>Add numbers</strong> - "7 Ways," "Top 10," "5 Tips" perform well</li>
+                                <li><strong>Create urgency</strong> - "Now," "Today," "2024," "Latest"</li>
+                                <li><strong>Test different variations</strong> - A/B test titles when possible</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <button class="btn btn-outline-danger btn-sm ms-2" onclick="document.getElementById('titleGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Examples and Tips -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">🎯 Title Examples</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">How-to Tutorials:</h6>
+                    <div class="title-example mb-3">
+                        <small>How to Make Perfect Pizza Dough (Never Fails!)</small>
+                        <br><small class="text-success">✓ Clear benefit, emotional hook</small>
+                    </div>
+                    
+                    <h6 class="fw-bold">Review Videos:</h6>
+                    <div class="title-example mb-3">
+                        <small>iPhone 15 Review: 3 Months Later (Honest Opinion)</small>
+                        <br><small class="text-success">✓ Timeframe, authenticity</small>
+                    </div>
+
+                    <h6 class="fw-bold">List Videos:</h6>
+                    <div class="title-example">
+                        <small>7 Productivity Hacks That Actually Work in 2024</small>
+                        <br><small class="text-success">✓ Number, proof, current year</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">📈 Title Performance Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">🎯 <strong>CTR Goal:</strong> 4-10% for optimal performance</li>
+                        <li class="mb-2">📱 <strong>Mobile First:</strong> 70% of views are mobile</li>
+                        <li class="mb-2">⏰ <strong>Quick Hook:</strong> First 3 words are crucial</li>
+                        <li class="mb-2">🔍 <strong>Search Friendly:</strong> Include searchable terms</li>
+                        <li class="mb-2">😊 <strong>Emotion:</strong> Trigger curiosity or excitement</li>
+                        <li class="mb-0">✨ <strong>Unique Angle:</strong> Stand out from competition</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">🚀 More YouTube Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/youtube-tag-generator" class="btn btn-outline-danger btn-sm">Tag Generator</a>
+                        <a href="/youtube-description-generator" class="btn btn-outline-success btn-sm">Description Generator</a>
+                        <a href="/youtube-thumbnail-generator" class="btn btn-outline-warning btn-sm">Thumbnail Ideas</a>
+                        <a href="/youtube-tools" class="btn btn-outline-info btn-sm">All YouTube Tools</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">YouTube Title Generator Guide - Create Titles That Get Clicks 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>The Science Behind Click-Worthy YouTube Titles</h3>
+                            <p>Your YouTube title is the first (and often only) chance to grab a viewer's attention. Our <strong>free YouTube title generator</strong> uses AI to analyze millions of successful videos and create titles that maximize click-through rates and search visibility.</p>
+
+                            <h3>YouTube Title Optimization Formula</h3>
+                            <h4>The AIDA Framework for Titles:</h4>
+                            <ol>
+                                <li><strong>Attention:</strong> Hook viewers with compelling words</li>
+                                <li><strong>Interest:</strong> Promise value or solve a problem</li>
+                                <li><strong>Desire:</strong> Create urgency or curiosity</li>
+                                <li><strong>Action:</strong> Encourage the click</li>
+                            </ol>
+
+                            <h3>High-Performing Title Types</h3>
+                            <h4>1. How-To Titles</h4>
+                            <p>These consistently perform well because they promise to solve problems:</p>
+                            <ul>
+                                <li>"How to [Achieve Desired Outcome] in [Timeframe]"</li>
+                                <li>"How to [Action] Without [Common Problem]"</li>
+                                <li>"How to [Action] Like a [Expert/Professional]"</li>
+                            </ul>
+
+                            <h4>2. List-Based Titles</h4>
+                            <p>Numbers attract attention and promise organized content:</p>
+                            <ul>
+                                <li>"[Number] Ways to [Achieve Goal]"</li>
+                                <li>"Top [Number] [Items] for [Purpose]"</li>
+                                <li>"[Number] [Items] That Will [Benefit]"</li>
+                            </ul>
+
+                            <h4>3. Question Titles</h4>
+                            <p>Questions create curiosity and engagement:</p>
+                            <ul>
+                                <li>"Why Do [Common Phenomenon]?"</li>
+                                <li>"What Happens If [Scenario]?"</li>
+                                <li>"Is [Popular Thing] Worth It?"</li>
+                            </ul>
+
+                            <h3>Title Length and Character Limits</h3>
+                            <h4>Optimal Length Guidelines:</h4>
+                            <ul>
+                                <li><strong>Desktop:</strong> 60 characters before truncation</li>
+                                <li><strong>Mobile:</strong> 40 characters visible</li>
+                                <li><strong>Search Results:</strong> 50-60 characters shown</li>
+                                <li><strong>Recommended:</strong> 40-50 characters for maximum visibility</li>
+                            </ul>
+
+                            <h3>Power Words That Increase CTR</h3>
+                            <h4>Emotion-Triggering Words:</h4>
+                            <ul>
+                                <li><strong>Curiosity:</strong> Secret, Hidden, Unknown, Revealed</li>
+                                <li><strong>Urgency:</strong> Now, Today, Latest, Breaking, New</li>
+                                <li><strong>Value:</strong> Free, Ultimate, Complete, Best, Top</li>
+                                <li><strong>Exclusivity:</strong> Only, Exclusive, Private, Behind-the-scenes</li>
+                            </ul>
+
+                            <h3>A/B Testing Your Titles</h3>
+                            <p>YouTube allows you to test different titles and thumbnails to optimize performance:</p>
+                            <ul>
+                                <li>Test 2-3 title variations</li>
+                                <li>Run tests for at least 2 weeks</li>
+                                <li>Monitor CTR and view duration</li>
+                                <li>Keep winning variations</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-danger text-white p-4 rounded mb-4">
+                                <h5>📊 Title Statistics</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 60 character desktop limit</li>
+                                    <li>• 40 characters mobile visibility</li>
+                                    <li>• 4-10% average CTR range</li>
+                                    <li>• 70% traffic from mobile</li>
+                                    <li>• First 40 chars most important</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded">
+                                <h6>High-CTR Keywords:</h6>
+                                <div class="d-flex flex-wrap">
+                                    <span class="badge bg-secondary me-1 mb-1">How to</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Best</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Top</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Ultimate</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Complete</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Secret</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Proven</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Amazing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/youtube-tools" class="btn btn-outline-danger">← YouTube Tools</a>
+            <a href="/youtube-description-generator" class="btn btn-danger">Description Generator →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.title-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.title-item {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.title-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);
+    border-color: #fff;
+}
+
+.title-item.selected {
+    border-color: #28a745;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.title-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.title-meta {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-title-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.copy-title-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.title-example {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-left: 4px solid #dc3545;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.character-count {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.character-count.good {
+    background: rgba(40, 167, 69, 0.3);
+}
+
+.character-count.warning {
+    background: rgba(255, 193, 7, 0.3);
+}
+
+.character-count.danger {
+    background: rgba(220, 53, 69, 0.3);
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    .title-item {
+        margin: 8px 0;
+        padding: 12px 15px;
+    }
+    
+    .title-text {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('titleGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const titleResults = document.getElementById('titleResults');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedTitles = [];
+    let selectedTitles = [];
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateTitles();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateTitles();
+    });
+
+    copyAllBtn.addEventListener('click', function() {
+        const allTitles = lastGeneratedTitles.join('\n');
+        copyToClipboard(allTitles);
+        showCopyFeedback(this, 'All titles copied!');
+    });
+
+    async function generateTitles() {
+        const topic = document.getElementById('videoTopic').value.trim();
+        const style = document.getElementById('titleStyle').value;
+        const count = parseInt(document.getElementById('titleCount').value);
+        const category = document.getElementById('videoCategory').value;
+        const keyword = document.getElementById('targetKeyword').value.trim();
+        const audience = document.getElementById('audienceLevel').value;
+
+        if (!topic) {
+            showError('Please describe your video content');
+            return;
+        }
+
+        let enhancedPrompt = `${topic} (Style: ${style}, Category: ${category}, Audience: ${audience}`;
+        if (keyword) enhancedPrompt += `, Target keyword: ${keyword}`;
+        enhancedPrompt += ')';
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/youtube/titles', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt,
+                    count: count
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate titles');
+            }
+
+            if (data.success && data.titles) {
+                displayResults(data.titles);
+                lastGeneratedTitles = data.titles;
+                selectedTitles = [];
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            buttonText.textContent = 'Creating Click-Worthy Titles...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Generate YouTube Titles 🎬';
+        }
+    }
+
+    function displayResults(titles) {
+        titleResults.innerHTML = '';
+
+        titles.forEach((title, index) => {
+            const charCount = title.length;
+            let charClass = 'good';
+            if (charCount > 60) charClass = 'danger';
+            else if (charCount > 50) charClass = 'warning';
+
+            const titleElement = document.createElement('div');
+            titleElement.className = 'title-item';
+            titleElement.innerHTML = `
+                <button class="copy-title-btn" onclick="copySingleTitle('${title.replace(/'/g, "\\'")}', this)">
+                    <i class="fas fa-copy"></i>
+                </button>
+                <div class="title-text">${title}</div>
+                <div class="title-meta">
+                    <span>Title ${index + 1}</span>
+                    <span class="character-count ${charClass}">${charCount} chars</span>
+                </div>
+            `;
+            
+            titleElement.addEventListener('click', function(e) {
+                if (e.target.classList.contains('copy-title-btn') || e.target.closest('.copy-title-btn')) {
+                    return; // Don't select when copying
+                }
+                this.classList.toggle('selected');
+                if (this.classList.contains('selected')) {
+                    if (!selectedTitles.includes(title)) {
+                        selectedTitles.push(title);
+                    }
+                } else {
+                    selectedTitles = selectedTitles.filter(t => t !== title);
+                }
+                updateSelectionStats();
+            });
+            
+            titleResults.appendChild(titleElement);
+        });
+
+        updateTitleStats(titles);
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function updateTitleStats(titles) {
+        const avgLength = Math.round(titles.reduce((sum, title) => sum + title.length, 0) / titles.length);
+        const seoScore = calculateSEOScore(titles);
+        
+        document.getElementById('titleStats').textContent = `${titles.length} titles generated`;
+        document.getElementById('avgLength').textContent = `Average length: ${avgLength} characters`;
+        document.getElementById('seoScore').textContent = `SEO potential: ${seoScore}/100`;
+    }
+
+    function updateSelectionStats() {
+        const count = selectedTitles.length;
+        if (count > 0) {
+            document.getElementById('titleStats').textContent = `${lastGeneratedTitles.length} titles generated (${count} selected)`;
+        } else {
+            document.getElementById('titleStats').textContent = `${lastGeneratedTitles.length} titles generated`;
+        }
+    }
+
+    function calculateSEOScore(titles) {
+        let score = 0;
+        const keyword = document.getElementById('targetKeyword').value.toLowerCase();
+        
+        titles.forEach(title => {
+            const titleLower = title.toLowerCase();
+            // Length score
+            if (title.length >= 40 && title.length <= 60) score += 20;
+            // Keyword presence
+            if (keyword && titleLower.includes(keyword)) score += 30;
+            // Power words
+            const powerWords = ['how to', 'best', 'top', 'ultimate', 'complete', 'guide'];
+            if (powerWords.some(word => titleLower.includes(word))) score += 20;
+            // Numbers
+            if (/\d+/.test(title)) score += 15;
+            // Question marks
+            if (title.includes('?')) score += 15;
+        });
+        
+        return Math.min(100, Math.round(score / titles.length));
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('btn-success');
+        button.classList.remove('btn-light');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-light');
+        }, 2000);
+    }
+
+    // Global functions for onclick handlers
+    window.copySingleTitle = function(title, button) {
+        copyToClipboard(title);
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i>';
+        button.style.background = 'rgba(40, 167, 69, 0.3)';
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.background = 'rgba(255, 255, 255, 0.2)';
+        }, 1500);
+        
+        event.stopPropagation();
+    };
+
+    window.copyBestTitles = function() {
+        const bestTitles = lastGeneratedTitles.slice(0, 5);
+        copyToClipboard(bestTitles.join('\n'));
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied Top 5!';
+        button.classList.add('btn-success');
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-primary');
+        }, 2000);
+    };
+
+    window.analyzeTitles = function() {
+        const analysis = [];
+        lastGeneratedTitles.forEach((title, index) => {
+            const charCount = title.length;
+            const hasNumbers = /\d+/.test(title);
+            const hasQuestion = title.includes('?');
+            const keyword = document.getElementById('targetKeyword').value.toLowerCase();
+            const hasKeyword = keyword && title.toLowerCase().includes(keyword);
+            
+            let score = 0;
+            if (charCount >= 40 && charCount <= 60) score += 25;
+            if (hasNumbers) score += 20;
+            if (hasQuestion) score += 15;
+            if (hasKeyword) score += 40;
+            
+            analysis.push({
+                title: title,
+                score: score,
+                length: charCount,
+                hasNumbers,
+                hasQuestion,
+                hasKeyword
+            });
+        });
+        
+        analysis.sort((a, b) => b.score - a.score);
+        
+        let analysisText = 'SEO Analysis Results:\n\n';
+        analysis.slice(0, 3).forEach((item, index) => {
+            analysisText += `${index + 1}. ${item.title}\n`;
+            analysisText += `   Score: ${item.score}/100, Length: ${item.length} chars\n`;
+            analysisText += `   Features: ${item.hasKeyword ? '✓ Keyword' : '✗ Keyword'} | ${item.hasNumbers ? '✓ Numbers' : '✗ Numbers'} | ${item.hasQuestion ? '✓ Question' : '✗ Question'}\n\n`;
+        });
+        
+        alert(analysisText);
+    };
+
+    window.exportTitles = function() {
+        const selectedOnly = selectedTitles.length > 0;
+        const titlesToExport = selectedOnly ? selectedTitles : lastGeneratedTitles;
+        
+        let exportText = `YouTube Title Ideas - Generated ${new Date().toLocaleDateString()}\n\n`;
+        titlesToExport.forEach((title, index) => {
+            exportText += `${index + 1}. ${title}\n`;
+        });
+        
+        exportText += `\n\nTotal: ${titlesToExport.length} titles`;
+        if (selectedOnly) exportText += ' (selected)';
+        
+        const blob = new Blob([exportText], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'youtube-titles.txt';
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+});
+</script>
+{% endblock %}

@@ -8,8 +8,8 @@ from datetime import datetime, timedelta
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload", "https://www.googleapis.com/auth/userinfo.email", "openid"]
 #SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "openid"]
 USER_DATA_FILE = "user_data.json"
-#REDIRECT_URI = "http://127.0.0.1:5000/oauth2callback"
-REDIRECT_URI = "https://mushtastic-intelligence.com/oauth2callback"
+REDIRECT_URI = "http://127.0.0.1:5000/oauth2callback"
+#REDIRECT_URI = "https://mushtastic-intelligence.com/oauth2callback"
 
 def start_google_auth_flow():
     """Start the Google OAuth flow and return the authorization URL."""

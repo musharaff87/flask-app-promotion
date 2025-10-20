@@ -1,0 +1,888 @@
+{% extends "base.html" %}
+{% block title %}Free TikTok Caption Generator - AI Viral Captions with Emojis 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-dark">💬 TikTok Caption Generator</h1>
+        <p class="lead mb-4">Create viral TikTok captions with trending phrases and emojis - 100% FREE!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">150</div>
+                <small>Characters</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">20K+</div>
+                <small>Generated</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">24/7</div>
+                <small>Available</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="captionGeneratorForm">
+                        <div class="mb-4">
+                            <label for="videoDescription" class="form-label fw-bold">Describe your TikTok video:</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="videoDescription"
+                                rows="4"
+                                placeholder="E.g., Dancing to trending sound, morning routine, cooking recipe, makeup transformation, funny pet video, workout routine..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Be specific! Include the vibe, activity, mood, and any unique elements of your video.</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label for="captionStyle" class="form-label fw-bold">Caption Style:</label>
+                                <select class="form-select" id="captionStyle">
+                                    <option value="trendy" selected>🔥 Trendy & Viral</option>
+                                    <option value="funny">😂 Funny & Witty</option>
+                                    <option value="motivational">✨ Motivational</option>
+                                    <option value="relatable">👥 Relatable</option>
+                                    <option value="mysterious">🤔 Mysterious</option>
+                                    <option value="educational">📚 Educational</option>
+                                    <option value="lifestyle">🌟 Lifestyle</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="captionCount" class="form-label fw-bold">Number of captions:</label>
+                                <select class="form-select" id="captionCount">
+                                    <option value="3">3 captions</option>
+                                    <option value="5" selected>5 captions</option>
+                                    <option value="8">8 captions</option>
+                                    <option value="10">10 captions</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="emojiLevel" class="form-label fw-bold">Emoji Level:</label>
+                                <select class="form-select" id="emojiLevel">
+                                    <option value="minimal">🎯 Minimal</option>
+                                    <option value="moderate" selected>😊 Moderate</option>
+                                    <option value="lots">🎉 Lots of Emojis</option>
+                                    <option value="extra">🌟 Extra Emojis</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="contentType" class="form-label fw-bold">Content Category:</label>
+                                <select class="form-select" id="contentType">
+                                    <option value="dance">💃 Dance</option>
+                                    <option value="comedy">😂 Comedy</option>
+                                    <option value="lifestyle">✨ Lifestyle</option>
+                                    <option value="food">🍕 Food</option>
+                                    <option value="fitness">💪 Fitness</option>
+                                    <option value="beauty">💄 Beauty</option>
+                                    <option value="pets">🐕 Pets</option>
+                                    <option value="diy">🔨 DIY/Crafts</option>
+                                    <option value="travel">✈️ Travel</option>
+                                    <option value="education">📚 Educational</option>
+                                    <option value="music">🎵 Music</option>
+                                    <option value="fashion">👗 Fashion</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="targetAudience" class="form-label fw-bold">Target Audience:</label>
+                                <select class="form-select" id="targetAudience">
+                                    <option value="gen_z" selected>🔥 Gen Z (16-24)</option>
+                                    <option value="millennial">📱 Millennials (25-40)</option>
+                                    <option value="all_ages">👥 All Ages</option>
+                                    <option value="teens">🎓 Teens</option>
+                                    <option value="adults">👨‍💼 Adults</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-dark btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate TikTok Captions 🎵</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-dark text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🎉 Generated TikTok Captions</h5>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light btn-sm" id="copyAllBtn">
+                                    <i class="fas fa-copy"></i> Copy All
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate More
+                                </button>
+                                <button class="btn btn-outline-warning btn-sm" id="generateVariationBtn">
+                                    <i class="fas fa-magic"></i> Generate Variation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="captionResults" class="caption-container mb-4"></div>
+                        
+                        <!-- Caption Analysis -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Caption Stats:</h6>
+                                <div id="statsContainer">
+                                    <small class="text-muted">
+                                        <span id="captionStats">0 captions generated</span><br>
+                                        <span id="avgLength">Average: 0 characters</span><br>
+                                        <span id="emojiCount">Total emojis: 0</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📋 Quick Actions:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="copyBestCaptions()">Copy Top 3</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="addHashtags()">Add Hashtags</button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="exportCaptions()">Download</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="fw-bold text-dark">💡 TikTok Caption Best Practices:</h6>
+                            <ul class="small mb-0">
+                                <li><strong>Keep it short & punchy</strong> - Attention spans are short on TikTok</li>
+                                <li><strong>Use trending phrases</strong> - "POV:", "Tell me why...", "This is your sign"</li>
+                                <li><strong>Add emojis strategically</strong> - They increase engagement but don't overdo it</li>
+                                <li><strong>Ask questions</strong> - Encourage comments and interaction</li>
+                                <li><strong>Include call-to-actions</strong> - "Tag someone who...", "Comment if..."</li>
+                                <li><strong>Use relevant hashtags</strong> - Mix trending and niche hashtags</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <div class="mt-2">
+                        <button class="btn btn-outline-danger btn-sm me-2" onclick="document.getElementById('captionGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                        <button class="btn btn-outline-warning btn-sm" onclick="generateCaptionVariation()">Try Variation Instead</button>
+                    </div>
+                    <div class="mt-2 small text-muted">
+                        <strong>Common Solutions:</strong>
+                        <ul class="mb-0 mt-1">
+                            <li>Try a different description or style</li>
+                            <li>Check your internet connection</li>
+                            <li>Wait a moment and try again</li>
+                            <li>Use the "Generate Variation" button for creative alternatives</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Examples and Tips -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">🎯 Caption Examples</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">Dance Videos:</h6>
+                    <div class="caption-example mb-3">
+                        <small>POV: You hit the beat perfectly 💃✨ #fyp #dance #viral</small>
+                    </div>
+                    
+                    <h6 class="fw-bold">Food Content:</h6>
+                    <div class="caption-example mb-3">
+                        <small>This recipe will change your life 🤤 Who's trying this? #food #recipe</small>
+                    </div>
+
+                    <h6 class="fw-bold">Lifestyle:</h6>
+                    <div class="caption-example">
+                        <small>That girl energy activated ✨ What's your morning routine? #lifestyle</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">🔥 Trending Phrases</h5>
+                </div>
+                <div class="card-body">
+                    <div class="trending-phrases">
+                        <span class="badge bg-secondary me-1 mb-2">POV:</span>
+                        <span class="badge bg-secondary me-1 mb-2">Tell me why...</span>
+                        <span class="badge bg-secondary me-1 mb-2">This is your sign</span>
+                        <span class="badge bg-secondary me-1 mb-2">Not me...</span>
+                        <span class="badge bg-secondary me-1 mb-2">When you...</span>
+                        <span class="badge bg-secondary me-1 mb-2">Nobody:</span>
+                        <span class="badge bg-secondary me-1 mb-2">Me:</span>
+                        <span class="badge bg-secondary me-1 mb-2">That girl who...</span>
+                        <span class="badge bg-secondary me-1 mb-2">Plot twist:</span>
+                        <span class="badge bg-secondary me-1 mb-2">Fun fact:</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">🚀 TikTok Best Practices</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ <strong>Hook in first 3 seconds</strong> - Grab attention immediately</li>
+                        <li class="mb-2">✅ <strong>Use trending sounds</strong> - Jump on viral audio</li>
+                        <li class="mb-2">✅ <strong>Ask engaging questions</strong> - Boost comments and shares</li>
+                        <li class="mb-2">✅ <strong>Use relevant hashtags</strong> - Mix trending and niche tags</li>
+                        <li class="mb-2">✅ <strong>Post consistently</strong> - Algorithm rewards regular posting</li>
+                        <li class="mb-0">✅ <strong>Engage with comments</strong> - Build community and boost reach</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">🔗 More TikTok Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/tiktok-hashtag-generator" class="btn btn-outline-dark btn-sm">Hashtag Generator</a>
+                        <a href="/tiktok-hook-generator" class="btn btn-outline-success btn-sm">Hook Generator</a>
+                        <a href="/tiktok-trend-generator" class="btn btn-outline-warning btn-sm">Trend Ideas</a>
+                        <a href="/tiktok-tools" class="btn btn-outline-info btn-sm">All TikTok Tools</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">TikTok Caption Generator Guide - Create Viral Captions 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>The Psychology Behind Viral TikTok Captions</h3>
+                            <p>TikTok captions play a crucial role in engagement and virality. Our <strong>free TikTok caption generator</strong> creates captions that trigger emotional responses, encourage interaction, and align with current trends to maximize your content's viral potential.</p>
+
+                            <h3>Essential Elements of Viral TikTok Captions</h3>
+                            <h4>1. Hook Phrases That Work</h4>
+                            <p>Start your captions with phrases that immediately grab attention:</p>
+                            <ul>
+                                <li><strong>"POV:"</strong> Point of view scenarios are highly engaging</li>
+                                <li><strong>"Tell me why..."</strong> Creates curiosity and invites comments</li>
+                                <li><strong>"This is your sign to..."</strong> Motivational and actionable</li>
+                                <li><strong>"Nobody:" "Me:"</strong> Relatable meme format</li>
+                                <li><strong>"When you..."</strong> Relatable situations</li>
+                            </ul>
+
+                            <h4>2. Emotional Triggers</h4>
+                            <p>Captions that evoke strong emotions perform better:</p>
+                            <ul>
+                                <li><strong>Surprise:</strong> "Plot twist," "Wait for it"</li>
+                                <li><strong>Nostalgia:</strong> "Childhood memories," "Anyone else remember"</li>
+                                <li><strong>FOMO:</strong> "Everyone needs to try this"</li>
+                                <li><strong>Validation:</strong> "You're not alone," "Same energy"</li>
+                            </ul>
+
+                            <h4>3. Interactive Elements</h4>
+                            <p>Encourage audience participation:</p>
+                            <ul>
+                                <li>Ask questions: "What's your favorite...?"</li>
+                                <li>Tag challenges: "Tag someone who..."</li>
+                                <li>Comment instructions: "Comment your..."</li>
+                                <li>Rate requests: "Rate this 1-10"</li>
+                            </ul>
+
+                            <h3>Caption Length and Formatting</h3>
+                            <h4>Optimal Caption Length</h4>
+                            <ul>
+                                <li><strong>Short & Punchy:</strong> 50-100 characters for quick consumption</li>
+                                <li><strong>Medium Length:</strong> 100-150 characters with context</li>
+                                <li><strong>Avoid Long Captions:</strong> TikTok users prefer brief, impactful text</li>
+                            </ul>
+
+                            <h4>Strategic Emoji Usage</h4>
+                            <ul>
+                                <li>Use 2-5 emojis per caption for optimal engagement</li>
+                                <li>Choose emojis that match your content theme</li>
+                                <li>Use trending emojis (✨, 🔥, 💀, 😭)</li>
+                                <li>Avoid emoji overload - it can look spammy</li>
+                            </ul>
+
+                            <h3>TikTok Caption Trends by Category</h3>
+                            <h4>Dance Content</h4>
+                            <ul>
+                                <li>"POV: You hit every beat 💃"</li>
+                                <li>"When the drop hits different 🔥"</li>
+                                <li>"Tell me you're a dancer without telling me"</li>
+                            </ul>
+
+                            <h4>Comedy Content</h4>
+                            <ul>
+                                <li>"Me trying to be an adult:"</li>
+                                <li>"Nobody asked but here's my opinion"</li>
+                                <li>"Why is this so accurate 💀"</li>
+                            </ul>
+
+                            <h4>Lifestyle Content</h4>
+                            <ul>
+                                <li>"That girl energy activated ✨"</li>
+                                <li>"Glow up check 📸"</li>
+                                <li>"Main character moment"</li>
+                            </ul>
+
+                            <h3>Hashtag Integration in Captions</h3>
+                            <p>Include 3-5 strategic hashtags in your captions:</p>
+                            <ul>
+                                <li><strong>Essential TikTok hashtags:</strong> #fyp #foryou #viral</li>
+                                <li><strong>Trend hashtags:</strong> Current viral challenges</li>
+                                <li><strong>Niche hashtags:</strong> Specific to your content type</li>
+                                <li><strong>Branded hashtags:</strong> Your unique tags</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-dark text-white p-4 rounded mb-4">
+                                <h5>📊 Caption Performance</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 150 character optimal length</li>
+                                    <li>• 2-5 emojis increase engagement</li>
+                                    <li>• Questions boost comments 300%</li>
+                                    <li>• POV format gets 2x more views</li>
+                                    <li>• Interactive captions = higher CTR</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded">
+                                <h6>Top Performing Emojis:</h6>
+                                <div class="d-flex flex-wrap">
+                                    <span class="badge bg-secondary me-1 mb-1">✨ Sparkles</span>
+                                    <span class="badge bg-secondary me-1 mb-1">🔥 Fire</span>
+                                    <span class="badge bg-secondary me-1 mb-1">💀 Skull</span>
+                                    <span class="badge bg-secondary me-1 mb-1">😭 Crying</span>
+                                    <span class="badge bg-secondary me-1 mb-1">💅 Nail polish</span>
+                                    <span class="badge bg-secondary me-1 mb-1">🤌 Pinched fingers</span>
+                                    <span class="badge bg-secondary me-1 mb-1">📸 Camera</span>
+                                    <span class="badge bg-secondary me-1 mb-1">🎵 Music</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/tiktok-tools" class="btn btn-outline-dark">← TikTok Tools</a>
+            <a href="/tiktok-hook-generator" class="btn btn-dark">Hook Generator →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.caption-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.caption-item {
+    background: linear-gradient(135deg, #333 0%, #666 100%);
+    color: white;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.caption-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(51, 51, 51, 0.3);
+    border-color: #fff;
+}
+
+.caption-item.selected {
+    border-color: #28a745;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.caption-text {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.caption-meta {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-caption-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.copy-caption-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.caption-example {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-left: 4px solid #333;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.trending-phrases {
+    line-height: 2;
+}
+
+.character-count {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.character-count.good {
+    background: rgba(40, 167, 69, 0.3);
+}
+
+.character-count.warning {
+    background: rgba(255, 193, 7, 0.3);
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    .caption-item {
+        margin: 8px 0;
+        padding: 12px 15px;
+    }
+    
+    .caption-text {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+#generateVariationBtn:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('captionGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const captionResults = document.getElementById('captionResults');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedCaptions = [];
+    let selectedCaptions = [];
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateCaptions();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateCaptions();
+    });
+
+    document.getElementById('generateVariationBtn').addEventListener('click', async function() {
+        await generateCaptionVariation();
+    });
+
+    copyAllBtn.addEventListener('click', function() {
+        const allCaptions = lastGeneratedCaptions.join('\n\n');
+        copyToClipboard(allCaptions);
+        showCopyFeedback(this, 'All captions copied!');
+    });
+
+    async function generateCaptions() {
+        const description = document.getElementById('videoDescription').value.trim();
+        const style = document.getElementById('captionStyle').value;
+        const count = parseInt(document.getElementById('captionCount').value);
+        const emojiLevel = document.getElementById('emojiLevel').value;
+        const contentType = document.getElementById('contentType').value;
+        const audience = document.getElementById('targetAudience').value;
+
+        if (!description) {
+            showError('Please describe your TikTok video');
+            return;
+        }
+
+        let enhancedPrompt = `${description} (Style: ${style}, Content: ${contentType}, Audience: ${audience}, Emojis: ${emojiLevel})`;
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/tiktok/captions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt,
+                    count: count,
+                    is_variation: false
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate captions');
+            }
+
+            if (data.success && data.captions) {
+                displayResults(data.captions);
+                lastGeneratedCaptions = data.captions;
+                selectedCaptions = [];
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    async function generateCaptionVariation() {
+        const description = document.getElementById('videoDescription').value.trim();
+        const style = document.getElementById('captionStyle').value;
+        const count = parseInt(document.getElementById('captionCount').value);
+        const emojiLevel = document.getElementById('emojiLevel').value;
+        const contentType = document.getElementById('contentType').value;
+        const audience = document.getElementById('targetAudience').value;
+
+        if (!description) {
+            showError('Please describe your TikTok video first');
+            return;
+        }
+
+        let enhancedPrompt = `${description} (Style: ${style}, Content: ${contentType}, Audience: ${audience}, Emojis: ${emojiLevel})`;
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/tiktok/captions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt,
+                    count: count,
+                    is_variation: true
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate variation');
+            }
+
+            if (data.success && data.captions) {
+                displayResults(data.captions);
+                lastGeneratedCaptions = data.captions;
+                selectedCaptions = [];
+                
+                // Show variation indicator
+                const resultsSection = document.getElementById('resultsSection');
+                const variationBadge = document.createElement('div');
+                variationBadge.className = 'alert alert-warning alert-sm mb-3';
+                variationBadge.innerHTML = '<i class="fas fa-magic"></i> <strong>Unique Variation Generated!</strong> This is a creative, trending version with web search integration.';
+                
+                const cardBody = resultsSection.querySelector('.card-body');
+                cardBody.insertBefore(variationBadge, cardBody.firstChild);
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const regenerateBtn = document.getElementById('regenerateBtn');
+        const variationBtn = document.getElementById('generateVariationBtn');
+        
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            regenerateBtn.disabled = true;
+            variationBtn.disabled = true;
+            buttonText.textContent = 'Creating Viral Captions...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            regenerateBtn.disabled = false;
+            variationBtn.disabled = false;
+            buttonText.textContent = 'Generate TikTok Captions 🎵';
+        }
+    }
+
+    function displayResults(captions) {
+        captionResults.innerHTML = '';
+
+        captions.forEach((caption, index) => {
+            const charCount = caption.length;
+            let charClass = 'good';
+            if (charCount > 150) charClass = 'warning';
+
+            const captionElement = document.createElement('div');
+            captionElement.className = 'caption-item';
+            captionElement.innerHTML = `
+                <button class="copy-caption-btn" onclick="copySingleCaption('${caption.replace(/'/g, "\\'")}', this)">
+                    <i class="fas fa-copy"></i>
+                </button>
+                <div class="caption-text">${caption}</div>
+                <div class="caption-meta">
+                    <span>Caption ${index + 1}</span>
+                    <span class="character-count ${charClass}">${charCount} chars</span>
+                </div>
+            `;
+            
+            captionElement.addEventListener('click', function(e) {
+                if (e.target.classList.contains('copy-caption-btn') || e.target.closest('.copy-caption-btn')) {
+                    return;
+                }
+                this.classList.toggle('selected');
+                if (this.classList.contains('selected')) {
+                    if (!selectedCaptions.includes(caption)) {
+                        selectedCaptions.push(caption);
+                    }
+                } else {
+                    selectedCaptions = selectedCaptions.filter(c => c !== caption);
+                }
+                updateSelectionStats();
+            });
+            
+            captionResults.appendChild(captionElement);
+        });
+
+        updateCaptionStats(captions);
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function updateCaptionStats(captions) {
+        const avgLength = Math.round(captions.reduce((sum, caption) => sum + caption.length, 0) / captions.length);
+        const totalEmojis = captions.reduce((sum, caption) => {
+            return sum + (caption.match(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu) || []).length;
+        }, 0);
+        
+        document.getElementById('captionStats').textContent = `${captions.length} captions generated`;
+        document.getElementById('avgLength').textContent = `Average: ${avgLength} characters`;
+        document.getElementById('emojiCount').textContent = `Total emojis: ${totalEmojis}`;
+    }
+
+    function updateSelectionStats() {
+        const count = selectedCaptions.length;
+        if (count > 0) {
+            document.getElementById('captionStats').textContent = `${lastGeneratedCaptions.length} captions generated (${count} selected)`;
+        } else {
+            document.getElementById('captionStats').textContent = `${lastGeneratedCaptions.length} captions generated`;
+        }
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('btn-success');
+        button.classList.remove('btn-light');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-light');
+        }, 2000);
+    }
+
+    // Global functions
+    window.copySingleCaption = function(caption, button) {
+        copyToClipboard(caption);
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i>';
+        button.style.background = 'rgba(40, 167, 69, 0.3)';
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.background = 'rgba(255, 255, 255, 0.2)';
+        }, 1500);
+        
+        event.stopPropagation();
+    };
+
+    window.copyBestCaptions = function() {
+        const bestCaptions = lastGeneratedCaptions.slice(0, 3);
+        copyToClipboard(bestCaptions.join('\n\n'));
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied Top 3!';
+        button.classList.add('btn-success');
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-primary');
+        }, 2000);
+    };
+
+    window.addHashtags = function() {
+        const captionsWithHashtags = lastGeneratedCaptions.map(caption => {
+            if (!caption.includes('#')) {
+                return caption + ' #fyp #foryou #viral';
+            }
+            return caption;
+        });
+        
+        copyToClipboard(captionsWithHashtags.join('\n\n'));
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Added Hashtags!';
+        button.classList.add('btn-success');
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-success');
+        }, 2000);
+    };
+
+    window.exportCaptions = function() {
+        const selectedOnly = selectedCaptions.length > 0;
+        const captionsToExport = selectedOnly ? selectedCaptions : lastGeneratedCaptions;
+        
+        let exportText = `TikTok Caption Ideas - Generated ${new Date().toLocaleDateString()}\n\n`;
+        captionsToExport.forEach((caption, index) => {
+            exportText += `${index + 1}. ${caption}\n\n`;
+        });
+        
+        exportText += `Total: ${captionsToExport.length} captions`;
+        if (selectedOnly) exportText += ' (selected)';
+        
+        const blob = new Blob([exportText], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'tiktok-captions.txt';
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+});
+</script>
+{% endblock %}

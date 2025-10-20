@@ -1,0 +1,848 @@
+{% extends "base.html" %}
+{% block title %}Free TikTok Hook Generator - AI Scroll-Stopping Hooks 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-dark">🪝 TikTok Hook Generator</h1>
+        <p class="lead mb-4">Create scroll-stopping hooks that grab attention in the first 3 seconds - FREE!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">3</div>
+                <small>Seconds Rule</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">30K+</div>
+                <small>Hooks Created</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">24/7</div>
+                <small>Available</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="hookGeneratorForm">
+                        <div class="mb-4">
+                            <label for="videoTopic" class="form-label fw-bold">What's your video about?</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="videoTopic"
+                                rows="4"
+                                placeholder="E.g., Morning routine that changed my life, secret cooking trick, workout transformation, relationship advice, productivity hack..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Describe the main value or story of your video - what will make people want to watch?</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label for="hookStyle" class="form-label fw-bold">Hook Style:</label>
+                                <select class="form-select" id="hookStyle">
+                                    <option value="curiosity" selected>🤔 Curiosity-Driven</option>
+                                    <option value="shocking">😱 Shocking/Surprising</option>
+                                    <option value="problem">❗ Problem-Solution</option>
+                                    <option value="secret">🤫 Secret Reveal</option>
+                                    <option value="transformation">✨ Transformation</option>
+                                    <option value="controversy">🔥 Controversial</option>
+                                    <option value="storytelling">📖 Story-Based</option>
+                                    <option value="educational">📚 Educational</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="hookCount" class="form-label fw-bold">Number of hooks:</label>
+                                <select class="form-select" id="hookCount">
+                                    <option value="5">5 hooks</option>
+                                    <option value="10" selected>10 hooks</option>
+                                    <option value="15">15 hooks</option>
+                                    <option value="20">20 hooks</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="hookLength" class="form-label fw-bold">Hook Length:</label>
+                                <select class="form-select" id="hookLength">
+                                    <option value="short">⚡ Short (3-5 words)</option>
+                                    <option value="medium" selected>📱 Medium (6-10 words)</option>
+                                    <option value="long">📝 Long (10-15 words)</option>
+                                    <option value="mixed">🎯 Mixed Lengths</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="targetEmotion" class="form-label fw-bold">Target Emotion:</label>
+                                <select class="form-select" id="targetEmotion">
+                                    <option value="curiosity" selected>🤔 Curiosity</option>
+                                    <option value="surprise">😲 Surprise</option>
+                                    <option value="fear">😰 Fear of Missing Out</option>
+                                    <option value="excitement">🎉 Excitement</option>
+                                    <option value="anger">😤 Anger/Frustration</option>
+                                    <option value="joy">😊 Joy/Happiness</option>
+                                    <option value="urgency">⚡ Urgency</option>
+                                    <option value="validation">✅ Validation</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="audience" class="form-label fw-bold">Target Audience:</label>
+                                <select class="form-select" id="audience">
+                                    <option value="gen_z" selected>🔥 Gen Z (16-24)</option>
+                                    <option value="millennials">📱 Millennials (25-40)</option>
+                                    <option value="all_ages">👥 All Ages</option>
+                                    <option value="women">👩 Women</option>
+                                    <option value="men">👨 Men</option>
+                                    <option value="entrepreneurs">💼 Entrepreneurs</option>
+                                    <option value="students">🎓 Students</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="keyBenefit" class="form-label fw-bold">Key Benefit/Result (Optional):</label>
+                            <input type="text" class="form-control" id="keyBenefit" placeholder="e.g., lose 10 pounds, save 2 hours daily, make $1000 extra">
+                            <div class="form-text">What specific result or benefit will viewers get?</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-dark btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate TikTok Hooks 🪝</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-dark text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🎯 Generated TikTok Hooks</h5>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light btn-sm" id="copyAllBtn">
+                                    <i class="fas fa-copy"></i> Copy All
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="hookResults" class="hook-container mb-4"></div>
+                        
+                        <!-- Hook Analysis -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Hook Analysis:</h6>
+                                <div id="analysisContainer">
+                                    <small class="text-muted">
+                                        <span id="hookStats">0 hooks generated</span><br>
+                                        <span id="avgWords">Average: 0 words</span><br>
+                                        <span id="emotionScore">Emotion score: 0/10</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">🚀 Quick Actions:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="copyTopHooks()">Copy Top 5</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="analyzeHooks()">Analyze Power</button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="exportHooks()">Download</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="fw-bold text-dark">💡 Hook Best Practices:</h6>
+                            <ul class="small mb-0">
+                                <li><strong>3-second rule</strong> - Hook viewers before they scroll away</li>
+                                <li><strong>Start with action</strong> - Jump into the content immediately</li>
+                                <li><strong>Create curiosity gaps</strong> - Make them want to see what happens</li>
+                                <li><strong>Use pattern interrupts</strong> - Break expected patterns to grab attention</li>
+                                <li><strong>Promise value</strong> - Tell them what they'll learn or gain</li>
+                                <li><strong>Test multiple hooks</strong> - Same content, different hooks = different results</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <button class="btn btn-outline-danger btn-sm ms-2" onclick="document.getElementById('hookGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Examples and Tips -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">🎯 Hook Examples</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">Curiosity Hooks:</h6>
+                    <div class="hook-example mb-3">
+                        <small>"This changed everything..."<br>
+                        "Wait until you see this..."<br>
+                        "Nobody talks about this..."</small>
+                    </div>
+                    
+                    <h6 class="fw-bold">Problem/Solution:</h6>
+                    <div class="hook-example mb-3">
+                        <small>"If you struggle with..."<br>
+                        "Stop doing this immediately..."<br>
+                        "This is why you're failing..."</small>
+                    </div>
+
+                    <h6 class="fw-bold">Shocking/Surprising:</h6>
+                    <div class="hook-example">
+                        <small>"I can't believe this worked..."<br>
+                        "This shouldn't be legal..."<br>
+                        "Everyone's doing this wrong..."</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">🧠 Psychology of Hooks</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">🎯 <strong>Curiosity Gap:</strong> Create questions viewers must answer</li>
+                        <li class="mb-2">⚡ <strong>Pattern Interrupt:</strong> Break expectations instantly</li>
+                        <li class="mb-2">😱 <strong>Shock Value:</strong> Surprise with unexpected information</li>
+                        <li class="mb-2">📈 <strong>Benefit Promise:</strong> Show clear value proposition</li>
+                        <li class="mb-2">🔥 <strong>Urgency:</strong> Create fear of missing out</li>
+                        <li class="mb-0">✅ <strong>Validation:</strong> Confirm viewer's experiences</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">🚀 More TikTok Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/tiktok-hashtag-generator" class="btn btn-outline-dark btn-sm">Hashtag Generator</a>
+                        <a href="/tiktok-caption-generator" class="btn btn-outline-success btn-sm">Caption Generator</a>
+                        <a href="/tiktok-trend-generator" class="btn btn-outline-warning btn-sm">Trend Ideas</a>
+                        <a href="/tiktok-tools" class="btn btn-outline-info btn-sm">All TikTok Tools</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">TikTok Hook Generator Guide - Master the 3-Second Rule 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>The Science of TikTok Hooks</h3>
+                            <p>TikTok users scroll through content at lightning speed, giving you just 3 seconds to capture their attention. Our <strong>free TikTok hook generator</strong> creates scientifically-backed hooks that stop the scroll and boost your view completion rates.</p>
+
+                            <h3>The 3-Second Rule Explained</h3>
+                            <h4>Why 3 Seconds Matters</h4>
+                            <p>TikTok's algorithm tracks how quickly users scroll past content:</p>
+                            <ul>
+                                <li><strong>0-1 seconds:</strong> Visual impact and movement</li>
+                                <li><strong>1-2 seconds:</strong> Text overlay or spoken hook</li>
+                                <li><strong>2-3 seconds:</strong> Value proposition clarity</li>
+                                <li><strong>3+ seconds:</strong> Engagement decision made</li>
+                            </ul>
+
+                            <h3>Types of High-Converting Hooks</h3>
+                            <h4>1. Curiosity-Driven Hooks</h4>
+                            <p>Create an information gap that viewers must fill:</p>
+                            <ul>
+                                <li>"This one trick changed everything..."</li>
+                                <li>"Nobody talks about this but..."</li>
+                                <li>"The secret they don't want you to know..."</li>
+                                <li>"Wait until you see what happens next..."</li>
+                            </ul>
+
+                            <h4>2. Problem-Solution Hooks</h4>
+                            <p>Address pain points immediately:</p>
+                            <ul>
+                                <li>"If you struggle with [problem]..."</li>
+                                <li>"Stop doing [wrong thing] immediately..."</li>
+                                <li>"This is why you're not [achieving goal]..."</li>
+                                <li>"The reason [problem] keeps happening..."</li>
+                            </ul>
+
+                            <h4>3. Shocking/Surprising Hooks</h4>
+                            <p>Break expectations with unexpected information:</p>
+                            <ul>
+                                <li>"I can't believe this actually worked..."</li>
+                                <li>"This shouldn't be legal but..."</li>
+                                <li>"Everyone's doing this completely wrong..."</li>
+                                <li>"The truth about [topic] will shock you..."</li>
+                            </ul>
+
+                            <h4>4. Social Proof Hooks</h4>
+                            <p>Use credibility and results:</p>
+                            <ul>
+                                <li>"After [X] years of [experience]..."</li>
+                                <li>"This got me [impressive result]..."</li>
+                                <li>"Every expert recommends this..."</li>
+                                <li>"[Number] people tried this and..."</li>
+                            </ul>
+
+                            <h3>Hook Psychology Principles</h3>
+                            <h4>The Curiosity Gap Theory</h4>
+                            <p>Humans have an innate need to fill information gaps. Effective hooks:</p>
+                            <ul>
+                                <li>Hint at valuable information</li>
+                                <li>Don't reveal everything immediately</li>
+                                <li>Create mental tension that demands resolution</li>
+                                <li>Promise a payoff worth the time investment</li>
+                            </ul>
+
+                            <h4>Pattern Interrupt Technique</h4>
+                            <p>Break viewers' scrolling patterns:</p>
+                            <ul>
+                                <li>Sudden movement or action</li>
+                                <li>Unexpected visual elements</li>
+                                <li>Contrarian statements</li>
+                                <li>Surprising statistics or facts</li>
+                            </ul>
+
+                            <h3>Testing and Optimizing Hooks</h3>
+                            <h4>A/B Testing Your Hooks</h4>
+                            <ul>
+                                <li>Create multiple versions of the same content</li>
+                                <li>Test different hook styles (curious vs. shocking)</li>
+                                <li>Monitor completion rates and engagement</li>
+                                <li>Scale winning hook patterns across content</li>
+                            </ul>
+
+                            <h4>Key Metrics to Track</h4>
+                            <ul>
+                                <li><strong>Watch Time:</strong> How long viewers stay</li>
+                                <li><strong>Completion Rate:</strong> Percentage who watch to end</li>
+                                <li><strong>Engagement Rate:</strong> Likes, comments, shares</li>
+                                <li><strong>Save Rate:</strong> How many save for later</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-dark text-white p-4 rounded mb-4">
+                                <h5>⚡ Hook Performance</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 3 seconds to hook viewers</li>
+                                    <li>• 6-10 words optimal length</li>
+                                    <li>• Curiosity hooks = 40% higher retention</li>
+                                    <li>• Problem-solution = 35% more engagement</li>
+                                    <li>• Shocking statements = 50% more shares</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded">
+                                <h6>Power Words for Hooks:</h6>
+                                <div class="d-flex flex-wrap">
+                                    <span class="badge bg-secondary me-1 mb-1">Secret</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Shocking</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Nobody</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Stop</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Mistake</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Truth</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Warning</span>
+                                    <span class="badge bg-secondary me-1 mb-1">Instantly</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/tiktok-tools" class="btn btn-outline-dark">← TikTok Tools</a>
+            <a href="/tiktok-trend-generator" class="btn btn-dark">Trend Ideas →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.hook-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.hook-item {
+    background: linear-gradient(135deg, #333 0%, #666 100%);
+    color: white;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.hook-item:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(51, 51, 51, 0.3);
+    border-color: #fff;
+}
+
+.hook-item.selected {
+    border-color: #28a745;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.hook-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.hook-meta {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-hook-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.copy-hook-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.hook-example {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-left: 4px solid #333;
+    font-style: italic;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.power-rating {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    margin-left: 8px;
+}
+
+.power-rating.high {
+    background: rgba(40, 167, 69, 0.3);
+}
+
+.power-rating.medium {
+    background: rgba(255, 193, 7, 0.3);
+}
+
+.power-rating.low {
+    background: rgba(220, 53, 69, 0.3);
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    .hook-item {
+        margin: 8px 0;
+        padding: 12px 15px;
+    }
+    
+    .hook-text {
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('hookGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const hookResults = document.getElementById('hookResults');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedHooks = [];
+    let selectedHooks = [];
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateHooks();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateHooks();
+    });
+
+    copyAllBtn.addEventListener('click', function() {
+        const allHooks = lastGeneratedHooks.join('\n');
+        copyToClipboard(allHooks);
+        showCopyFeedback(this, 'All hooks copied!');
+    });
+
+    async function generateHooks() {
+        const topic = document.getElementById('videoTopic').value.trim();
+        const style = document.getElementById('hookStyle').value;
+        const count = parseInt(document.getElementById('hookCount').value);
+        const length = document.getElementById('hookLength').value;
+        const emotion = document.getElementById('targetEmotion').value;
+        const audience = document.getElementById('audience').value;
+        const benefit = document.getElementById('keyBenefit').value.trim();
+
+        if (!topic) {
+            showError('Please describe your video topic');
+            return;
+        }
+
+        let enhancedPrompt = `${topic} (Style: ${style}, Length: ${length}, Emotion: ${emotion}, Audience: ${audience}`;
+        if (benefit) enhancedPrompt += `, Benefit: ${benefit}`;
+        enhancedPrompt += ')';
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/tiktok/hooks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt,
+                    count: count
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate hooks');
+            }
+
+            if (data.success && data.hooks) {
+                displayResults(data.hooks);
+                lastGeneratedHooks = data.hooks;
+                selectedHooks = [];
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            buttonText.textContent = 'Creating Scroll-Stopping Hooks...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Generate TikTok Hooks 🪝';
+        }
+    }
+
+    function displayResults(hooks) {
+        hookResults.innerHTML = '';
+
+        hooks.forEach((hook, index) => {
+            const wordCount = hook.split(' ').length;
+            const powerRating = calculatePowerRating(hook);
+            let ratingClass = 'low';
+            if (powerRating >= 8) ratingClass = 'high';
+            else if (powerRating >= 6) ratingClass = 'medium';
+
+            const hookElement = document.createElement('div');
+            hookElement.className = 'hook-item';
+            hookElement.innerHTML = `
+                <button class="copy-hook-btn" onclick="copySingleHook('${hook.replace(/'/g, "\\'")}', this)">
+                    <i class="fas fa-copy"></i>
+                </button>
+                <div class="hook-text">${hook}</div>
+                <div class="hook-meta">
+                    <span>Hook ${index + 1} • ${wordCount} words</span>
+                    <span class="power-rating ${ratingClass}">Power: ${powerRating}/10</span>
+                </div>
+            `;
+            
+            hookElement.addEventListener('click', function(e) {
+                if (e.target.classList.contains('copy-hook-btn') || e.target.closest('.copy-hook-btn')) {
+                    return;
+                }
+                this.classList.toggle('selected');
+                if (this.classList.contains('selected')) {
+                    if (!selectedHooks.includes(hook)) {
+                        selectedHooks.push(hook);
+                    }
+                } else {
+                    selectedHooks = selectedHooks.filter(h => h !== hook);
+                }
+                updateSelectionStats();
+            });
+            
+            hookResults.appendChild(hookElement);
+        });
+
+        updateHookStats(hooks);
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function calculatePowerRating(hook) {
+        let score = 5; // Base score
+        const hookLower = hook.toLowerCase();
+        
+        // Power words boost
+        const powerWords = ['secret', 'nobody', 'shocking', 'stop', 'mistake', 'truth', 'warning', 'instantly', 'never', 'always'];
+        powerWords.forEach(word => {
+            if (hookLower.includes(word)) score += 1.5;
+        });
+        
+        // Question marks
+        if (hook.includes('?')) score += 1;
+        
+        // Length optimization
+        const wordCount = hook.split(' ').length;
+        if (wordCount >= 6 && wordCount <= 10) score += 1;
+        
+        // Emotional triggers
+        const emotionalWords = ['changed', 'shocking', 'amazing', 'incredible', 'unbelievable', 'mind-blowing'];
+        emotionalWords.forEach(word => {
+            if (hookLower.includes(word)) score += 0.5;
+        });
+        
+        // Curiosity indicators
+        const curiosityWords = ['this', 'what', 'why', 'how', 'wait', 'see'];
+        curiosityWords.forEach(word => {
+            if (hookLower.includes(word)) score += 0.3;
+        });
+        
+        return Math.min(10, Math.round(score * 10) / 10);
+    }
+
+    function updateHookStats(hooks) {
+        const avgWords = Math.round(hooks.reduce((sum, hook) => sum + hook.split(' ').length, 0) / hooks.length);
+        const emotionScore = Math.round(hooks.reduce((sum, hook) => sum + calculatePowerRating(hook), 0) / hooks.length * 10) / 10;
+        
+        document.getElementById('hookStats').textContent = `${hooks.length} hooks generated`;
+        document.getElementById('avgWords').textContent = `Average: ${avgWords} words`;
+        document.getElementById('emotionScore').textContent = `Emotion score: ${emotionScore}/10`;
+    }
+
+    function updateSelectionStats() {
+        const count = selectedHooks.length;
+        if (count > 0) {
+            document.getElementById('hookStats').textContent = `${lastGeneratedHooks.length} hooks generated (${count} selected)`;
+        } else {
+            document.getElementById('hookStats').textContent = `${lastGeneratedHooks.length} hooks generated`;
+        }
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('btn-success');
+        button.classList.remove('btn-light');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-light');
+        }, 2000);
+    }
+
+    // Global functions
+    window.copySingleHook = function(hook, button) {
+        copyToClipboard(hook);
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i>';
+        button.style.background = 'rgba(40, 167, 69, 0.3)';
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.background = 'rgba(255, 255, 255, 0.2)';
+        }, 1500);
+        
+        event.stopPropagation();
+    };
+
+    window.copyTopHooks = function() {
+        // Sort by power rating and take top 5
+        const hooksWithRating = lastGeneratedHooks.map(hook => ({
+            hook: hook,
+            rating: calculatePowerRating(hook)
+        }));
+        
+        hooksWithRating.sort((a, b) => b.rating - a.rating);
+        const topHooks = hooksWithRating.slice(0, 5).map(item => item.hook);
+        
+        copyToClipboard(topHooks.join('\n'));
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied Top 5!';
+        button.classList.add('btn-success');
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-primary');
+        }, 2000);
+    };
+
+    window.analyzeHooks = function() {
+        const analysis = lastGeneratedHooks.map((hook, index) => {
+            const wordCount = hook.split(' ').length;
+            const powerRating = calculatePowerRating(hook);
+            const hasQuestion = hook.includes('?');
+            const hasPowerWords = ['secret', 'nobody', 'shocking', 'stop'].some(word => hook.toLowerCase().includes(word));
+            
+            return {
+                hook: hook,
+                index: index + 1,
+                words: wordCount,
+                power: powerRating,
+                hasQuestion,
+                hasPowerWords
+            };
+        });
+        
+        analysis.sort((a, b) => b.power - a.power);
+        
+        let analysisText = 'Hook Power Analysis:\n\n';
+        analysis.slice(0, 5).forEach(item => {
+            analysisText += `${item.index}. "${item.hook}"\n`;
+            analysisText += `   Power: ${item.power}/10 | Words: ${item.words} | `;
+            analysisText += `${item.hasQuestion ? '✓ Question' : '✗ Question'} | `;
+            analysisText += `${item.hasPowerWords ? '✓ Power Words' : '✗ Power Words'}\n\n`;
+        });
+        
+        alert(analysisText);
+    };
+
+    window.exportHooks = function() {
+        const selectedOnly = selectedHooks.length > 0;
+        const hooksToExport = selectedOnly ? selectedHooks : lastGeneratedHooks;
+        
+        let exportText = `TikTok Hook Ideas - Generated ${new Date().toLocaleDateString()}\n\n`;
+        hooksToExport.forEach((hook, index) => {
+            const powerRating = calculatePowerRating(hook);
+            exportText += `${index + 1}. ${hook}\n`;
+            exportText += `   Power Rating: ${powerRating}/10\n`;
+            exportText += `   Word Count: ${hook.split(' ').length}\n\n`;
+        });
+        
+        exportText += `Total: ${hooksToExport.length} hooks`;
+        if (selectedOnly) exportText += ' (selected)';
+        
+        const blob = new Blob([exportText], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'tiktok-hooks.txt';
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+});
+</script>
+{% endblock %}

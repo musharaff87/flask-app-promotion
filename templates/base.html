@@ -6,18 +6,67 @@
     <title>{% block title %}Mushtastic Intelligence{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* Header/Navbar Styling */
+        .navbar {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e1f5fe;
+        }
+        .navbar .nav-link {
+            color: #1976d2 !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 0 5px;
+        }
+        .navbar .nav-link:hover {
+            color: #ffffff !important;
+            background-color: #42a5f5;
+            transform: translateY(-2px);
+        }
+        .navbar-brand {
+            color: #1565c0 !important;
+            font-weight: 700;
+        }
+        .navbar-brand:hover {
+            color: #0d47a1 !important;
+        }
+        
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e8 100%);
+            color: #2e7d32;
+            padding: 25px 0;
+            border-top: 1px solid #c8e6c9;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        footer p {
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        footer a {
+            color: #388e3c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #1b5e20;
+            text-decoration: underline;
+        }
+        
+        /* Body Styling (kept separate as requested) */
         body {
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            color: white;
             font-family: 'Arial', sans-serif;
             min-height: 100vh;
+            background-color: #ffffff;
+            color: #333;
         }
-        .navbar {
-            background: rgba(0, 0, 0, 0.8);
-        }
+        
+        /* Other component styles */
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
+            background: #ffffff;
+            border: 1px solid #ddd;
             transition: transform 0.3s;
         }
         .card:hover {
@@ -26,15 +75,10 @@
         .btn-custom {
             background-color: #ff4444;
             border: none;
+            color: white;
         }
         .btn-custom:hover {
             background-color: #ff6666;
-        }
-        footer {
-            background: rgba(0, 0, 0, 0.8);
-            position: relative;
-            bottom: 0;
-            width: 100%;
         }
         .navbar-brand img {
             height: 40px;
@@ -43,11 +87,11 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand d-flex align-items-center" href="/">
                 <img src="/static/mushtastic.png" alt="Mushtastic Intelligence Logo">
-                Mushtastic Intelligence
+                <span class="ms-2 fw-bold">Mushtastic Intelligence</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -61,11 +105,14 @@
             </div>
         </div>
     </nav>
+    
     {% block content %}{% endblock %}
+    
     <footer class="text-center py-3">
         <p>© 2025 Mushtastic Intelligence. All rights reserved.</p>
         <p>Contact us: <a href="mailto:musharaff87@gmail.com" style="color: #ff4444;">musharaff87@gmail.com</a></p>
     </footer>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

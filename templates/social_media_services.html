@@ -1,0 +1,719 @@
+{% extends "base.html" %}
+{% block title %}Free Social Media AI Tools - Instagram, YouTube, TikTok, Twitter Content Generator | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+    }
+
+    .hero-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        margin: 20px 0;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .platform-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+    }
+
+    .platform-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .platform-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .tool-card {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px 0;
+        transition: all 0.3s ease;
+        border-left: 4px solid #667eea;
+    }
+
+    .tool-card:hover {
+        background: #e3f2fd;
+        transform: translateX(5px);
+    }
+
+    .btn-custom {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+
+    .feature-badge {
+        background: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .free-badge {
+        background: #ff6b6b;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+    }
+
+    .stats-section {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+    }
+
+    .testimonial {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+    }
+
+    .faq-item {
+        background: white;
+        border-radius: 10px;
+        margin: 10px 0;
+        border: 1px solid #e0e0e0;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            margin: 10px;
+            padding: 25px;
+        }
+
+        .platform-card {
+            margin-bottom: 20px;
+        }
+
+        .platform-icon {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+
+<div class="container py-5" style="margin-top: 20px;">
+    <!-- Hero Section -->
+    <div class="hero-section text-center">
+        <h1 class="display-4 fw-bold mb-4">Free Social Media AI Tools</h1>
+        <p class="lead mb-4">Generate viral content for Instagram, YouTube, TikTok, and Twitter with our completely FREE AI-powered tools</p>
+        <div class="row text-center mb-4">
+            <div class="col-md-3">
+                <div class="stat-number text-primary">100%</div>
+                <p class="mb-0">Free Forever</p>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number text-success">50K+</div>
+                <p class="mb-0">Content Generated</p>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number text-info">4</div>
+                <p class="mb-0">Platforms Supported</p>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number text-warning">24/7</div>
+                <p class="mb-0">Always Available</p>
+            </div>
+        </div>
+        <p class="text-muted">Join thousands of creators who use our tools daily to boost their social media presence</p>
+    </div>
+
+    <!-- Instagram Section -->
+    <div class="platform-card position-relative" id="instagram-tools">
+        <div class="free-badge">100% FREE</div>
+        <div class="text-center mb-4">
+            <div class="platform-icon">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <h2 class="fw-bold">Instagram AI Tools</h2>
+            <p class="lead">Boost your Instagram engagement with trending hashtags and captivating captions</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-hashtag text-primary"></i> Hashtag Generator</h5>
+                    <p class="mb-3">Generate up to 50 trending and niche hashtags for maximum reach</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Trending Tags</span>
+                        <span class="feature-badge">Niche Tags</span>
+                        <span class="feature-badge">Copy Options</span>
+                    </div>
+                    <a href="/instagram-hashtag-generator" class="btn btn-custom">Generate Hashtags</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-edit text-success"></i> Caption Generator</h5>
+                    <p class="mb-3">Create engaging captions that boost likes and comments</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Engaging</span>
+                        <span class="feature-badge">CTA Included</span>
+                        <span class="feature-badge">Multiple Styles</span>
+                    </div>
+                    <a href="/instagram-caption-generator" class="btn btn-custom">Generate Captions</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-user text-info"></i> Bio Generator</h5>
+                    <p class="mb-3">Craft the perfect Instagram bio that converts visitors to followers</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Professional</span>
+                        <span class="feature-badge">Creative</span>
+                        <span class="feature-badge">Personal</span>
+                    </div>
+                    <a href="/instagram-bio-generator" class="btn btn-custom">Generate Bio</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/instagram-tools" class="btn btn-outline-primary btn-lg">View All Instagram Tools</a>
+        </div>
+    </div>
+
+    <!-- YouTube Section -->
+    <div class="platform-card position-relative" id="youtube-tools">
+        <div class="free-badge">100% FREE</div>
+        <div class="text-center mb-4">
+            <div class="platform-icon">
+                <i class="fab fa-youtube"></i>
+            </div>
+            <h2 class="fw-bold text-danger">YouTube AI Tools</h2>
+            <p class="lead">Optimize your YouTube videos for maximum visibility and growth</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-tags text-danger"></i> Tag Generator</h5>
+                    <p class="mb-3">Generate SEO-optimized keywords and tags for better discoverability</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">SEO Optimized</span>
+                        <span class="feature-badge">No # Symbol</span>
+                        <span class="feature-badge">Keyword Rich</span>
+                    </div>
+                    <a href="/youtube-tag-generator" class="btn btn-custom">Generate Tags</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-heading text-warning"></i> Title Generator</h5>
+                    <p class="mb-3">Create click-worthy titles that boost your video views</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Click-worthy</span>
+                        <span class="feature-badge">SEO Friendly</span>
+                        <span class="feature-badge">Multiple Options</span>
+                    </div>
+                    <a href="/youtube-title-generator" class="btn btn-custom">Generate Titles</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-align-left text-info"></i> Description Generator</h5>
+                    <p class="mb-3">Write comprehensive video descriptions with CTAs and timestamps</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">SEO Rich</span>
+                        <span class="feature-badge">CTA Included</span>
+                        <span class="feature-badge">Structured</span>
+                    </div>
+                    <a href="/youtube-description-generator" class="btn btn-custom">Generate Description</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/youtube-tools" class="btn btn-outline-danger btn-lg">View All YouTube Tools</a>
+        </div>
+    </div>
+
+    <!-- TikTok Section -->
+    <div class="platform-card position-relative" id="tiktok-tools">
+        <div class="free-badge">100% FREE</div>
+        <div class="text-center mb-4">
+            <div class="platform-icon">
+                <i class="fab fa-tiktok"></i>
+            </div>
+            <h2 class="fw-bold">TikTok AI Tools</h2>
+            <p class="lead">Create viral TikTok content with trending hashtags and engaging captions</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-hashtag text-dark"></i> Hashtag Generator</h5>
+                    <p class="mb-3">Generate viral TikTok hashtags including #fyp #foryou and trending tags</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Viral Tags</span>
+                        <span class="feature-badge">FYP Ready</span>
+                        <span class="feature-badge">Trending</span>
+                    </div>
+                    <a href="/tiktok-hashtag-generator" class="btn btn-custom">Generate Hashtags</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-comment text-primary"></i> Caption Generator</h5>
+                    <p class="mb-3">Create catchy captions with emojis and trending phrases</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Emoji Rich</span>
+                        <span class="feature-badge">Trending Phrases</span>
+                        <span class="feature-badge">Engaging</span>
+                    </div>
+                    <a href="/tiktok-caption-generator" class="btn btn-custom">Generate Captions</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-bullhorn text-warning"></i> Hook Generator</h5>
+                    <p class="mb-3">Generate attention-grabbing hooks that stop the scroll</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Scroll Stopper</span>
+                        <span class="feature-badge">Viral Hooks</span>
+                        <span class="feature-badge">Creative</span>
+                    </div>
+                    <a href="/tiktok-hook-generator" class="btn btn-custom">Generate Hooks</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/tiktok-tools" class="btn btn-outline-dark btn-lg">View All TikTok Tools</a>
+        </div>
+    </div>
+
+    <!-- Twitter/X Section -->
+    <div class="platform-card position-relative" id="twitter-tools">
+        <div class="free-badge">100% FREE</div>
+        <div class="text-center mb-4">
+            <div class="platform-icon">
+                <i class="fab fa-twitter"></i>
+            </div>
+            <h2 class="fw-bold text-primary">Twitter/X AI Tools</h2>
+            <p class="lead">Craft engaging tweets and build your Twitter presence with AI</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-hashtag text-primary"></i> Hashtag Generator</h5>
+                    <p class="mb-3">Generate trending Twitter hashtags for maximum reach and engagement</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Trending</span>
+                        <span class="feature-badge">News Related</span>
+                        <span class="feature-badge">Viral Ready</span>
+                    </div>
+                    <a href="/twitter-hashtag-generator" class="btn btn-custom">Generate Hashtags</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-tweet text-info"></i> Tweet Generator</h5>
+                    <p class="mb-3">Create engaging tweets that get likes, retweets, and replies</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">280 Characters</span>
+                        <span class="feature-badge">Engaging</span>
+                        <span class="feature-badge">Multiple Styles</span>
+                    </div>
+                    <a href="/twitter-tweet-generator" class="btn btn-custom">Generate Tweets</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tool-card">
+                    <h5><i class="fas fa-list text-success"></i> Thread Generator</h5>
+                    <p class="mb-3">Create compelling Twitter threads that tell your story</p>
+                    <div class="mb-3">
+                        <span class="feature-badge">Multi-tweet</span>
+                        <span class="feature-badge">Storytelling</span>
+                        <span class="feature-badge">Engaging</span>
+                    </div>
+                    <a href="/twitter-thread-generator" class="btn btn-custom">Generate Threads</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/twitter-tools" class="btn btn-outline-primary btn-lg">View All Twitter Tools</a>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="blog-section">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Why Choose Our Social Media AI Tools?</h2>
+            <p class="lead">Everything you need to dominate social media, completely free</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="display-4 text-success mb-3">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h5>100% Free Forever</h5>
+                    <p>No hidden fees, no subscriptions, no limits. Use all our tools completely free.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="display-4 text-primary mb-3">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h5>AI-Powered</h5>
+                    <p>Advanced AI technology generates high-quality, relevant content for your brand.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="display-4 text-warning mb-3">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h5>Instant Results</h5>
+                    <p>Generate hashtags, captions, and content in seconds, not hours.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="display-4 text-info mb-3">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h5>Mobile Friendly</h5>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="blog-section">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">How Our Social Media AI Tools Work</h2>
+            <p class="lead">Simple 3-step process to create viral content</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="text-center">
+                    <div class="display-1 text-primary mb-3">1</div>
+                    <h4>Describe Your Content</h4>
+                    <p>Tell us about your post, video, or content. Be as detailed as you want - our AI understands context!</p>
+                    <div class="bg-light p-3 rounded">
+                        <small class="text-muted">Example: "Sunset beach photo with friends, vacation vibes, summer evening, California coast"</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="text-center">
+                    <div class="display-1 text-success mb-3">2</div>
+                    <h4>Choose Your Style</h4>
+                    <p>Select from trending, niche, or mixed content styles. Customize the number of results you want.</p>
+                    <div class="bg-light p-3 rounded">
+                        <small class="text-muted">Options: Trending (max reach), Niche (engaged audience), Mixed (balanced approach)</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="text-center">
+                    <div class="display-1 text-warning mb-3">3</div>
+                    <h4>Copy & Use</h4>
+                    <p>Get your results instantly! Copy individual items or bulk copy everything. Generate more if needed.</p>
+                    <div class="bg-light p-3 rounded">
+                        <small class="text-muted">Multiple copy options: Text only, with hashtags, individual selection, or bulk copy all</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Stories / Testimonials -->
+    <div class="stats-section text-center">
+        <h2 class="fw-bold text-white mb-4">What Our Users Say</h2>
+        <div class="row">
+            <div class="col-lg-4 mb-3">
+                <div class="testimonial">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p>"Increased my Instagram engagement by 300%! The hashtag generator finds tags I never would have thought of."</p>
+                    <small class="text-muted">- Sarah M., Content Creator</small>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="testimonial">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p>"The YouTube title generator helped my videos get 5x more views. The titles are so much better than what I came up with."</p>
+                    <small class="text-muted">- Mike R., YouTuber</small>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="testimonial">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p>"My TikToks started going viral after using the hashtag generator. The #fyp tags actually work!"</p>
+                    <small class="text-muted">- Emma K., TikTok Creator</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Blog Content Section -->
+    <div class="blog-section">
+        <h2 class="fw-bold mb-4">Master Social Media with AI: The Complete Guide</h2>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>Instagram Marketing in 2024</h3>
+                <p>Instagram remains one of the most powerful platforms for businesses and creators. With over 2 billion active users, the competition for attention is fierce. Our <strong>free Instagram hashtag generator</strong> uses advanced AI to analyze trending topics and suggest the perfect mix of popular and niche hashtags.</p>
+
+                <h4>Instagram Hashtag Best Practices:</h4>
+                <ul>
+                    <li><strong>Use 20-30 hashtags per post</strong> - Instagram allows up to 30, so use them!</li>
+                    <li><strong>Mix popular and niche tags</strong> - Our tool automatically balances this</li>
+                    <li><strong>Research your competitors</strong> - See what's working in your industry</li>
+                    <li><strong>Create branded hashtags</strong> - Build your community</li>
+                    <li><strong>Avoid banned hashtags</strong> - Our AI filters these out automatically</li>
+                </ul>
+
+                <h3>YouTube SEO Strategy</h3>
+                <p>YouTube is the world's second-largest search engine. Optimizing your videos for search is crucial for growth. Our <strong>YouTube tag generator</strong> creates SEO-optimized keywords that help your videos rank higher in search results.</p>
+
+                <h4>YouTube Optimization Tips:</h4>
+                <ul>
+                    <li><strong>Use relevant keywords in titles</strong> - Our title generator includes trending keywords</li>
+                    <li><strong>Write detailed descriptions</strong> - Our description generator creates SEO-rich content</li>
+                    <li><strong>Add tags strategically</strong> - Use our tag generator for maximum discoverability</li>
+                    <li><strong>Create eye-catching thumbnails</strong> - Visual appeal matters</li>
+                    <li><strong>Encourage engagement</strong> - Ask viewers to like, comment, and subscribe</li>
+                </ul>
+
+                <h3>TikTok Viral Content Strategy</h3>
+                <p>TikTok's algorithm favors engaging, trending content. Our <strong>TikTok hashtag generator</strong> includes essential tags like #fyp, #foryou, and #viral, plus trending hashtags specific to your content.</p>
+
+                <h4>TikTok Success Secrets:</h4>
+                <ul>
+                    <li><strong>Hook viewers in the first 3 seconds</strong> - Use our hook generator</li>
+                    <li><strong>Follow trending sounds and challenges</strong> - Stay current</li>
+                    <li><strong>Use trending hashtags</strong> - Our tool finds the latest trends</li>
+                    <li><strong>Post consistently</strong> - Algorithm rewards frequent posting</li>
+                    <li><strong>Engage with your audience</strong> - Reply to comments quickly</li>
+                </ul>
+
+                <h3>Twitter/X Growth Strategies</h3>
+                <p>Twitter/X is perfect for real-time engagement and trending topics. Our <strong>Twitter hashtag generator</strong> helps you tap into trending conversations and reach new audiences.</p>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="bg-light p-4 rounded">
+                    <h5>Quick Stats</h5>
+                    <ul class="list-unstyled">
+                        <li>📈 <strong>Instagram:</strong> 2B+ active users</li>
+                        <li>🎥 <strong>YouTube:</strong> 2.7B+ active users</li>
+                        <li>📱 <strong>TikTok:</strong> 1B+ active users</li>
+                        <li>🐦 <strong>Twitter:</strong> 450M+ active users</li>
+                    </ul>
+
+                    <h5 class="mt-4">Our Tools Generate:</h5>
+                    <ul class="list-unstyled">
+                        <li>✅ <strong>50,000+</strong> hashtags daily</li>
+                        <li>✅ <strong>10,000+</strong> captions monthly</li>
+                        <li>✅ <strong>5,000+</strong> titles weekly</li>
+                        <li>✅ <strong>100%</strong> free forever</li>
+                    </ul>
+                </div>
+
+                <div class="mt-4 p-4 bg-primary text-white rounded">
+                    <h5>Start Creating Now!</h5>
+                    <p class="mb-3">Join thousands of creators using our free tools to grow their social media presence.</p>
+                    <a href="#instagram-tools" class="btn btn-light">Get Started Free</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="blog-section">
+        <h2 class="fw-bold text-center mb-5">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAccordion">
+            <div class="faq-item">
+                <div class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                        Are these social media tools really free?
+                    </button>
+                </div>
+                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes! All our social media AI tools are 100% free forever. No hidden costs, no subscription fees, no limits on usage. We believe every creator should have access to powerful AI tools.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                        How accurate are the AI-generated hashtags?
+                    </button>
+                </div>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Our AI analyzes millions of social media posts to identify trending and relevant hashtags. The accuracy is very high, with most users seeing significant engagement improvements. We continuously update our AI models to stay current with trends.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                        Can I use these tools for business accounts?
+                    </button>
+                </div>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Absolutely! Our tools work great for personal accounts, business accounts, agencies, and brands. Many businesses use our tools to maintain consistent, engaging social media presence across all platforms.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                        How often are the hashtag databases updated?
+                    </button>
+                </div>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Our AI models are trained on real-time data and updated continuously. We monitor trending topics across all platforms 24/7 to ensure you always get the most current and effective hashtags and content suggestions.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center py-5">
+        <div class="hero-section">
+            <h2 class="fw-bold mb-4">Ready to Go Viral?</h2>
+            <p class="lead mb-4">Start using our free social media AI tools today and watch your engagement soar!</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="#instagram-tools" class="btn btn-custom btn-lg">Instagram Tools</a>
+                <a href="#youtube-tools" class="btn btn-custom btn-lg">YouTube Tools</a>
+                <a href="#tiktok-tools" class="btn btn-custom btn-lg">TikTok Tools</a>
+                <a href="#twitter-tools" class="btn btn-custom btn-lg">Twitter Tools</a>
+            </div>
+            <p class="mt-4 text-muted">
+                <i class="fas fa-shield-alt text-success"></i> Completely Free
+                <i class="fas fa-clock text-primary ms-3"></i> Instant Results
+                <i class="fas fa-mobile-alt text-info ms-3"></i> Mobile Friendly
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all cards
+    document.querySelectorAll('.platform-card, .tool-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+</script>
+{% endblock %}

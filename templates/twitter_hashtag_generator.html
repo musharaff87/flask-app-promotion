@@ -1,0 +1,632 @@
+{% extends "base.html" %}
+{% block title %}Free Twitter/X Hashtag Generator - AI Powered Trending Tags 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">🐦 Twitter Hashtag Generator</h1>
+        <p class="lead mb-4">Generate trending Twitter/X hashtags instantly with AI - 100% FREE forever!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">30+</div>
+                <small>Tags</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">1M+</div>
+                <small>Generated</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">24/7</div>
+                <small>Available</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="tagGeneratorForm">
+                        <div class="mb-4">
+                            <label for="contentPrompt" class="form-label fw-bold">Describe your Twitter/X content:</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="contentPrompt"
+                                rows="4"
+                                placeholder="E.g., Artificial intelligence trends, machine learning breakthrough, tech startup news, or breaking technology announcement..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Include topics, industry, news type, opinions - our AI finds the most relevant trending hashtags!</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label for="tagCount" class="form-label fw-bold">Number of hashtags:</label>
+                                <select class="form-select" id="tagCount">
+                                    <option value="10">10 hashtags</option>
+                                    <option value="15" selected>15 hashtags</option>
+                                    <option value="20">20 hashtags</option>
+                                    <option value="25">25 hashtags</option>
+                                    <option value="30">30 hashtags</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="contentType" class="form-label fw-bold">Content Type:</label>
+                                <select class="form-select" id="contentType">
+                                    <option value="general">🐦 General Tweet</option>
+                                    <option value="news">📰 News/Breaking</option>
+                                    <option value="opinion">💭 Opinion/Hot Take</option>
+                                    <option value="thread">🧵 Thread</option>
+                                    <option value="question">❓ Question/Poll</option>
+                                    <option value="promotional">📢 Promotional</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="trendFocus" class="form-label fw-bold">Trend Focus:</label>
+                                <select class="form-select" id="trendFocus">
+                                    <option value="current">🔥 Current Trending</option>
+                                    <option value="evergreen">🌲 Evergreen</option>
+                                    <option value="niche" selected>🎯 Niche Targeted</option>
+                                    <option value="viral">⚡ Viral Potential</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate Twitter Hashtags ✨</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🎉 Generated Twitter Hashtags</h5>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light btn-sm" id="copyAllBtn">
+                                    <i class="fas fa-copy"></i> Copy All
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="copyTextOnlyBtn">
+                                    Text Only
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="hashtagResults" class="hashtag-container mb-4"></div>
+                        
+                        <!-- Copy Options -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📋 Quick Copy Options:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="copyFormatted('hash')">With #</button>
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="copyFormatted('space')">Space Separated</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="copyFormatted('comma')">Comma Separated</button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="copyFormatted('lines')">Line by Line</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Stats:</h6>
+                                <div id="statsContainer">
+                                    <small class="text-muted">
+                                        <span id="tagStats">0 hashtags generated</span> •
+                                        <span id="characterCount">0 characters</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="fw-bold text-primary">💡 Pro Tips for Twitter Hashtags:</h6>
+                            <ul class="small mb-0">
+                                <li><strong>Use 1-3 hashtags per tweet</strong> - Twitter works best with fewer, more targeted hashtags</li>
+                                <li><strong>Join trending conversations</strong> - Check what's trending in your region</li>
+                                <li><strong>Mix popular and niche tags</strong> - Balance reach with engagement</li>
+                                <li><strong>Create branded hashtags</strong> - Build your community with unique tags</li>
+                                <li><strong>Time your tweets</strong> - Post when your hashtags are most active</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <button class="btn btn-outline-danger btn-sm ms-2" onclick="document.getElementById('tagGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Tips and Examples -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">🎯 Hashtag Examples</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">Tech Content:</h6>
+                    <div class="hashtag-example mb-3">
+                        <small>#AI #MachineLearning #TechNews #Innovation #Startups</small>
+                    </div>
+                    
+                    <h6 class="fw-bold">Business Posts:</h6>
+                    <div class="hashtag-example mb-3">
+                        <small>#Business #Entrepreneurship #Leadership #Marketing #Growth</small>
+                    </div>
+
+                    <h6 class="fw-bold">News & Politics:</h6>
+                    <div class="hashtag-example">
+                        <small>#Breaking #News #Politics #Election #Policy</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">📈 Why Use Our Generator?</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ <strong>Real-time Trending:</strong> Up-to-date hashtag suggestions</li>
+                        <li class="mb-2">✅ <strong>Twitter Optimized:</strong> Designed specifically for Twitter/X</li>
+                        <li class="mb-2">✅ <strong>Engagement Focused:</strong> Hashtags that drive interactions</li>
+                        <li class="mb-2">✅ <strong>News Aware:</strong> Connects to current events</li>
+                        <li class="mb-2">✅ <strong>Industry Specific:</strong> Tailored to your niche</li>
+                        <li class="mb-0">✅ <strong>Completely Free:</strong> No limits, no fees</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">🚀 More Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/twitter-tweet-generator" class="btn btn-outline-primary btn-sm">Tweet Generator</a>
+                        <a href="/twitter-thread-generator" class="btn btn-outline-success btn-sm">Thread Generator</a>
+                        <a href="/instagram-hashtag-generator" class="btn btn-outline-danger btn-sm">Instagram Hashtags</a>
+                        <a href="/tiktok-hashtag-generator" class="btn btn-outline-dark btn-sm">TikTok Hashtags</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">Complete Guide to Twitter Hashtag Strategy - Free AI Tool 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>What Makes Twitter Hashtags Different?</h3>
+                            <p>Unlike Instagram where you can use 30 hashtags, Twitter works best with 1-3 highly relevant hashtags per tweet. Our <strong>free Twitter hashtag generator</strong> uses AI to identify the most impactful hashtags for your specific content, helping you join conversations and reach the right audience.</p>
+
+                            <h3>Types of Twitter Hashtags</h3>
+                            <h4>1. Trending Hashtags</h4>
+                            <p>These are hashtags currently trending on Twitter. They offer maximum reach but high competition:</p>
+                            <ul>
+                                <li>Check Twitter's trending section daily</li>
+                                <li>Regional trends vs global trends</li>
+                                <li>News and event-based trending topics</li>
+                                <li>Viral memes and cultural moments</li>
+                            </ul>
+
+                            <h4>2. Industry Hashtags</h4>
+                            <p>Consistent hashtags used within specific industries:</p>
+                            <ul>
+                                <li><strong>Tech:</strong> #AI #MachineLearning #TechNews #Innovation</li>
+                                <li><strong>Marketing:</strong> #Marketing #DigitalMarketing #SEO #ContentMarketing</li>
+                                <li><strong>Business:</strong> #Entrepreneurship #Leadership #Startup #Growth</li>
+                                <li><strong>Finance:</strong> #FinTech #Investing #Cryptocurrency #PersonalFinance</li>
+                            </ul>
+
+                            <h4>3. Event Hashtags</h4>
+                            <p>Hashtags for live events, conferences, and special occasions:</p>
+                            <ul>
+                                <li>Conference hashtags (#CES2024, #SXSW)</li>
+                                <li>Sports events (#SuperBowl, #WorldCup)</li>
+                                <li>Award shows (#Oscars, #Grammys)</li>
+                                <li>Holidays and celebrations (#NewYear, #BlackFriday)</li>
+                            </ul>
+
+                            <h4>4. Branded Hashtags</h4>
+                            <p>Unique hashtags created by brands and individuals:</p>
+                            <ul>
+                                <li>Company hashtags (#JustDoIt, #ThinkDifferent)</li>
+                                <li>Campaign hashtags (#IceBucketChallenge)</li>
+                                <li>Personal brand hashtags (#YourNameHere)</li>
+                                <li>Community hashtags (#TwitterChat, #MondayMotivation)</li>
+                            </ul>
+
+                            <h3>Twitter Hashtag Best Practices</h3>
+                            <h4>The 1-3 Rule</h4>
+                            <p>Research shows that tweets with 1-3 hashtags receive the highest engagement. More than 3 hashtags can actually decrease engagement on Twitter.</p>
+
+                            <h4>Hashtag Placement Strategies</h4>
+                            <ul>
+                                <li><strong>Mid-tweet:</strong> Integrate hashtags naturally into your message</li>
+                                <li><strong>End of tweet:</strong> Add hashtags at the end for clean readability</li>
+                                <li><strong>Comment hashtags:</strong> Reply to your own tweet with additional hashtags</li>
+                            </ul>
+
+                            <h3>Timing and Trending Analysis</h3>
+                            <h4>Best Times to Use Hashtags</h4>
+                            <ul>
+                                <li><strong>Breaking News:</strong> Immediately when stories break</li>
+                                <li><strong>Business Hours:</strong> 9 AM - 5 PM in your target timezone</li>
+                                <li><strong>Event Hashtags:</strong> Before, during, and immediately after events</li>
+                                <li><strong>Weekly Hashtags:</strong> #MondayMotivation, #ThrowbackThursday, #FridayFeeling</li>
+                            </ul>
+
+                            <h3>Measuring Hashtag Performance</h3>
+                            <h4>Key Metrics to Track:</h4>
+                            <ul>
+                                <li><strong>Impressions:</strong> How many people saw your hashtag</li>
+                                <li><strong>Engagement Rate:</strong> Interactions per impression</li>
+                                <li><strong>Reach:</strong> Unique users who saw your content</li>
+                                <li><strong>Mention Volume:</strong> How often the hashtag is used</li>
+                                <li><strong>Click-through Rate:</strong> Clicks on links in hashtagged tweets</li>
+                            </ul>
+
+                            <h3>Common Twitter Hashtag Mistakes</h3>
+                            <h4>Avoid These Pitfalls:</h4>
+                            <ul>
+                                <li>❌ Using too many hashtags (more than 3)</li>
+                                <li>❌ Irrelevant hashtags just for reach</li>
+                                <li>❌ Hijacking trending hashtags inappropriately</li>
+                                <li>❌ Creating hashtags that are too long</li>
+                                <li>❌ Not researching hashtag context first</li>
+                                <li>❌ Using the same hashtags for every tweet</li>
+                            </ul>
+
+                            <h3>Advanced Hashtag Strategies</h3>
+                            <h4>Twitter Chat Participation</h4>
+                            <p>Join scheduled Twitter chats in your industry using specific hashtags. Popular chat formats include:</p>
+                            <ul>
+                                <li>#MarketingTwitter for marketing professionals</li>
+                                <li>#TechTwitter for technology discussions</li>
+                                <li>#WritingCommunity for writers and authors</li>
+                                <li>#StartupChat for entrepreneurs</li>
+                            </ul>
+
+                            <h4>Hashtag Monitoring and Research</h4>
+                            <p>Use these strategies to find effective hashtags:</p>
+                            <ul>
+                                <li>Monitor competitor hashtag usage</li>
+                                <li>Track hashtag performance over time</li>
+                                <li>Research hashtag volume and competition</li>
+                                <li>Follow industry influencers' hashtag choices</li>
+                                <li>Use Twitter's advanced search to find relevant hashtags</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-primary text-white p-4 rounded mb-4">
+                                <h5>🐦 Twitter Hashtag Stats</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 1-3 hashtags = optimal engagement</li>
+                                    <li>• 125% more engagement than no hashtags</li>
+                                    <li>• 55% more retweets with hashtags</li>
+                                    <li>• Peak hashtag usage: 9 AM & 9 PM</li>
+                                    <li>• Trending hashtags last 11 minutes average</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded">
+                                <h6>Popular Hashtag Categories:</h6>
+                                <div class="d-flex flex-wrap">
+                                    <span class="badge bg-secondary me-1 mb-1">#Breaking</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Tech</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Business</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#News</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Sports</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Politics</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Marketing</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#AI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/twitter-tools" class="btn btn-outline-primary">← Back to Twitter Tools</a>
+            <a href="/twitter-tweet-generator" class="btn btn-primary">Tweet Generator →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.hashtag-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.hashtag-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    margin: 0.25rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.hashtag-tag:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.4);
+}
+
+.hashtag-tag.copied {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    animation: pulse 0.6s ease-in-out;
+}
+
+.hashtag-example {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #1da1f2;
+    box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    .hashtag-tag {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('tagGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const hashtagResults = document.getElementById('hashtagResults');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const copyTextOnlyBtn = document.getElementById('copyTextOnlyBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedTags = [];
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateHashtags();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateHashtags();
+    });
+
+    copyAllBtn.addEventListener('click', function() {
+        const tags = lastGeneratedTags.map(tag => '#' + tag).join(' ');
+        copyToClipboard(tags);
+        showCopyFeedback(this, 'All hashtags copied!');
+    });
+
+    copyTextOnlyBtn.addEventListener('click', function() {
+        const tags = lastGeneratedTags.join(' ');
+        copyToClipboard(tags);
+        showCopyFeedback(this, 'Text copied!');
+    });
+
+    async function generateHashtags() {
+        const prompt = document.getElementById('contentPrompt').value.trim();
+        const count = parseInt(document.getElementById('tagCount').value);
+        const contentType = document.getElementById('contentType').value;
+        const trendFocus = document.getElementById('trendFocus').value;
+
+        if (!prompt) {
+            showError('Please describe your Twitter content');
+            return;
+        }
+
+        const enhancedPrompt = `${prompt} (Content type: ${contentType}, Focus: ${trendFocus})`;
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/twitter/hashtags', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt,
+                    count: count
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate hashtags');
+            }
+
+            if (data.success && data.tags) {
+                displayResults(data.tags);
+                lastGeneratedTags = data.tags;
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            buttonText.textContent = 'Generating Trending Hashtags...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Generate Twitter Hashtags ✨';
+        }
+    }
+
+    function displayResults(tags) {
+        hashtagResults.innerHTML = '';
+
+        tags.forEach((tag, index) => {
+            const tagElement = document.createElement('button');
+            tagElement.className = 'hashtag-tag';
+            tagElement.textContent = tag;
+            tagElement.title = `Click to copy #${tag}`;
+            tagElement.addEventListener('click', function() {
+                copyToClipboard('#' + tag);
+                this.classList.add('copied');
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                }, 1000);
+            });
+            hashtagResults.appendChild(tagElement);
+        });
+
+        // Update stats
+        document.getElementById('tagStats').textContent = `${tags.length} hashtags generated`;
+        const charCount = tags.map(tag => '#' + tag).join(' ').length;
+        document.getElementById('characterCount').textContent = `${charCount} characters`;
+
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('btn-success');
+        button.classList.remove('btn-light');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-light');
+        }, 2000);
+    }
+
+    // Copy format functions
+    window.copyFormatted = function(format) {
+        let text = '';
+        switch(format) {
+            case 'hash':
+                text = lastGeneratedTags.map(tag => '#' + tag).join(' ');
+                break;
+            case 'space':
+                text = lastGeneratedTags.join(' ');
+                break;
+            case 'comma':
+                text = lastGeneratedTags.join(', ');
+                break;
+            case 'lines':
+                text = lastGeneratedTags.map(tag => '#' + tag).join('\n');
+                break;
+        }
+        copyToClipboard(text);
+        
+        // Show feedback
+        const button = event.target;
+        showCopyFeedback(button, 'Copied!');
+    };
+});
+</script>
+{% endblock %}

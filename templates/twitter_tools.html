@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+{% block title %}Free Twitter/X AI Tools - Hashtags, Tweets, Threads Generator | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">🐦 Twitter/X AI Tools</h1>
+        <p class="lead mb-4">Create viral tweets and grow your Twitter presence - 100% FREE!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free Forever</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">280</div>
+                <small>Characters Max</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">50K+</div>
+                <small>Tweets Generated</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">24/7</div>
+                <small>Always Available</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main Tools -->
+        <div class="col-lg-8">
+            <div class="row">
+                <!-- Hashtag Generator -->
+                <div class="col-md-6 mb-4">
+                    <div class="card tool-card h-100">
+                        <div class="card-body text-center">
+                            <div class="tool-icon mb-3">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                            <h5 class="card-title">Twitter Hashtag Generator</h5>
+                            <p class="card-text">Generate trending Twitter hashtags for maximum reach and engagement.</p>
+                            <div class="mb-3">
+                                <span class="badge bg-success">Trending</span>
+                                <span class="badge bg-info">News Related</span>
+                                <span class="badge bg-warning">Viral Ready</span>
+                            </div>
+                            <a href="/twitter-hashtag-generator" class="btn btn-primary">Generate Hashtags</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tweet Generator -->
+                <div class="col-md-6 mb-4">
+                    <div class="card tool-card h-100">
+                        <div class="card-body text-center">
+                            <div class="tool-icon mb-3">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <h5 class="card-title">Tweet Generator</h5>
+                            <p class="card-text">Create engaging tweets that get likes, retweets, and replies.</p>
+                            <div class="mb-3">
+                                <span class="badge bg-success">280 Characters</span>
+                                <span class="badge bg-info">Engaging</span>
+                                <span class="badge bg-warning">Multiple Styles</span>
+                            </div>
+                            <a href="/twitter-tweet-generator" class="btn btn-primary">Generate Tweets</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thread Generator -->
+                <div class="col-md-6 mb-4">
+                    <div class="card tool-card h-100">
+                        <div class="card-body text-center">
+                            <div class="tool-icon mb-3">
+                                <i class="fas fa-list"></i>
+                            </div>
+                            <h5 class="card-title">Thread Generator</h5>
+                            <p class="card-text">Create compelling Twitter threads that tell your story and engage followers.</p>
+                            <div class="mb-3">
+                                <span class="badge bg-success">Multi-tweet</span>
+                                <span class="badge bg-info">Storytelling</span>
+                                <span class="badge bg-warning">Engaging</span>
+                            </div>
+                            <a href="/twitter-thread-generator" class="btn btn-primary">Generate Threads</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bio Generator -->
+                <div class="col-md-6 mb-4">
+                    <div class="card tool-card h-100">
+                        <div class="card-body text-center">
+                            <div class="tool-icon mb-3">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h5 class="card-title">Bio Generator</h5>
+                            <p class="card-text">Craft the perfect Twitter bio that attracts followers and builds your brand.</p>
+                            <div class="mb-3">
+                                <span class="badge bg-success">160 Characters</span>
+                                <span class="badge bg-info">Professional</span>
+                                <span class="badge bg-warning">Creative</span>
+                            </div>
+                            <a href="/twitter-bio-generator" class="btn btn-primary">Generate Bio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">🎯 Twitter Growth Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ <strong>Tweet consistently:</strong> 1-3 times per day optimal</li>
+                        <li class="mb-2">✅ <strong>Engage authentically:</strong> Reply and retweet others</li>
+                        <li class="mb-2">✅ <strong>Use trending hashtags:</strong> Join conversations</li>
+                        <li class="mb-2">✅ <strong>Share valuable content:</strong> Educate and entertain</li>
+                        <li class="mb-0">✅ <strong>Tweet at peak times:</strong> 9 AM and 9 PM</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">📊 Success Stories</h5>
+                </div>
+                <div class="card-body">
+                    <div class="testimonial mb-3">
+                        <div class="stars mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <small>"Increased my engagement by 400% using these hashtag suggestions!"</small>
+                        <br><small class="text-muted">- Sarah J., Marketer</small>
+                    </div>
+                    <div class="testimonial">
+                        <div class="stars mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <small>"My threads now consistently get viral engagement!"</small>
+                        <br><small class="text-muted">- Alex M., Creator</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">🚀 More Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/instagram-tools" class="btn btn-outline-primary btn-sm">Instagram Tools</a>
+                        <a href="/youtube-tools" class="btn btn-outline-danger btn-sm">YouTube Tools</a>
+                        <a href="/tiktok-tools" class="btn btn-outline-dark btn-sm">TikTok Tools</a>
+                        <a href="/social-media" class="btn btn-outline-secondary btn-sm">All Tools</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">Twitter/X Marketing Mastery Guide - Grow Your Following & Engagement 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>Why Twitter/X Marketing Still Matters in 2024</h3>
+                            <p>Despite changes in ownership and name, Twitter/X remains a powerful platform for real-time engagement, news, and community building. With over 450 million monthly active users, it's the go-to platform for breaking news, trending topics, and meaningful conversations. Our <strong>free Twitter AI tools</strong> help you create content that resonates and drives engagement.</p>
+
+                            <h3>Understanding the Twitter/X Algorithm</h3>
+                            <h4>Key Ranking Factors:</h4>
+                            <ul>
+                                <li><strong>Engagement Rate:</strong> Likes, retweets, replies within first hour</li>
+                                <li><strong>User Relationship:</strong> How often users interact with your content</li>
+                                <li><strong>Tweet Recency:</strong> Fresh content gets priority</li>
+                                <li><strong>Content Quality:</strong> Original, valuable content performs better</li>
+                                <li><strong>Trending Topics:</strong> Joining relevant conversations</li>
+                            </ul>
+
+                            <h3>Twitter Content Strategy</h3>
+                            <h4>Types of High-Performing Tweets:</h4>
+                            <ul>
+                                <li><strong>Educational Threads:</strong> Share knowledge in bite-sized pieces</li>
+                                <li><strong>Behind-the-Scenes:</strong> Humanize your brand</li>
+                                <li><strong>Hot Takes:</strong> Share opinions on industry topics</li>
+                                <li><strong>Questions:</strong> Spark conversations and engagement</li>
+                                <li><strong>Tips & Tricks:</strong> Provide immediate value</li>
+                                <li><strong>News Commentary:</strong> Add your perspective to trending stories</li>
+                            </ul>
+
+                            <h3>Hashtag Strategy for Twitter</h3>
+                            <p>Unlike Instagram, Twitter works best with 1-3 highly relevant hashtags. Focus on:</p>
+                            <ul>
+                                <li><strong>Trending Hashtags:</strong> Check what's trending in your region</li>
+                                <li><strong>Industry Hashtags:</strong> Join professional conversations</li>
+                                <li><strong>Event Hashtags:</strong> Participate in live events and conferences</li>
+                                <li><strong>Branded Hashtags:</strong> Create unique tags for campaigns</li>
+                            </ul>
+
+                            <h3>Building a Twitter Community</h3>
+                            <h4>Engagement Best Practices:</h4>
+                            <ul>
+                                <li>Reply to comments within 1-2 hours</li>
+                                <li>Retweet with thoughtful commentary</li>
+                                <li>Quote tweet to add your perspective</li>
+                                <li>Join Twitter chats in your industry</li>
+                                <li>Share others' content regularly</li>
+                            </ul>
+
+                            <h4>Thread Writing Tips:</h4>
+                            <ul>
+                                <li>Start with a compelling hook tweet</li>
+                                <li>Number your tweets (1/x format)</li>
+                                <li>Keep each tweet valuable on its own</li>
+                                <li>End with a call-to-action</li>
+                                <li>Use thread tools for better formatting</li>
+                            </ul>
+
+                            <h3>Twitter Analytics & Performance</h3>
+                            <h4>Key Metrics to Track:</h4>
+                            <ul>
+                                <li><strong>Impressions:</strong> How many people saw your tweet</li>
+                                <li><strong>Engagement Rate:</strong> Interactions divided by impressions</li>
+                                <li><strong>Click-Through Rate:</strong> Clicks on links in your tweets</li>
+                                <li><strong>Follower Growth:</strong> New followers gained over time</li>
+                                <li><strong>Mention Rate:</strong> How often you're mentioned</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-primary text-white p-4 rounded mb-4">
+                                <h5>🐦 Twitter Statistics</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 450M monthly active users</li>
+                                    <li>• 500M tweets sent daily</li>
+                                    <li>• 83% of world leaders on Twitter</li>
+                                    <li>• 80% of users access via mobile</li>
+                                    <li>• 18-minute average session</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded">
+                                <h6>Popular Twitter Categories:</h6>
+                                <div class="d-flex flex-wrap">
+                                    <span class="badge bg-secondary me-1 mb-1">#Breaking</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Tech</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Marketing</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Business</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#Sports</span>
+                                    <span class="badge bg-secondary me-1 mb-1">#News</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/social-media" class="btn btn-outline-primary">← Back to Social Media Tools</a>
+            <a href="/instagram-tools" class="btn btn-primary">Instagram Tools →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.tool-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.tool-icon {
+    font-size: 3rem;
+    color: #1da1f2;
+    background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.testimonial {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #1da1f2;
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .tool-icon {
+        font-size: 2rem;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+}
+</style>
+{% endblock %}

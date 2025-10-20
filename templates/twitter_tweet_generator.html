@@ -1,0 +1,730 @@
+{% extends "base.html" %}
+{% block title %}Free Twitter/X Tweet Generator - AI Powered Viral Content 2024 | Mushtastic Intelligence{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">🐦 Twitter Tweet Generator</h1>
+        <p class="lead mb-4">Create engaging tweets that get likes, retweets, and replies - 100% FREE forever!</p>
+        <div class="row text-center mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-success h3">100%</div>
+                <small>Free</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-primary h3">280</div>
+                <small>Characters</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-warning h3">10K+</div>
+                <small>Generated</small>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number text-info h3">24/7</div>
+                <small>Available</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Generator Form -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <form id="tweetGeneratorForm">
+                        <div class="mb-4">
+                            <label for="contentPrompt" class="form-label fw-bold">What's your tweet about?</label>
+                            <textarea
+                                class="form-control form-control-lg"
+                                id="contentPrompt"
+                                rows="4"
+                                placeholder="E.g., Sharing a productivity tip for remote workers, announcing a new product launch, or discussing the latest AI breakthrough..."
+                                required
+                            ></textarea>
+                            <div class="form-text">💡 Be specific! Include your main message, target audience, and desired tone.</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label for="tweetStyle" class="form-label fw-bold">Tweet Style:</label>
+                                <select class="form-select" id="tweetStyle">
+                                    <option value="engaging" selected>🔥 Engaging</option>
+                                    <option value="informative">📚 Informative</option>
+                                    <option value="funny">😄 Funny/Humorous</option>
+                                    <option value="professional">👔 Professional</option>
+                                    <option value="casual">😊 Casual</option>
+                                    <option value="inspirational">✨ Inspirational</option>
+                                    <option value="controversial">⚡ Hot Take</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="tweetCount" class="form-label fw-bold">Number of tweets:</label>
+                                <select class="form-select" id="tweetCount">
+                                    <option value="3">3 tweets</option>
+                                    <option value="5" selected>5 tweets</option>
+                                    <option value="7">7 tweets</option>
+                                    <option value="10">10 tweets</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="includeHashtags" class="form-label fw-bold">Include Hashtags:</label>
+                                <select class="form-select" id="includeHashtags">
+                                    <option value="yes" selected>✅ Yes (1-2 hashtags)</option>
+                                    <option value="no">❌ No hashtags</option>
+                                    <option value="minimal">➖ Minimal (1 hashtag)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="targetAudience" class="form-label fw-bold">Target Audience (Optional):</label>
+                            <select class="form-select" id="targetAudience">
+                                <option value="">General Audience</option>
+                                <option value="entrepreneurs">👔 Entrepreneurs</option>
+                                <option value="developers">💻 Developers</option>
+                                <option value="marketers">📈 Marketers</option>
+                                <option value="creators">🎨 Content Creators</option>
+                                <option value="students">🎓 Students</option>
+                                <option value="business">🏢 Business Professionals</option>
+                                <option value="tech">⚡ Tech Enthusiasts</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg py-3">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="loadingSpinner"></span>
+                                <span id="buttonText">Generate Viral Tweets ✨</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🎉 Generated Tweets</h5>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light btn-sm" id="copyAllBtn">
+                                    <i class="fas fa-copy"></i> Copy All
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" id="regenerateBtn">
+                                    <i class="fas fa-refresh"></i> Generate More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="tweetResults" class="tweet-container"></div>
+                        
+                        <!-- Stats -->
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">📊 Stats:</h6>
+                                <div id="statsContainer">
+                                    <small class="text-muted">
+                                        <span id="tweetStats">0 tweets generated</span> •
+                                        <span id="avgCharCount">0 avg characters</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">🎯 Pro Tip:</h6>
+                                <small class="text-muted">Test different tweet styles to see what resonates with your audience. A/B test your top performers!</small>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="bg-light p-3 rounded mt-3">
+                            <h6 class="fw-bold text-primary">💡 Twitter Engagement Tips:</h6>
+                            <ul class="small mb-0">
+                                <li><strong>Hook in first 10 words</strong> - Capture attention immediately</li>
+                                <li><strong>Ask questions</strong> - Encourage replies and engagement</li>
+                                <li><strong>Use numbers and lists</strong> - They perform better than general statements</li>
+                                <li><strong>Add visual elements</strong> - Images, GIFs, or videos boost engagement</li>
+                                <li><strong>Tweet at optimal times</strong> - 9 AM and 9 PM typically perform best</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="mt-4 d-none">
+                <div class="alert alert-danger">
+                    <strong>⚠️ Error:</strong> <span id="errorMessage"></span>
+                    <button class="btn btn-outline-danger btn-sm ms-2" onclick="document.getElementById('tweetGeneratorForm').dispatchEvent(new Event('submit'))">Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Examples and Tips -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">🎯 Tweet Examples</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold">Engaging Question:</h6>
+                    <div class="tweet-example mb-3">
+                        <small>"What's the best productivity hack you've discovered this year? Mine is time-blocking my calendar 📅 #ProductivityTips"</small>
+                        <div class="tweet-stats mt-1">
+                            <small class="text-muted">156 characters • High engagement potential</small>
+                        </div>
+                    </div>
+                    
+                    <h6 class="fw-bold">Value-First Tweet:</h6>
+                    <div class="tweet-example mb-3">
+                        <small>"3 things I wish I knew before starting my business:
+1. Cash flow > profit
+2. Build before you need it
+3. Network constantly
+What would you add? 🤔"</small>
+                        <div class="tweet-stats mt-1">
+                            <small class="text-muted">178 characters • Great for replies</small>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold">Hot Take:</h6>
+                    <div class="tweet-example">
+                        <small>"Unpopular opinion: Most 'AI will replace jobs' takes are from people who don't understand either AI or jobs. 
+Thread below 🧵"</small>
+                        <div class="tweet-stats mt-1">
+                            <small class="text-muted">163 characters • Conversation starter</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">📈 Tweet Performance Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ <strong>Optimal Length:</strong> 71-100 characters get most retweets</li>
+                        <li class="mb-2">✅ <strong>Use Emojis:</strong> Can increase engagement by 25%</li>
+                        <li class="mb-2">✅ <strong>Include CTAs:</strong> "RT if you agree" or "Thoughts?"</li>
+                        <li class="mb-2">✅ <strong>Tag Relevant People:</strong> But don't overdo it (max 2)</li>
+                        <li class="mb-2">✅ <strong>Thread Teaser:</strong> End with "Thread below 🧵"</li>
+                        <li class="mb-0">✅ <strong>Time Matters:</strong> Tweet when your audience is active</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">🚀 More Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/twitter-hashtag-generator" class="btn btn-outline-primary btn-sm">Hashtag Generator</a>
+                        <a href="/twitter-thread-generator" class="btn btn-outline-success btn-sm">Thread Generator</a>
+                        <a href="/instagram-caption-generator" class="btn btn-outline-danger btn-sm">Instagram Captions</a>
+                        <a href="/tiktok-caption-generator" class="btn btn-outline-dark btn-sm">TikTok Captions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 fw-bold mb-4">Twitter Tweet Writing Mastery - Free AI Generator 2024</h2>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>The Science of Viral Tweets</h3>
+                            <p>Creating tweets that resonate requires understanding both psychology and platform mechanics. Our <strong>free Twitter tweet generator</strong> uses AI trained on millions of high-performing tweets to create content that drives engagement and builds your following.</p>
+
+                            <h3>Tweet Anatomy: What Makes Content Viral</h3>
+                            <h4>1. The Hook (First 10 Words)</h4>
+                            <p>Your opening words determine if users will read the full tweet:</p>
+                            <ul>
+                                <li><strong>Numbers:</strong> "3 mistakes that cost me $10K"</li>
+                                <li><strong>Questions:</strong> "What's your biggest business challenge?"</li>
+                                <li><strong>Bold Claims:</strong> "This will change everything"</li>
+                                <li><strong>Relatable Moments:</strong> "That moment when..."</li>
+                                <li><strong>Controversy:</strong> "Unpopular opinion:"</li>
+                            </ul>
+
+                            <h4>2. Value Proposition</h4>
+                            <p>Every tweet should provide value through:</p>
+                            <ul>
+                                <li>Education (tips, insights, lessons)</li>
+                                <li>Entertainment (humor, stories, memes)</li>
+                                <li>Inspiration (motivation, success stories)</li>
+                                <li>Information (news, updates, facts)</li>
+                                <li>Connection (questions, polls, discussions)</li>
+                            </ul>
+
+                            <h4>3. Call-to-Action</h4>
+                            <p>End with engagement triggers:</p>
+                            <ul>
+                                <li>"What do you think?" - Encourages replies</li>
+                                <li>"RT if you agree" - Drives retweets</li>
+                                <li>"Thread below 🧵" - Promotes thread engagement</li>
+                                <li>"Who else relates?" - Creates community feeling</li>
+                                <li>"Share your experience" - Invites personal stories</li>
+                            </ul>
+
+                            <h3>Tweet Types That Perform Well</h3>
+                            <h4>Educational Tweets</h4>
+                            <p>Share knowledge and insights:</p>
+                            <ul>
+                                <li>Tips and tricks in your industry</li>
+                                <li>Lesson learned from experience</li>
+                                <li>Step-by-step mini-tutorials</li>
+                                <li>Common mistakes to avoid</li>
+                                <li>Tool recommendations with benefits</li>
+                            </ul>
+
+                            <h4>Story Tweets</h4>
+                            <p>Personal narratives that connect:</p>
+                            <ul>
+                                <li>Behind-the-scenes moments</li>
+                                <li>Failure and comeback stories</li>
+                                <li>Meeting interesting people</li>
+                                <li>Unexpected discoveries</li>
+                                <li>Daily life observations</li>
+                            </ul>
+
+                            <h4>Opinion Tweets</h4>
+                            <p>Share thoughtful perspectives:</p>
+                            <ul>
+                                <li>Industry trend analysis</li>
+                                <li>Hot takes on current events</li>
+                                <li>Predictions about the future</li>
+                                <li>Contrarian viewpoints</li>
+                                <li>Personal philosophies</li>
+                            </ul>
+
+                            <h3>Twitter Engagement Psychology</h3>
+                            <h4>Emotional Triggers</h4>
+                            <p>Tweets that evoke emotion get more engagement:</p>
+                            <ul>
+                                <li><strong>Surprise:</strong> Unexpected facts or revelations</li>
+                                <li><strong>Anger:</strong> Frustrations that others share</li>
+                                <li><strong>Joy:</strong> Celebrations and positive news</li>
+                                <li><strong>Fear:</strong> Warnings and cautionary tales</li>
+                                <li><strong>Curiosity:</strong> Cliffhangers and incomplete information</li>
+                            </ul>
+
+                            <h4>Social Proof Elements</h4>
+                            <ul>
+                                <li>Numbers and statistics</li>
+                                <li>Success stories and results</li>
+                                <li>Expert endorsements</li>
+                                <li>Community testimonials</li>
+                                <li>Before/after comparisons</li>
+                            </ul>
+
+                            <h3>Timing and Frequency Strategy</h3>
+                            <h4>Optimal Posting Times</h4>
+                            <ul>
+                                <li><strong>Weekdays:</strong> 9 AM, 1 PM, and 9 PM</li>
+                                <li><strong>Weekends:</strong> 2 PM and 8 PM</li>
+                                <li><strong>Business Content:</strong> Tuesday-Thursday, 9 AM-5 PM</li>
+                                <li><strong>Entertainment:</strong> Evenings and weekends</li>
+                                <li><strong>News/Breaking:</strong> Immediately as events unfold</li>
+                            </ul>
+
+                            <h4>Posting Frequency</h4>
+                            <ul>
+                                <li><strong>Beginners:</strong> 1-2 tweets per day</li>
+                                <li><strong>Growing Accounts:</strong> 3-5 tweets per day</li>
+                                <li><strong>Established Accounts:</strong> 5-10 tweets per day</li>
+                                <li><strong>News/Media:</strong> 15+ tweets per day</li>
+                            </ul>
+
+                            <h3>Common Tweet Mistakes to Avoid</h3>
+                            <h4>Content Mistakes:</h4>
+                            <ul>
+                                <li>❌ Being too salesy or promotional</li>
+                                <li>❌ Sharing without adding value</li>
+                                <li>❌ Using too many hashtags (stick to 1-3)</li>
+                                <li>❌ Ignoring your audience's interests</li>
+                                <li>❌ Being consistently negative</li>
+                                <li>❌ Copying others without attribution</li>
+                            </ul>
+
+                            <h4>Engagement Mistakes:</h4>
+                            <ul>
+                                <li>❌ Not replying to comments quickly</li>
+                                <li>❌ Only talking, never listening</li>
+                                <li>❌ Arguing instead of discussing</li>
+                                <li>❌ Ignoring mentions and tags</li>
+                                <li>❌ Never retweeting others</li>
+                            </ul>
+
+                            <h3>Advanced Twitter Strategies</h3>
+                            <h4>Thread Teasers</h4>
+                            <p>Use single tweets to promote longer threads:</p>
+                            <ul>
+                                <li>Start with a compelling hook</li>
+                                <li>Promise valuable content</li>
+                                <li>End with "Thread below 🧵"</li>
+                                <li>Deliver on your promise</li>
+                            </ul>
+
+                            <h4>Quote Tweet Strategy</h4>
+                            <ul>
+                                <li>Add thoughtful commentary</li>
+                                <li>Provide additional context</li>
+                                <li>Share contrasting viewpoints</li>
+                                <li>Ask follow-up questions</li>
+                            </ul>
+
+                            <h4>Retweet with Purpose</h4>
+                            <ul>
+                                <li>Retweet valuable content from others</li>
+                                <li>Add your own commentary</li>
+                                <li>Support your community</li>
+                                <li>Share diverse perspectives</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-primary text-white p-4 rounded mb-4">
+                                <h5>🐦 Twitter Engagement Stats</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 71-100 characters = most retweets</li>
+                                    <li>• Questions get 23% more replies</li>
+                                    <li>• Images increase engagement 150%</li>
+                                    <li>• Videos get 10x more shares</li>
+                                    <li>• Emojis boost engagement 25%</li>
+                                    <li>• Hashtags increase reach 12.6%</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-light p-4 rounded">
+                                <h6>High-Performing Tweet Formats:</h6>
+                                <div class="mb-2">
+                                    <span class="badge bg-primary me-1">Lists</span>
+                                    <span class="badge bg-success me-1">Questions</span>
+                                    <span class="badge bg-warning me-1">Tips</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="badge bg-info me-1">Stories</span>
+                                    <span class="badge bg-secondary me-1">Quotes</span>
+                                    <span class="badge bg-danger me-1">Hot Takes</span>
+                                </div>
+                                <div>
+                                    <span class="badge bg-dark me-1">Threads</span>
+                                    <span class="badge bg-purple me-1">Polls</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-5">
+        <div class="btn-group flex-wrap" role="group">
+            <a href="/twitter-tools" class="btn btn-outline-primary">← Back to Twitter Tools</a>
+            <a href="/twitter-thread-generator" class="btn btn-primary">Thread Generator →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.tweet-container {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.tweet-item {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tweet-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.tweet-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.tweet-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+}
+
+.copy-btn.copied {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.character-count {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: #e9ecef;
+}
+
+.character-count.good {
+    background: #d4edda;
+    color: #155724;
+}
+
+.character-count.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.character-count.danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.tweet-example {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #1da1f2;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.tweet-stats {
+    font-size: 0.75rem;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .tweet-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .copy-btn {
+        align-self: flex-end;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('tweetGeneratorForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const buttonText = document.getElementById('buttonText');
+    const resultsSection = document.getElementById('resultsSection');
+    const errorSection = document.getElementById('errorSection');
+    const tweetResults = document.getElementById('tweetResults');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+
+    let lastGeneratedTweets = [];
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await generateTweets();
+    });
+
+    regenerateBtn.addEventListener('click', async function() {
+        await generateTweets();
+    });
+
+    copyAllBtn.addEventListener('click', function() {
+        const allTweets = lastGeneratedTweets.join('\n\n---\n\n');
+        copyToClipboard(allTweets);
+        showCopyFeedback(this, 'All tweets copied!');
+    });
+
+    async function generateTweets() {
+        const prompt = document.getElementById('contentPrompt').value.trim();
+        const style = document.getElementById('tweetStyle').value;
+        const count = parseInt(document.getElementById('tweetCount').value);
+        const includeHashtags = document.getElementById('includeHashtags').value;
+        const targetAudience = document.getElementById('targetAudience').value;
+
+        if (!prompt) {
+            showError('Please describe what your tweet should be about');
+            return;
+        }
+
+        const enhancedPrompt = `${prompt} (Style: ${style}, Hashtags: ${includeHashtags}${targetAudience ? ', Audience: ' + targetAudience : ''})`;
+
+        setLoadingState(true);
+        hideResults();
+        hideError();
+
+        try {
+            const response = await fetch('/api/twitter/tweets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: enhancedPrompt,
+                    count: count
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate tweets');
+            }
+
+            if (data.success && data.tweets) {
+                displayResults(data.tweets);
+                lastGeneratedTweets = data.tweets;
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError(error.message);
+        } finally {
+            setLoadingState(false);
+        }
+    }
+
+    function setLoadingState(loading) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (loading) {
+            loadingSpinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            buttonText.textContent = 'Creating Viral Tweets...';
+        } else {
+            loadingSpinner.classList.add('d-none');
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Generate Viral Tweets ✨';
+        }
+    }
+
+    function displayResults(tweets) {
+        tweetResults.innerHTML = '';
+
+        tweets.forEach((tweet, index) => {
+            const tweetElement = createTweetElement(tweet, index);
+            tweetResults.appendChild(tweetElement);
+        });
+
+        // Update stats
+        const totalChars = tweets.reduce((sum, tweet) => sum + tweet.length, 0);
+        const avgChars = Math.round(totalChars / tweets.length);
+        
+        document.getElementById('tweetStats').textContent = `${tweets.length} tweets generated`;
+        document.getElementById('avgCharCount').textContent = `${avgChars} avg characters`;
+
+        resultsSection.classList.remove('d-none');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function createTweetElement(tweet, index) {
+        const div = document.createElement('div');
+        div.className = 'tweet-item';
+
+        const charCount = tweet.length;
+        let charClass = 'good';
+        if (charCount > 240) charClass = 'warning';
+        if (charCount > 280) charClass = 'danger';
+
+        div.innerHTML = `
+            <div class="tweet-text">${tweet}</div>
+            <div class="tweet-actions">
+                <div>
+                    <span class="character-count ${charClass}">${charCount}/280</span>
+                    <span class="ms-2 text-muted">Tweet ${index + 1}</span>
+                </div>
+                <button class="copy-btn" onclick="copyTweet(${index}, this)">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+        `;
+
+        return div;
+    }
+
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        errorSection.classList.remove('d-none');
+        errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideError() {
+        errorSection.classList.add('d-none');
+    }
+
+    function hideResults() {
+        resultsSection.classList.add('d-none');
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+    }
+
+    function showCopyFeedback(button, message) {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        button.classList.add('copied');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('copied');
+        }, 2000);
+    }
+
+    // Global function for individual tweet copying
+    window.copyTweet = function(index, button) {
+        const tweet = lastGeneratedTweets[index];
+        copyToClipboard(tweet);
+        showCopyFeedback(button, 'Copied!');
+    };
+});
+</script>
+{% endblock %}
